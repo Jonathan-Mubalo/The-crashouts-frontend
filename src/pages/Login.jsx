@@ -96,7 +96,7 @@ function LoginPage () {
 
         <div className="signupContainer">
           <a href="#signup" className="signupLink">
-            Register
+            Don't have an Account? Register
           </a>
         </div>
       </div>
