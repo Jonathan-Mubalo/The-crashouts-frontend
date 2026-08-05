@@ -6,24 +6,25 @@
 
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-image: url("/backgroundOne.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-.login-page {
+.loginPage {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   overflow: hidden;
-  /* background-color: #60a5fa; */
 }
 
 .backgroundWrapper {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom right, #bfdbfe, #60a5fa, #2563eb);
+  inset: 10 ;
   z-index: 0;
-  background-image: url("backgroundOne.jpg");
 }
 
 .shape {
@@ -48,6 +49,8 @@ body {
   opacity: 0.5;
 }
 
+/* transparent login card and features e.g inputs*/
+
 .loginCard {
   position: relative;
   z-index: 10;
@@ -61,8 +64,10 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 1.5rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  color: white;
+  color: #2563eb;
 }
+
+/* transparent login card and features e.g inputs*/
 
 .loginTitle {
   font-size: 1.875rem;
@@ -119,34 +124,17 @@ body {
   padding-right: 2.5rem;
 }
 
-.password-toggle-btn {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  padding-right: 0.75rem;
-  display: flex;
-  align-items: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #6b7280;
-}
-
-.password-toggle-btn:hover {
-  color: #374151;
-}
-
 .termsText {
   font-size: 0.75rem;
   text-align: center;
-  color: rgba(255, 255, 255, 0.8);
+  color: #000;
   padding-top: 0.25rem;
 }
 
 .termsLink {
   text-decoration: underline;
   cursor: pointer;
+  color: #2563eb;
 }
 
 .submitBtn {
@@ -166,17 +154,17 @@ body {
   background-color: #1d4ed8;
 }
 
-.signUpContainer {
+.signupContainer {
   text-align: center;
   margin-top: 1.5rem;
 }
 
-.signUpLink {
+.signupLink {
   font-size: 0.875rem;
-  color: white;
+  color: #1d4ed8;
   text-decoration: none;
 }
 
-.signUpLink:hover {
+.signupLink:hover {
   text-decoration: underline;
 }
