@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-// import backgroundOne from '../public/assets/backgroundOne.jpg'
-// import { Eye, EyeOff } from 'lucide-react';
 import './Login.css'; 
 
 function LoginPage () {
@@ -23,7 +21,7 @@ function LoginPage () {
   return (
     
     <div className="loginPage">
-      <div className="backgroundWrapper">
+      <div className="backgroundWrapper" >
         <div className="shape shapeOne"></div>
         <div className="shape shapeTwo"></div>
       </div>
