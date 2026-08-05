@@ -10,6 +10,15 @@ body {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.loginPage{
+ background-image: url("/backgroundOne.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .loginPage {
