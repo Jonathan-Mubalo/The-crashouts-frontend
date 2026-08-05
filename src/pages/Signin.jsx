@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
-import './Signin.css'; 
+import './Signin.css';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
 
 const handleSignUp = () =>{
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
-const auth = getAuth();
 createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed up 
@@ -58,7 +55,7 @@ function SignUpPage () {
             <label className="inputLabel">Full Name</label>
             <input
               type="text"
-              name="username"
+              name="fullName"
               placeholder="Full Name"
               value={formData.fullName}
               onChange={handleChange}
