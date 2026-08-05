@@ -6,10 +6,47 @@
 
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-image: url("/backgroundOne.jpg");
+    background-image: url("/assets/backgroundOne.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+.loginPage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.backgroundWrapper {
+  position: absolute;
+  inset: 10 ;
+  z-index: 0;
+}
+
+.shape {
+  position: absolute;
+  width: 24rem;
+  height: 24rem;
+  border-radius: 9999px;
+  filter: blur(64px);
+}
+
+.shapeOne {
+  top: -6rem;
+  left: -6rem;
+  background-color: #93c5fd;
+  opacity: 0.5;
+}
+
+.shapeTwo {
+  bottom: -6rem;
+  right: -6rem;
+  background-color: #3b82f6;
+  opacity: 0.5;
 }
 
 .signupCard {

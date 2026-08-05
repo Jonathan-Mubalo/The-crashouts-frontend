@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './Signin.css'; 
+import './Signin.css';   
 
 function SignUpPage () {
     const [showPassword, setShowPassword] = useState(false);
@@ -37,7 +37,7 @@ function SignUpPage () {
             <label className="inputLabel">Full Name</label>
             <input
               type="text"
-              name="username"
+              name="fullName"
               placeholder="Full Name"
               value={formData.fullName}
               onChange={handleChange}
