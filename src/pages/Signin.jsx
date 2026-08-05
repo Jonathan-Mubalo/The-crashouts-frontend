@@ -20,7 +20,9 @@ function SignInPage () {
   
     return (
         <>
+            <div className='mainWrapper'>
 
+            </div>
         </>
     )
 }
