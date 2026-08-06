@@ -1,7 +1,28 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { auth } from "../firebase";
+    import { signInWithEmailAndPassword } from "firebase/auth";
 import "./Login.css"
 
 function LoginPage () {
+
+  const navigate = useNavigate();
+
+  const handleLogin = () =>{
+
+signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+
+  }
+
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
@@ -17,6 +38,8 @@ function LoginPage () {
     e.preventDefault();
     console.log('Form submitted:', formData);
   };
+
+  
 
   return (
     
@@ -88,7 +111,7 @@ function LoginPage () {
 
           {/* Login Button */}
 
-          <button type="submit" className="submitBtn">
+          <button type="submit" className="submitBtn" onClick={ handleLogin }>
             Login
           </button>
         </form>
@@ -96,9 +119,9 @@ function LoginPage () {
         {/* Sign-Up Link */}
 
         <div className="signupContainer">
-          <a href="#signup" className="signupLink">
-            Don't have an Account? Register
-          </a>
+          <p>
+            Don't have an Account? <span className="goToSignin" onClick={() =>{navigate("/Signup")}}>Signup</span>
+          </p>
         </div>
       </div>
     </div>
