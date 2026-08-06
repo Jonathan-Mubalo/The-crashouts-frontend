@@ -13,9 +13,36 @@ function LoginPage () {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Form submitted:', formData);
+
+    try {
+      const response = await fetch("http://localhost:3000/login", 
+        {
+          method: "POST",
+          headers: {"Content-Type": "application/json",},
+          body: JSON.stringify({
+            loginEmail: formData.email,
+            loginPassword: formData.password,
+          })
+        })
+
+        const data = await response.json();
+
+        if (response.ok) {
+          console.log("Logged in:", data);
+
+          alert(data.message)
+
+          localStorage.setItem("user", JSON.stringify(data.user));
+        } else {
+          alert(data.message)
+        }
+    } catch (error) {
+      console.error(error);
+      alert("Unable to connect to server.");
+    }
   };
 
   return (

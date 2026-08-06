@@ -22,19 +22,46 @@ createUserWithEmailAndPassword(auth, email, password)
 function SignUpPage () {
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
-    fullName: '',
+    signupName: '',
     username: '',
-    email: '',
-    password: '',
+    signupEmail: '',
+    signupPassword: '',
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Sign-up form submitted:', formData);
+
+    try {
+      const response = await fetch("http://localhost:3000/signup", 
+        {
+          method: "POST",
+          headers: {"Content-Type": "application/json",},
+          body: JSON.stringify({
+            signupName: formData.fullName,
+            signupEmail: formData.email,
+            signupPassword: formData.password,
+          })
+        })
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert(data.message)
+
+          console.log(data);
+
+        } else {
+          alert(data.message)
+        }
+    } catch (error) {
+      console.error(error);
+      alert("Unable to connect to server.");
+    }
   };
 
   return (
@@ -55,9 +82,9 @@ function SignUpPage () {
             <label className="inputLabel">Full Name</label>
             <input
               type="text"
-              name="fullName"
+              name="signupName"
               placeholder="Full Name"
-              value={formData.fullName}
+              value={formData.signupName}
               onChange={handleChange}
               className="textInput"
               required
