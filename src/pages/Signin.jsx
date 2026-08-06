@@ -33,14 +33,6 @@ createUserWithEmailAndPassword(auth, email, password)
 
 }
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [formData, setFormData] = useState({
-    signupName: '',
-    username: '',
-    signupEmail: '',
-    signupPassword: '',
-  });
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
