@@ -1,10 +1,24 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Signin.css';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
+function SignUpPage () {
 
-const handleSignUp = () =>{
+  const navigate = useNavigate();
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [formData, setFormData] = useState({
+    fullName: '',
+    username: '',
+    email: '',
+    password: '',
+  });
+
+  const handleSignUp = () =>{
+
+
 createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed up 
@@ -19,7 +33,6 @@ createUserWithEmailAndPassword(auth, email, password)
 
 }
 
-function SignUpPage () {
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
     signupName: '',
@@ -63,6 +76,7 @@ function SignUpPage () {
       alert("Unable to connect to server.");
     }
   };
+
 
   return (
     <div className="loginPage">
@@ -147,9 +161,8 @@ function SignUpPage () {
 
         {/* Login Redirect Link */}
         <div className="loginRedirectContainer">
-          <a href="#login" className="loginRedirectLink">
-            Already have an account? Login
-          </a>
+          <p>Already have an account? <span className="goToLogin" onClick={() =>{navigate("/Login")}}>Login</span>
+          </p>
         </div>
       </div>
     </div>

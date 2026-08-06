@@ -177,3 +177,13 @@ body {
 .signupLink:hover {
   text-decoration: underline;
 }
+
+.goToSignin {
+  text-decoration: underline;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.goToSignin:hover {
+  transform: scale(1.2);
+}
