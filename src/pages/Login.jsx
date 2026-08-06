@@ -120,7 +120,7 @@ signInWithEmailAndPassword(auth, email, password)
 
         <div className="signupContainer">
           <p>
-            Don't have an Account? <span className="goToSignin" onClick={() =>{navigate("/Signup")}}>Signup</span>
+            Don't have an Account? <span className="goToSignin" onClick={() =>{;navigate("/Signup")}}>Signup</span>
           </p>
         </div>
       </div>
