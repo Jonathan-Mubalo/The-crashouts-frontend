@@ -93,3 +93,13 @@ body {
 .loginRedirectLink:hover {
   text-decoration: underline;
 }
+
+.goToLogin {
+   text-decoration: underline;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.goToLogin:hover {
+  transform: scale(1.2);
+}
