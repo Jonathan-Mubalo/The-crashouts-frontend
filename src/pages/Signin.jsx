@@ -1,73 +1,70 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Signin.css';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
-function SignUpPage () {
+function SignUpPage() {
 
   const navigate = useNavigate();
+  const userName = useRef();
+  const email = useRef();
+  const password = useRef();
+  const emailError = useRef();
+  const passwordError = useRef();
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [formData, setFormData] = useState({
-    fullName: '',
-    username: '',
-    email: '',
-    password: '',
-  });
+  // Firebase signin mixed with mongodb
+  const handleSignUp = async (e) => {
 
-  const handleSignUp = () =>{
-
-
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
-
-}
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Sign-up form submitted:', formData);
 
     try {
-      const response = await fetch("http://localhost:3000/signup", 
+      const userCredential = await createUserWithEmailAndPassword(auth, email.current.value, password.current.value);
+
+      const firebaseCredentials = userCredential.user.accessToken;
+      sessionStorage.setItem("ReserveX", JSON.stringify(true))
+      console.log("firebaseProvidedToken: ", firebaseCredentials);
+      const mongoDB = await fetch('http://localhost:3000/signup',
         {
           method: "POST",
-          headers: {"Content-Type": "application/json",},
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            signupName: formData.fullName,
-            signupEmail: formData.email,
-            signupPassword: formData.password,
+            userName: userName.current.value,
+            email: email.current.value
           })
-        })
 
-        const data = await response.json();
-
-        if (response.ok) {
-          alert(data.message)
-
-          console.log(data);
-
-        } else {
-          alert(data.message)
         }
-    } catch (error) {
-      console.error(error);
-      alert("Unable to connect to server.");
+      );
+      navigate("/")
     }
-  };
+    catch (error) {
+      const errorCode = error.code;
+      console.log("ErrorCode: ", errorCode);
+      const errorMessage = error.message;
+      console.log("ErrorMessage: ", errorMessage);
+
+      if (errorMessage.includes("invalid-email).")) {
+        return emailError.current.innerText = "Invalid email format";
+      }
+
+      if (errorMessage.includes("email-already-in-use")) {
+        return emailError.current.innerText = "Email is unavailable";
+      }
+
+      else {
+        passwordError.current.innerText = errorMessage.slice(9, -22)
+      }
+    }
+
+
+  }
+
+  // USED TO CLEAR ANY ERROR MESSAGE THAT THE PASSWORD INPUT DISPLAYS FROM FIRBASE
+
+  const clearErrorNotification = () => {
+    emailError.current.innerText = ""
+    passwordError.current.innerText = ""
+  }
 
 
   return (
@@ -81,21 +78,9 @@ createUserWithEmailAndPassword(auth, email, password)
       <div className="signupCard">
         <h2 className="signupTitle">Create an Account</h2>
 
-        <form onSubmit={handleSubmit} className="signupForm">
-          {/* Username Field */}
+        <form onSubmit={handleSignUp} className="signupForm">
 
-          <div className="inputGroup">
-            <label className="inputLabel">Full Name</label>
-            <input
-              type="text"
-              name="signupName"
-              placeholder="Full Name"
-              value={formData.signupName}
-              onChange={handleChange}
-              className="textInput"
-              required
-            />
-          </div>
+          {/* Username Field */}
 
           <div className="inputGroup">
             <label className="inputLabel">Username</label>
@@ -103,10 +88,9 @@ createUserWithEmailAndPassword(auth, email, password)
               type="text"
               name="username"
               placeholder="Username"
-              value={formData.username}
-              onChange={handleChange}
               className="textInput"
               required
+              ref={userName}
             />
           </div>
 
@@ -117,28 +101,32 @@ createUserWithEmailAndPassword(auth, email, password)
               type="email"
               name="email"
               placeholder="name@gmail.com"
-              value={formData.email}
-              onChange={handleChange}
               className="textInput"
               required
+              ref={email}
             />
           </div>
+          <p className="emailError" ref={emailError} onClick={clearErrorNotification} ></p>
 
           {/* Password Field */}
           <div className="inputGroup">
             <label className="inputLabel">Password</label>
             <div className="passwordWrapper">
               <input
-                type={showPassword ? 'text' : 'password'}
+                type='password'
                 name="password"
                 placeholder="6+ characters"
-                value={formData.password}
-                onChange={handleChange}
                 className="textInput passwordInput"
                 required
+                ref={password}
+                onClick={clearErrorNotification}
               />
             </div>
           </div>
+
+          {/* ERROR NOTIFICATION COMING FROM FIREBASE */}
+
+          <p className="passwordError" ref={passwordError} ></p>
 
           {/* Terms and Conditions */}
           <div className="termsText">
@@ -147,13 +135,13 @@ createUserWithEmailAndPassword(auth, email, password)
 
           {/* Sign-Up Button */}
           <button type="submit" className="submitBtn">
-            Register
+            Signup
           </button>
         </form>
 
         {/* Login Redirect Link */}
         <div className="loginRedirectContainer">
-          <p>Already have an account? <span className="goToLogin" onClick={() =>{navigate("/Login")}}>Login</span>
+          <p>Already have an account? <span className="goToLogin" onClick={() => { navigate("/Login") }}>Login</span>
           </p>
         </div>
       </div>

@@ -187,3 +187,12 @@ body {
 .goToSignin:hover {
   transform: scale(1.2);
 }
+
+.errorNotification{
+  transition-duration: 0.3s;
+  color:rgb(180, 3, 3)
+}
+
+.inputLabel{
+  color: rgb(0, 0, 0, 0.8);
+}
