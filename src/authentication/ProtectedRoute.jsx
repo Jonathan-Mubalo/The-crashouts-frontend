@@ -1,14 +1,16 @@
 import React,{ useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
+import { getAuth } from 'firebase/auth'
 
-const ProtectedRoute = (children) => {
-    const navigate = useNavigate();
-   const loginState = localStorage.getItem("ReserveX_Login");
-    if(loginState !== null && loginState == true){
+const ProtectedRoute = ({children}) => {
+    const auth = getAuth();
+
+    // console.log("session storage:",JSON.parse(sessionStorage.getItem("ReserveX")))
+    // console.log("access token:",auth.currentUser)
+    if( auth.currentUser !== null  || JSON.parse(sessionStorage.getItem("ReserveX")) ){
         return children
     } else{
-navigate("/Login")
- useEffect( ()=>{navigate("/Login")},[])
+  return < Navigate to="/Login" />
     }
 
 }

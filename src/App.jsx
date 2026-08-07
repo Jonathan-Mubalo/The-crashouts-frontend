@@ -4,10 +4,12 @@ import './App.css'
 import LoginPage from './pages/Login'
 import SignUpPage from './pages/Signin'
 import Home from './pages/Home'
+import UserRole from './pages/UserRole'
+import UserProfile from './pages/UserProfile'
 import ProtectedRoute from './authentication/ProtectedRoute'
+import RestrictedAccess from './authentication/ProtectedRoute'
 
 function App() {
-
   return (
     <>
     <BrowserRouter>
@@ -17,8 +19,16 @@ function App() {
       <Route path="/" element={<ProtectedRoute> 
       <Home />
         </ProtectedRoute>} />
+        
+           <Route path="/UserProfile" element={<ProtectedRoute> 
+      <UserProfile />
+        </ProtectedRoute>} />
+
+           <Route path="/UserRole" element={<RestrictedAccess> 
+      <UserRole />
+        </RestrictedAccess>} />
+        
       </Routes>
-      
 </BrowserRouter>
     </>
   )

@@ -103,3 +103,11 @@ body {
 .goToLogin:hover {
   transform: scale(1.2);
 }
+
+.passwordError, .emailError{
+  color: rgb(168, 4, 4);
+}
+
+.inputLabel{
+  color: rgb(0, 0, 0, 0.8);
+}

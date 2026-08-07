@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from "../firebase";
     import { signInWithEmailAndPassword } from "firebase/auth";
@@ -7,66 +7,39 @@ import "./Login.css"
 function LoginPage () {
 
   const navigate = useNavigate();
+  const userName = useRef();
+  const email = useRef();
+  const password = useRef();
+  const errorNotification = useRef();
 
-  const handleLogin = () =>{
+  const handleLogin = async (e) =>{
 
-signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
+    e.preventDefault();
+
+    try{
+const userCredentials = await signInWithEmailAndPassword(auth, email.current.value, password.current.value);
+const firebaseCredentials = userCredentials.user.accessToken;
+
+console.log("LoginaccessToken: ",firebaseCredentials);
+sessionStorage.setItem("ReserveX", JSON.stringify(true));
+navigate("/")
+}
+  catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
-  });
+console.log(errorCode);
+console.log(errorMessage);
+    if(errorCode){
+     errorNotification.current.innerText="Invalid email or password."
+    }
+
+  };
 
   }
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
-
-    try {
-      const response = await fetch("http://localhost:3000/login", 
-        {
-          method: "POST",
-          headers: {"Content-Type": "application/json",},
-          body: JSON.stringify({
-            loginEmail: formData.email,
-            loginPassword: formData.password,
-          })
-        })
-
-        const data = await response.json();
-
-        if (response.ok) {
-          console.log("Logged in:", data);
-
-          alert(data.message)
-
-          localStorage.setItem("user", JSON.stringify(data.user));
-        } else {
-          alert(data.message)
-        }
-    } catch (error) {
-      console.error(error);
-      alert("Unable to connect to server.");
-    }
-  };
-
-  
+  const clearError = () =>{
+    errorNotification.current.innerText = "";
+  }
 
   return (
     
@@ -80,23 +53,8 @@ signInWithEmailAndPassword(auth, email, password)
 
       <div className="loginCard">
         <h2 className="loginTitle">Login</h2>
-
-        <form onSubmit={handleSubmit} className="loginForm">
-
-          {/* Username Field */}
-
-          <div className="inputGroup">
-            <label className="inputLabel">Username</label>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
-              onChange={handleChange}
-              className="textInput"
-              required
-            />
-          </div>
+<p className="errorNotification" ref={errorNotification}></p>
+        <form onSubmit={handleLogin} className="loginForm">
 
           {/* Email Field */}
 
@@ -106,10 +64,10 @@ signInWithEmailAndPassword(auth, email, password)
               type="email"
               name="email"
               placeholder="name@gmail.com"
-              value={formData.email}
-              onChange={handleChange}
               className="textInput"
               required
+              ref = {email}
+              onClick={clearError}
             />
           </div>
 
@@ -119,13 +77,13 @@ signInWithEmailAndPassword(auth, email, password)
             <label className="inputLabel">Password</label>
             <div className="passwordWrapper">
               <input
-                type={showPassword ? 'text' : 'password'}
+                type='password'
                 name="password"
                 placeholder="6+ characters"
-                value={formData.password}
-                onChange={handleChange}
                 className="textInput passwordInput"
                 required
+                ref = {password}
+                onClick={clearError}
               />
             </div>
           </div>
@@ -147,7 +105,7 @@ signInWithEmailAndPassword(auth, email, password)
 
         <div className="signupContainer">
           <p>
-            Don't have an Account? <span className="goToSignin" onClick={() =>{;navigate("/Signup")}}>Signup</span>
+            Don't have an Account? <span className="goToSignin" onClick={() =>{navigate("/Signup")}}>Signup</span>
           </p>
         </div>
       </div>
