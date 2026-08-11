@@ -1,5 +1,5 @@
 .register-page {
-  min-height: calc(100vh - 74px);
+  min-height: 100vh;
   background-color: #ffffff;
   padding-top: 30px;
 }
