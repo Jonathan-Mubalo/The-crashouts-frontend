@@ -3,7 +3,46 @@ import "./RegisterVenue.css";
 import Navbar from "../components/Navbar";
 
 function RegisterVenue () {
-    return (
+  const [formDate, setFormDate]=useState({
+    venueName: "",
+    registrationNo: "",
+    address: "",
+    images: null,
+    documents: null,
+    facilities: "",
+    noOfSeats: "",
+    noOfRows: "",
+    noOfColumns: "",
+  });
+
+   const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleFileChange = (e) => {
+    const { id, files } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: files }));
+  };
+
+  const nextStep = (e) => {
+    e.preventDefault();
+    setStep(2);
+  };
+
+  const prevStep = (e) => {
+    e.preventDefault();
+    setStep(1);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Final Registration Data submitted:", formData);
+    alert("Form Submitted successfully!");
+  };
+
+
+        return (
       <>
         <Navbar />
         <div className="register-page">
@@ -74,6 +113,8 @@ function RegisterVenue () {
             <button type="submit" className="register-btn">
               Register
             </button>
+
+            {/*  */}
 
           </form>
         </div>
