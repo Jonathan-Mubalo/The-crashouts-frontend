@@ -4,20 +4,17 @@
     box-sizing: border-box;
 }
 
-body {
-    background-color: #fff;
-}
-
 .container {
+  background-color: #fff;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
 .eventsHeader {
-  background: var(--card-bg);
+  background: #fff;
   padding: 40px 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid;
   margin-bottom: 40px;
 }
 
@@ -53,3 +50,4 @@ body {
   height: 100%;
   object-fit: cover;
 }
+

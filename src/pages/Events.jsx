@@ -48,6 +48,25 @@ function EventPage () {
     },
     ];
 
+    const availableEvent = [
+        {
+      id: 6,
+      title: 'AWS Summit, Cape Town',
+      address: '',
+      location: 'Cape Town',
+      date: '13 August 2026',
+      image: '',
+        },
+        {
+      id: 7,
+      title: 'Jewellex Africa (JXA)',
+      address: '',
+      location: 'Cape Town',
+      date: '3 September 2026',
+      image: '',
+    },
+    ]
+
     return (
         <>
         <Navbar />
@@ -61,14 +80,23 @@ function EventPage () {
         </div>
 
         <main className="container mainContent">
+
         <section className="section">
+
           <h2 className="sectionTitle">Available Events</h2>
           <div className="eventsGrid">
-            
-              <div className="eventCard">
+
+            {/* The mapping for the venues within the array */}
+
+            {currentEvents.map((event) => (
+
+              <div className="eventCard" key={event.id}>
+
                 <div className="eventImageWrapper">
                   <img src={event.image} alt={event.title} className="eventImage" />
+                  {event.tag && <span className="eventBadge">{event.tag}</span>}
                 </div>
+
                 <div className="eventDetails">
                   <h3 className="eventCardTitle">{event.title}</h3>
                   <p className="eventLocation">{event.location}</p>
@@ -77,8 +105,12 @@ function EventPage () {
                     <button className="infoBtn">More Info</button>
                   </div>
                 </div>
+
               </div>
+
+            ))}
           </div>
+
         </section>
     </main>
 
