@@ -12,9 +12,9 @@
 }
 
 .eventsHeader {
-  background: var(--card-bg);
+  background: #fff;
   padding: 40px 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid 
   margin-bottom: 40px;
 }
 
