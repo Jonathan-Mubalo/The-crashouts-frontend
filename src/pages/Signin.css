@@ -104,9 +104,16 @@ body {
   transform: scale(1.2);
 }
 
-.passwordError, .emailError{
+/* Styling for the error messages when trying to sign up with the wrong information*/
+.errorMessages{
   color: rgb(168, 4, 4);
 }
+
+/* Styling for the message displayed when the correct login format is used*/
+.loginSuccess{
+  color: rgb(6, 156, 64);
+}
+
 
 .inputLabel{
   color: rgb(0, 0, 0, 0.8);

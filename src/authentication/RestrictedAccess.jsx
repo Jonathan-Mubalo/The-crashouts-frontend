@@ -6,7 +6,7 @@ const RestrictedAccess = ({ children }) => {
 
     const navigate = useNavigate();
     const auth = getAuth();
-
+useEffect(()=>{
     const userRole = async () => {
         try {
             console.log("Is it working")
@@ -30,8 +30,7 @@ const RestrictedAccess = ({ children }) => {
          catch (error) {
             console.error("Restricted access error: ", error)
         }
-    }
-    userRole();
+    }},[])
 }
 
 export default RestrictedAccess;
