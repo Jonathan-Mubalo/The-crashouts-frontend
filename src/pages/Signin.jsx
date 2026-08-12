@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Signin.css';
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
 function SignUpPage() {
@@ -10,8 +9,8 @@ function SignUpPage() {
   const userName = useRef();
   const email = useRef();
   const password = useRef();
-  const emailError = useRef();
-  const passwordError = useRef();
+  const errorMessages = useRef();
+  const loginSuccess = useRef();
 
   // Firebase signin mixed with mongodb
   const handleSignUp = async (e) => {
@@ -19,51 +18,44 @@ function SignUpPage() {
     e.preventDefault();
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email.current.value, password.current.value);
 
-      const firebaseCredentials = userCredential.user.accessToken;
-      sessionStorage.setItem("ReserveX", JSON.stringify(true))
-      console.log("firebaseProvidedToken: ", firebaseCredentials);
-      const mongoDB = await fetch('http://localhost:3000/signup',
+      const response = await fetch('http://localhost:3000/signup',
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userName: userName.current.value,
-            email: email.current.value
+            email: email.current.value,
+            password: password.current.value
           })
-
         }
       );
-      navigate("/")
-    }
-    catch (error) {
-      const errorCode = error.code;
-      console.log("ErrorCode: ", errorCode);
-      const errorMessage = error.message;
-      console.log("ErrorMessage: ", errorMessage);
 
-      if (errorMessage.includes("invalid-email).")) {
-        return emailError.current.innerText = "Invalid email format";
-      }
+      const data = await response.json();
 
-      if (errorMessage.includes("email-already-in-use")) {
-        return emailError.current.innerText = "Email is unavailable";
+      if (response.status !== 200) {
+        return errorMessages.current.innerText = data.message;
       }
 
       else {
-        passwordError.current.innerText = errorMessage.slice(9, -22)
+        loginSuccess.current.innerText = data.message;
+        sessionStorage.setItem("ReserveX", JSON.stringify(true));
+        sessionStorage.setItem("accessToken", JSON.stringify( data.accessToken));
+        // const token = JSON.parse(sessionStorage.getItem("accessToken"));
+        // console.log("firebaseProvidedToken: ",token );
+        navigate("/")
       }
     }
-
-
+    catch (error) {
+      console.log("Something mostlikely went wrong in the frontend");
+    }
   }
 
   // USED TO CLEAR ANY ERROR MESSAGE THAT THE PASSWORD INPUT DISPLAYS FROM FIRBASE
 
   const clearErrorNotification = () => {
-    emailError.current.innerText = ""
-    passwordError.current.innerText = ""
+    errorMessages.current.innerText = ""
+    loginSuccess.current.innerText = ""
   }
 
 
@@ -77,6 +69,8 @@ function SignUpPage() {
       {/* Glassmorphism Sign-Up Card */}
       <div className="signupCard">
         <h2 className="signupTitle">Create an Account</h2>
+        <p className="loginSuccess" ref={loginSuccess} ></p>
+        <p className="errorMessages" ref={errorMessages} ></p>
 
         <form onSubmit={handleSignUp} className="signupForm">
 
@@ -91,6 +85,7 @@ function SignUpPage() {
               className="textInput"
               required
               ref={userName}
+              onClick={clearErrorNotification}
             />
           </div>
 
@@ -104,9 +99,9 @@ function SignUpPage() {
               className="textInput"
               required
               ref={email}
+              onClick={clearErrorNotification}
             />
           </div>
-          <p className="emailError" ref={emailError} onClick={clearErrorNotification} ></p>
 
           {/* Password Field */}
           <div className="inputGroup">
@@ -126,7 +121,6 @@ function SignUpPage() {
 
           {/* ERROR NOTIFICATION COMING FROM FIREBASE */}
 
-          <p className="passwordError" ref={passwordError} ></p>
 
           {/* Terms and Conditions */}
           <div className="termsText">
