@@ -9,11 +9,12 @@ import UserProfile from './pages/UserProfile'
 import ProtectedRoute from './authentication/ProtectedRoute'
 import RestrictedAccess from './authentication/ProtectedRoute'
 import RegisterVenue  from './pages/RegisterVenue'
+import EventPage from './pages/Events'
 
 function App() {
   return (
     <>
-    <BrowserRouter>
+    {/* <BrowserRouter>
     <Routes>
       <Route path="/Login" element={<LoginPage />} />
       <Route path="/Signup" element={<SignUpPage />} />
@@ -48,7 +49,9 @@ function App() {
         </RestrictedAccess>} />
         
       </Routes>
-</BrowserRouter>
+</BrowserRouter> */}
+
+      <EventPage />
     </>
   )
 }
