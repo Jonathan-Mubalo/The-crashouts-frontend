@@ -7,7 +7,7 @@ const ProtectedRoute = ({children}) => {
 
     // console.log("session storage:",JSON.parse(sessionStorage.getItem("ReserveX")))
     // console.log("access token:",auth.currentUser)
-    if( auth.currentUser !== null  || JSON.parse(sessionStorage.getItem("ReserveX")) ){
+    if( JSON.parse(sessionStorage.getItem("accessToken")) || JSON.parse(sessionStorage.getItem("ReserveX")) ){
         return children
     } else{
   return < Navigate to="/Login" />

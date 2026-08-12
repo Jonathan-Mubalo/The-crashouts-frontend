@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { getAuth } from 'firebase/auth'
 
 const RestrictedAccess = ({ children }) => {
 
     const navigate = useNavigate();
-    const auth = getAuth();
 useEffect(()=>{
     const userRole = async () => {
         try {
