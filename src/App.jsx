@@ -14,7 +14,7 @@ import EventPage from './pages/Events'
 function App() {
   return (
     <>
-    {/* <BrowserRouter>
+    <BrowserRouter>
     <Routes>
       <Route path="/Login" element={<LoginPage />} />
       <Route path="/Signup" element={<SignUpPage />} />
@@ -49,9 +49,7 @@ function App() {
         </RestrictedAccess>} />
         
       </Routes>
-</BrowserRouter> */}
-
-      <EventPage />
+</BrowserRouter>
     </>
   )
 }
