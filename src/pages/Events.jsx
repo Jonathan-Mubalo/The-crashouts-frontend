@@ -1,4 +1,7 @@
-import './Events.css'
+import './Events.css';
+import React from 'react';
+import Navbar from "../components/Navbar.jsx";
+
 
 function EventPage () {
 
@@ -66,6 +69,7 @@ function EventPage () {
 
     return (
         <>
+        <Navbar />
       <header className="eventsHeader">
 
         <div className="eventContainer">
