@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from "../firebase";
 import "./Login.css"
 
-function LoginPage () {
+function LoginPage() {
 
   const navigate = useNavigate();
   const userName = useRef();
@@ -11,37 +11,47 @@ function LoginPage () {
   const password = useRef();
   const errorNotification = useRef();
 
-  const handleLogin = async (e) =>{
+  const handleLogin = async (e) => {
 
     e.preventDefault();
 
-    try{
-const userCredentials = await signInWithEmailAndPassword(auth, email.current.value, password.current.value);
-const firebaseCredentials = userCredentials.user.accessToken;
+    try {
 
-console.log("LoginaccessToken: ",firebaseCredentials);
-sessionStorage.setItem("ReserveX", JSON.stringify(true));
-navigate("/")
-}
-  catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-console.log(errorCode);
-console.log(errorMessage);
-    if(errorCode){
-     errorNotification.current.innerText="Invalid email or password."
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.current.value,
+          password: password.current.value
+        })
+      });
+
+      const data = await response.json();
+        // console.log("Error out of  if statement: ", response.status );
+        // console.log("Error out of  if statement: ", data.message );
+
+      if (response.status !== 200) {
+        // console.log("Error in if statement: ",response.status);
+        return errorNotification.current.innerText = data.message;
+      }
+
+      else {
+        sessionStorage.setItem("ReserveX", JSON.stringify(true));
+        sessionStorage.setItem("accessToken", JSON.stringify(data.accessToken));
+        navigate("/");
+      }
     }
-
-  };
-
+    catch (error) {
+      return console.log("Something went wrong in the frontend: ", error);
+    }
   }
 
-  const clearError = () =>{
+  const clearError = () => {
     errorNotification.current.innerText = "";
   }
 
   return (
-    
+
     <div className="loginPage">
       <div className="backgroundWrapper" >
         <div className="shape shapeOne"></div>
@@ -52,7 +62,7 @@ console.log(errorMessage);
 
       <div className="loginCard">
         <h2 className="loginTitle">Login</h2>
-<p className="errorNotification" ref={errorNotification}></p>
+        <p className="errorNotification" ref={errorNotification}></p>
         <form onSubmit={handleLogin} className="loginForm">
 
           {/* Email Field */}
@@ -65,7 +75,7 @@ console.log(errorMessage);
               placeholder="name@gmail.com"
               className="textInput"
               required
-              ref = {email}
+              ref={email}
               onClick={clearError}
             />
           </div>
@@ -81,7 +91,7 @@ console.log(errorMessage);
                 placeholder="6+ characters"
                 className="textInput passwordInput"
                 required
-                ref = {password}
+                ref={password}
                 onClick={clearError}
               />
             </div>
@@ -95,7 +105,7 @@ console.log(errorMessage);
 
           {/* Login Button */}
 
-          <button type="submit" className="submitBtn" onClick={ handleLogin }>
+          <button type="submit" className="submitBtn" onClick={handleLogin}>
             Login
           </button>
         </form>
@@ -104,7 +114,7 @@ console.log(errorMessage);
 
         <div className="signupContainer">
           <p>
-            Don't have an Account? <span className="goToSignin" onClick={() =>{navigate("/Signup")}}>Signup</span>
+            Don't have an Account? <span className="goToSignin" onClick={() => { navigate("/Signup") }}>Signup</span>
           </p>
         </div>
       </div>
@@ -112,4 +122,4 @@ console.log(errorMessage);
   );
 }
 
-export default LoginPage 
+export default LoginPage;
