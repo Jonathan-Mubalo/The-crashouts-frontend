@@ -8,6 +8,7 @@ import UserRole from './pages/UserRole'
 import UserProfile from './pages/UserProfile'
 import ProtectedRoute from './authentication/ProtectedRoute'
 import RestrictedAccess from './authentication/ProtectedRoute'
+import RegisterVenue  from './pages/RegisterVenue'
 
 function App() {
   return (
@@ -24,6 +25,24 @@ function App() {
       <UserProfile />
         </ProtectedRoute>} />
 
+<Route path="/RegisterVenue" element={<ProtectedRoute> 
+      <RegisterVenue />
+        </ProtectedRoute>} />
+        <Route path="/UserProfile" element={<ProtectedRoute> 
+      <UserProfile />
+        </ProtectedRoute>} />
+        <Route path="/UserProfile" element={<ProtectedRoute> 
+      <UserProfile />
+        </ProtectedRoute>} />
+        <Route path="/UserProfile" element={<ProtectedRoute> 
+      <UserProfile />
+        </ProtectedRoute>} />
+        <Route path="/UserProfile" element={<ProtectedRoute> 
+      <UserProfile />
+        </ProtectedRoute>} />
+        <Route path="/UserProfile" element={<ProtectedRoute> 
+      <UserProfile />
+        </ProtectedRoute>} />
            <Route path="/UserRole" element={<RestrictedAccess> 
       <UserRole />
         </RestrictedAccess>} />
