@@ -2,20 +2,53 @@ import { useState } from "react";
 import { Link } from 'react-router-dom'
 import './Navbar.css'
 
-function Navbar () {
-    const [isNav, setIsNav] = useState(false);
 
-    return (
-        <nav className="navbar">
-            <Link className="navLink" to="/">Home</Link>
-            <Link className="navLink" to="/Event">Events</Link>
-            <Link className="navLink" to="/UserProfile">My Profile</Link>
-            <Link className="navLink" to="/UserRole">User roles</Link>
-            <Link className="navLink" to="/RegisterVenue">Venues</Link>
-            <Link className="navLink" to="">About</Link>
-            <Link className="navLink" to="">Contact</Link>
-        </nav>
-    )
+function CustomerNavbar() {
+  return (
+    <nav>
+      <Link to="/home">Home</Link>
+      <Link to="/bookings">My Bookings</Link>
+      <Link to="/profile">Profile</Link>
+    </nav>
+  );
+}
+
+function ManagerNavbar() {
+  return (
+    <nav>
+      <Link to="/home">Home</Link>
+      <Link to="/venues">My Venues</Link>
+      <Link to="/bookings">Bookings</Link>
+      <Link to="/profile">Profile</Link>
+    </nav>
+  );
+}
+
+function AdminNavbar() {
+  return (
+    <nav>
+      <Link to="/home">Home</Link>
+      <Link to="/users">Users</Link>
+      <Link to="/venues">Venues</Link>
+      <Link to="/profile">Profile</Link>
+    </nav>
+  );
+}
+
+function Navbar({ role }) {
+  if (role === "admin") {
+    return <AdminNavbar />;
+  }
+
+  if (role === "manager") {
+    return <ManagerNavbar />;
+  }
+
+  if (role === "customer") {
+    return <CustomerNavbar />;
+  }
+
+  return null;
 }
 
 export default Navbar;

@@ -79,6 +79,8 @@ function EventPage () {
           </p>
         </div>
 
+      </header>
+
         <main className="container mainContent">
 
         <section className="section">
@@ -114,7 +116,6 @@ function EventPage () {
         </section>
     </main>
 
-      </header>
         </>
     )
 }
