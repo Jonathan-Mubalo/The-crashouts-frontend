@@ -85,9 +85,8 @@ const actualSubmission = submissionData.entries;
       <Navbar />
       <div className="register-page">
         <h1>Register Your Venue</h1>
-        <h2 ref={result}></h2>
+        <div className="registerVenueDiv">
         <form className="venue_form" onSubmit={step === 2 ? handleSubmit : nextStep}>
-
           {step === 1 && (
             <>
               <div className="form-group">
@@ -97,6 +96,18 @@ const actualSubmission = submissionData.entries;
                   id="venueName"
                   placeholder="Full Name"
                   value={formData.venueName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+               <div className="form-group">
+                <label htmlFor="Number">Phone Number</label>
+                <input
+                  type="text"
+                  id="Number"
+                  placeholder="Phone Number"
+                  value={formData.Number}
                   onChange={handleChange}
                   required
                 />
@@ -128,7 +139,7 @@ const actualSubmission = submissionData.entries;
 
               <div className="form-group">
                 <label htmlFor="images">Upload Images</label>
-                <input
+                <input className="RegisterFile"
                   type="file"
                   id="images"
                   accept="image/*"
@@ -139,7 +150,7 @@ const actualSubmission = submissionData.entries;
 
               <div className="form-group">
                 <label htmlFor="documents">Upload Documents</label>
-                <input
+                <input className="RegisterFile"
                   type="file"
                   id="documents"
                   multiple
@@ -166,7 +177,7 @@ const actualSubmission = submissionData.entries;
           {step === 2 && (
             <>
               <div className="form-group">
-                <label htmlFor="noOfSeats">No. of Seats</label>
+                <label htmlFor="noOfSeats">Seats pair Rows</label>
                 <input
                   type="number"
                   id="noOfSeats"
@@ -178,7 +189,7 @@ const actualSubmission = submissionData.entries;
               </div>
 
               <div className="form-group">
-                <label htmlFor="noOfRows">No. of Rows</label>
+                <label htmlFor="noOfRows">Number of Rows</label>
                 <input
                   type="number"
                   id="noOfRows"
@@ -213,6 +224,7 @@ const actualSubmission = submissionData.entries;
           )}
 
         </form>
+        </div>
       </div>
     </>
   );
