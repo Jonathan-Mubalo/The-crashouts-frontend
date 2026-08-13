@@ -53,7 +53,7 @@ function EventsPage () {
       title: 'Apartheid Photo Exhibition',
       location: 'Johannesburg, CBD',
       date: '30 November',
-      image: 'https://cdn.generationvoyage.fr/2025/03/Musee-de-lapartheid-de-Johannesburg',
+      image: 'https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=600&q=80',
       status: 'upcoming',
     },
     {
@@ -61,7 +61,7 @@ function EventsPage () {
       title: 'Apartheid Photo Exhibition',
       location: 'Cape Town',
       date: '15 December',
-      image: 'https://cdn.generationvoyage.fr/2025/03/Musee-de-lapartheid-de-Johannesburg',
+      image: 'https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=600&q=80',
       status: 'upcoming',
     },
   ]
