@@ -15,7 +15,11 @@ import EventPage from './pages/Events'
 function App({ user }) {
   return (
     <>
+<<<<<<< HEAD
       <BrowserRouter>
+=======
+    {/* <BrowserRouter>
+>>>>>>> fa75a45f7ba66e72073135bc2aa580af3830bc67
 
         <Routes>
           <Route path="/Login" element={<LoginPage />} />
@@ -34,6 +38,7 @@ function App({ user }) {
             <UserProfile />
           </ProtectedRoute>} />
 
+<<<<<<< HEAD
           <Route path="/RegisterVenue" element={<ProtectedRoute>
             <RegisterVenue />
           </ProtectedRoute>} />
@@ -56,6 +61,28 @@ function App({ user }) {
 
         </Routes>
       </BrowserRouter>
+=======
+        <Route path="/UserProfile" element={<ProtectedRoute> 
+      <UserProfile />
+        </ProtectedRoute>} />
+        <Route path="/UserProfile" element={<ProtectedRoute> 
+      <UserProfile />
+        </ProtectedRoute>} />
+        <Route path="/UserProfile" element={<ProtectedRoute> 
+      <UserProfile />
+        </ProtectedRoute>} />
+        <Route path="/UserProfile" element={<ProtectedRoute> 
+      <UserProfile />
+        </ProtectedRoute>} />
+           <Route path="/UserRole" element={<RestrictedAccess> 
+      <UserRole />
+        </RestrictedAccess>} />
+        
+      </Routes>
+</BrowserRouter> */}
+
+<EventPage />
+>>>>>>> fa75a45f7ba66e72073135bc2aa580af3830bc67
 
     </>
   )
