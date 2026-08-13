@@ -1,54 +1,78 @@
-import { useState } from "react";
-import { Link } from 'react-router-dom'
-import './Navbar.css'
+import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
+import './Navbar.css';
 
+function Navbar() {
 
-function CustomerNavbar() {
-  return (
-    <nav>
-      <Link to="/home">Home</Link>
-      <Link to="/bookings">My Bookings</Link>
-      <Link to="/profile">Profile</Link>
-    </nav>
-  );
-}
+  // const [userRole, setUserRole] = useState();
+  const [navDisplay, setNavDisplay] = useState();
 
-function ManagerNavbar() {
-  return (
-    <nav>
-      <Link to="/home">Home</Link>
-      <Link to="/venues">My Venues</Link>
-      <Link to="/bookings">Bookings</Link>
-      <Link to="/profile">Profile</Link>
-    </nav>
-  );
-}
+  useEffect(() => {
 
-function AdminNavbar() {
-  return (
-    <nav>
-      <Link to="/home">Home</Link>
-      <Link to="/users">Users</Link>
-      <Link to="/venues">Venues</Link>
-      <Link to="/profile">Profile</Link>
-    </nav>
-  );
-}
+    const accessTokenEmail = JSON.parse(sessionStorage.getItem("accessToken"));
 
-function Navbar({ role }) {
-  if (role === "admin") {
-    return <AdminNavbar />;
-  }
+    const handleNavbarDisplay = async () => {
 
-  if (role === "manager") {
-    return <ManagerNavbar />;
-  }
+      try {
+        const response = await fetch(`http://localhost:3000/isAuthorised/${accessTokenEmail}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
 
-  if (role === "customer") {
-    return <CustomerNavbar />;
-  }
+        const data = await response.json();
+        // setUserRole(data.role);
+        console.log("The current role: ", data.role)
+        console.log("The current message: ", data.message)
 
-  return null;
+        if (data.role === "admin") {
+          // return (
+
+          setNavDisplay(
+            <nav>
+              <Link className="navLink" to="/">Home</Link>
+              <Link className="navLink" to="/users">Users</Link>
+              <Link className="navLink" to="/RegisterVenue">Venues</Link>
+              <Link className="navLink" to="/UserProfile">Profile</Link>
+            </nav>
+          )
+          // );
+        }
+
+        else if (data.role === "manager") {
+          // return (
+          setNavDisplay(
+            <nav>
+              <Link className="navLink" to="/">Home</Link>
+              <Link className="navLink" to="/RegisterVenue">My Venues</Link>
+              <Link className="navLink" to="/bookings">Bookings</Link>
+              <Link className="navLink" to="/UserProfile">Profile</Link>
+            </nav>
+          )
+          // );
+        }
+
+        else if (data.role === "customer") {
+          // return (
+          setNavDisplay(
+            <nav>
+              <Link className="navLink" to="/">Home</Link>
+              <Link className="navLink" to="/bookings">My Bookings</Link>
+              <Link className="navLink" to="/UserProfile">Profile</Link>
+            </nav>
+          )
+          // );
+        }
+      }
+      catch (error) {
+        console.error("Error displaying the navbar: ", error);
+      }
+    }
+    handleNavbarDisplay();
+  }, [])
+
+  return  navDisplay;
+
 }
 
 export default Navbar;

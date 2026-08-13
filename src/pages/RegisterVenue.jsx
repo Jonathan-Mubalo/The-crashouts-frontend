@@ -51,8 +51,8 @@ function RegisterVenue() {
     submissionData.append("address", formData.address)
     submissionData.append("facilities", formData.facilities)
     submissionData.append("numberOfSeats", parseInt(formData.noOfSeats))
-    submissionData.append("numberOfRows", parseInt(formData.noOfRows))
-    submissionData.append("numberOfColumns", parseInt(formData.noOfColumns))
+    submissionData.append("seatRows", parseInt(formData.noOfRows))
+    submissionData.append("seatColumns", parseInt(formData.noOfColumns))
     for (let image of formData.images) {
       submissionData.append("images", image);
     }

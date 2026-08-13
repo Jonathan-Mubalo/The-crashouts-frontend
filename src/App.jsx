@@ -9,55 +9,53 @@ import UserRole from './pages/UserRole'
 import UserProfile from './pages/UserProfile'
 import ProtectedRoute from './authentication/ProtectedRoute'
 import RestrictedAccess from './authentication/ProtectedRoute'
-import RegisterVenue  from './pages/RegisterVenue'
+import RegisterVenue from './pages/RegisterVenue'
 import EventPage from './pages/Events'
 
-function App( {user} ) {
+function App({ user }) {
   return (
     <>
-    <BrowserRouter>
+      <BrowserRouter>
 
-    <Navbar role={user?.role} />
+        <Routes>
+          <Route path="/Login" element={<LoginPage />} />
 
-    <Routes>
-      <Route path="/Login" element={<LoginPage />} />
+          <Route path="/Signup" element={<SignUpPage />} />
 
-      <Route path="/Signup" element={<SignUpPage />} />
+          <Route path="/" element={<ProtectedRoute>
+            <Home />
+          </ProtectedRoute>} />
 
-      <Route path="/" element={<ProtectedRoute> 
-      <Home />
-        </ProtectedRoute>} />
-        
-        <Route path="/Event" element={<ProtectedRoute> 
-          <EventPage />
-        </ProtectedRoute>} />
-        
-           <Route path="/UserProfile" element={<ProtectedRoute> 
-      <UserProfile />
-        </ProtectedRoute>} />
+          <Route path="/Event" element={<ProtectedRoute>
+            <EventPage />
+          </ProtectedRoute>} />
 
-<Route path="/RegisterVenue" element={<ProtectedRoute> 
-      <RegisterVenue />
-        </ProtectedRoute>} />
+          <Route path="/UserProfile" element={<ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>} />
 
-        <Route path="/UserProfile" element={<ProtectedRoute> 
-      <UserProfile />
-        </ProtectedRoute>} />
-        <Route path="/UserProfile" element={<ProtectedRoute> 
-      <UserProfile />
-        </ProtectedRoute>} />
-        <Route path="/UserProfile" element={<ProtectedRoute> 
-      <UserProfile />
-        </ProtectedRoute>} />
-        <Route path="/UserProfile" element={<ProtectedRoute> 
-      <UserProfile />
-        </ProtectedRoute>} />
-           <Route path="/UserRole" element={<RestrictedAccess> 
-      <UserRole />
-        </RestrictedAccess>} />
-        
-      </Routes>
-</BrowserRouter>
+          <Route path="/RegisterVenue" element={<ProtectedRoute>
+            <RegisterVenue />
+          </ProtectedRoute>} />
+
+          <Route path="/UserProfile" element={<ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>} />
+          <Route path="/UserProfile" element={<ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>} />
+          <Route path="/UserProfile" element={<ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>} />
+          <Route path="/UserProfile" element={<ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>} />
+          <Route path="/UserRole" element={<RestrictedAccess>
+            <UserRole />
+          </RestrictedAccess>} />
+
+        </Routes>
+      </BrowserRouter>
 
     </>
   )
