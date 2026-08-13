@@ -17,7 +17,7 @@ function App( {user} ) {
     <>
     <BrowserRouter>
 
-    <Navbar role={user?.role} />
+    <Navbar role={user?.} />
 
     <Routes>
       <Route path="/Login" element={<LoginPage />} />
