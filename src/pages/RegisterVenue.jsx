@@ -1,21 +1,28 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./RegisterVenue.css";
 import Navbar from "../components/Navbar";
 
-function RegisterVenue () {
-  const [formDate, setFormDate]=useState({
+function RegisterVenue() {
+
+  const result = useRef();
+
+  // Needed to change the useState name from "formDate" to "formData" because the forms are using "formData" but the useState created was named "formDate"
+  const [formData, setFormData] = useState({
     venueName: "",
     registrationNo: "",
     address: "",
-    images: null,
-    documents: null,
+    images: [],
+    documents: [],
     facilities: "",
     noOfSeats: "",
     noOfRows: "",
     noOfColumns: "",
   });
 
-   const handleChange = (e) => {
+  // Added the useState after reviewing the merged code and the pull request and realising that setState was not present at all.
+  const [step, setStep] = useState(1);
+
+  const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
@@ -35,19 +42,51 @@ function RegisterVenue () {
     setStep(1);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const submissionData = new FormData();
+    submissionData.append("venueName", formData.venueName)
+    submissionData.append("registrationNo", formData.registrationNo)
+    submissionData.append("address", formData.address)
+    submissionData.append("facilities", formData.facilities)
+    submissionData.append("numberOfSeats", parseInt(formData.noOfSeats))
+    submissionData.append("numberOfRows", parseInt(formData.noOfRows))
+    submissionData.append("numberOfColumns", parseInt(formData.noOfColumns))
+    for (let image of formData.images) {
+      submissionData.append("images", image);
+    }
+    for (let document of formData.documents) {
+      submissionData.append("documents", document);
+    }
+
+    const accessTokenEmail = JSON.parse(sessionStorage.getItem("accessToken"));
+
+    const response = await fetch(`http://localhost:3000/newVenue/${accessTokenEmail}`, {
+      method: "POST",
+      body: submissionData,
+    });
+
+    const data = await response.json();
+    result.current.innerText = data.message;
+
+const actualSubmission = submissionData.entries;
+ for (const [key, value] of submissionData.entries()) {
+    console.log(key, value);
+}
     console.log("Final Registration Data submitted:", formData);
+    console.log("Object sent to the backend: ", submissionData.entries( ([key,value]) =>{ return console.log(key,value)}))
     alert("Form Submitted successfully!");
   };
 
 
-        return (
-      <>
-        <Navbar />
-        <div className="register-page">
-          <h1>Register Your Venue</h1>
-          <form className="venue_form" onSubmit={step === 2 ? handleSubmit : nextStep}>
+  return (
+    <>
+      <Navbar />
+      <div className="register-page">
+        <h1>Register Your Venue</h1>
+        <h2 ref={result}></h2>
+        <form className="venue_form" onSubmit={step === 2 ? handleSubmit : nextStep}>
 
           {step === 1 && (
             <>
@@ -161,7 +200,7 @@ function RegisterVenue () {
                   required
                 />
               </div>
-              
+
               <div className="form-navigation" style={{ display: "flex", gap: "15px", marginTop: "20px" }}>
                 <button type="button" onClick={prevStep} className="back-btn" style={{ flex: 1, backgroundColor: "#ccc" }}>
                   Previous
