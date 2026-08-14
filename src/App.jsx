@@ -15,7 +15,7 @@ import EventPage from './pages/Events'
 function App( {user} ) {
   return (
     <>
-    {/* <BrowserRouter>
+    <BrowserRouter>
 
     <Navbar role={user?.role} />
 
@@ -57,9 +57,7 @@ function App( {user} ) {
         </RestrictedAccess>} />
         
       </Routes>
-</BrowserRouter> */}
-
-<EventPage />
+</BrowserRouter>
 
     </>
   )
