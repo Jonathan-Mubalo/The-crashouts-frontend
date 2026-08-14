@@ -43,7 +43,7 @@ function EventsPage() {
       title: 'Comic Con',
       location: 'CBD',
       date: '27 September',
-      image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80',
+      image: 'https://www.howler.co.za/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBOVIzQWc9PSIsImV4cCI6IjIwMjYtMDgtMTNUMTU6NTI6MzMuMjc1WiIsInB1ciI6ImJsb2JfaWQifX0=--0193adfb9c968b9aeb523e5598ba3236ea43f027/CCA%20Social%20Headers%202026_Howler%202',
       status: 'active',
     },
     {
@@ -51,7 +51,7 @@ function EventsPage() {
       title: 'G-12 Conference',
       location: 'Centurion, Irene Park',
       date: '19 Febuary',
-      image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80',
+      image: 'https://www.my3c.tv/landing/wp-content/uploads/2025/03/G12-2026-1024x576.jpg',
       status: 'active',
     },
     {
@@ -67,7 +67,7 @@ function EventsPage() {
       title: 'Leadership Summit',
       location: 'Centurion, Irene Park',
       date: '03 December',
-      image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80',
+      image: 'https://pics.ics.co.za/Content/Images/UploadedImage/ProductScript/_789480128.jpg?r=0.28938767967761436',
       status: 'active',
     }
   ]
