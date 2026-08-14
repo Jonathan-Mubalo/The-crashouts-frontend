@@ -10,6 +10,7 @@ function RegisterVenue() {
   const [formData, setFormData] = useState({
     venueName: "",
     registrationNo: "",
+    number: "",
     address: "",
     images: [],
     documents: [],
@@ -47,12 +48,13 @@ function RegisterVenue() {
 
     const submissionData = new FormData();
     submissionData.append("venueName", formData.venueName)
+    submissionData.append("phoneNumber", formData.number)
     submissionData.append("registrationNo", formData.registrationNo)
     submissionData.append("address", formData.address)
     submissionData.append("facilities", formData.facilities)
     submissionData.append("numberOfSeats", parseInt(formData.noOfSeats))
-    submissionData.append("numberOfRows", parseInt(formData.noOfRows))
-    submissionData.append("numberOfColumns", parseInt(formData.noOfColumns))
+    submissionData.append("seatRows", parseInt(formData.noOfRows))
+    submissionData.append("seatColumns", parseInt(formData.noOfColumns))
     for (let image of formData.images) {
       submissionData.append("images", image);
     }
@@ -68,7 +70,10 @@ function RegisterVenue() {
     });
 
     const data = await response.json();
+
+    if(data.message){
     result.current.innerText = data.message;
+    }
 
 const actualSubmission = submissionData.entries;
  for (const [key, value] of submissionData.entries()) {
@@ -77,6 +82,21 @@ const actualSubmission = submissionData.entries;
     console.log("Final Registration Data submitted:", formData);
     console.log("Object sent to the backend: ", submissionData.entries( ([key,value]) =>{ return console.log(key,value)}))
     alert("Form Submitted successfully!");
+
+    // CLEARING THE FORM ONCE A PROPERTY HAS BEEN CREATED
+    setFormData({
+    venueName: "",
+    registrationNo: "",
+    number: "",
+    address: "",
+    images: [],
+    documents: [],
+    facilities: "",
+    noOfSeats: "",
+    noOfRows: "",
+    noOfColumns: "",
+  });
+
   };
 
 
@@ -85,9 +105,8 @@ const actualSubmission = submissionData.entries;
       <Navbar />
       <div className="register-page">
         <h1>Register Your Venue</h1>
-        <h2 ref={result}></h2>
+        <div className="registerVenueDiv">
         <form className="venue_form" onSubmit={step === 2 ? handleSubmit : nextStep}>
-
           {step === 1 && (
             <>
               <div className="form-group">
@@ -97,6 +116,21 @@ const actualSubmission = submissionData.entries;
                   id="venueName"
                   placeholder="Full Name"
                   value={formData.venueName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+               <div className="form-group">
+                <label htmlFor="Number">Phone Number</label>
+                <input
+                  type="tel"
+                  maxLength="10"
+                  minLength="10"
+                  min="0"
+                  id="number"
+                  placeholder="Phone Number"
+                  value={formData.number}
                   onChange={handleChange}
                   required
                 />
@@ -128,7 +162,7 @@ const actualSubmission = submissionData.entries;
 
               <div className="form-group">
                 <label htmlFor="images">Upload Images</label>
-                <input
+                <input className="RegisterFile"
                   type="file"
                   id="images"
                   accept="image/*"
@@ -139,7 +173,7 @@ const actualSubmission = submissionData.entries;
 
               <div className="form-group">
                 <label htmlFor="documents">Upload Documents</label>
-                <input
+                <input className="RegisterFile"
                   type="file"
                   id="documents"
                   multiple
@@ -166,7 +200,7 @@ const actualSubmission = submissionData.entries;
           {step === 2 && (
             <>
               <div className="form-group">
-                <label htmlFor="noOfSeats">No. of Seats</label>
+                <label htmlFor="noOfSeats">Total seats available</label>
                 <input
                   type="number"
                   id="noOfSeats"
@@ -174,11 +208,12 @@ const actualSubmission = submissionData.entries;
                   value={formData.noOfSeats}
                   onChange={handleChange}
                   required
-                />
+                  min="1"
+                                  />
               </div>
 
               <div className="form-group">
-                <label htmlFor="noOfRows">No. of Rows</label>
+                <label htmlFor="noOfRows">Number of Rows</label>
                 <input
                   type="number"
                   id="noOfRows"
@@ -186,11 +221,12 @@ const actualSubmission = submissionData.entries;
                   value={formData.noOfRows}
                   onChange={handleChange}
                   required
+                  min="1"
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="noOfColumns">No. of Columns</label>
+                <label htmlFor="noOfColumns">Number of seats per row</label>
                 <input
                   type="number"
                   id="noOfColumns"
@@ -198,14 +234,15 @@ const actualSubmission = submissionData.entries;
                   value={formData.noOfColumns}
                   onChange={handleChange}
                   required
+                  min="1"
                 />
               </div>
 
               <div className="form-navigation" style={{ display: "flex", gap: "15px", marginTop: "20px" }}>
-                <button type="button" onClick={prevStep} className="back-btn" style={{ flex: 1, backgroundColor: "#ccc" }}>
+                <button type="button" onClick={prevStep} className="back-btn" >
                   Previous
                 </button>
-                <button type="submit" className="register-btn" style={{ flex: 2 }}>
+                <button type="submit" className="register-btn" >
                   Register
                 </button>
               </div>
@@ -213,6 +250,7 @@ const actualSubmission = submissionData.entries;
           )}
 
         </form>
+        </div>
       </div>
     </>
   );

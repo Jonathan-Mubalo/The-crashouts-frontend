@@ -1,19 +1,44 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Navbar from '../components/Navbar';
 import './Events.css'
 
-function EventsPage () {
-  const [currentTab, setCurrentTab] = useState('search')
+function EventsPage() {
+  const [currentTab, setCurrentTab] = useState('search');
 
   // For the filter part to work 
 
   const [choosenStatus, setChoosenStatus] = useState('all')
   const [choosenSeat, setChoosenSeat] = useState('1')
-  const [choosenLocation, setChoosenLocation] = useState('all')
+  const [choosenLocation, setChoosenLocation] = useState('all');
+  const [allEventsData, setAllEventsData] = useState([]);
+
+  // THE ENDPOINT FUNCTION THAT GETS ALL OF THE EVENTS
+
+  useEffect(() => {
+    const getAllEvents = async () => {
+      try {
+
+        const response = await fetch('http://localhost:3000/upcomingEvent',
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+          }
+        );
+        const data = await response.json();
+        console.log(data.message)
+        setAllEventsData(data.message);
+      }
+      catch (error) {
+        console.error("There was a frontend error trying to get all of the events ", error)
+      }
+    }
+    getAllEvents()
+  }, [])
 
   // hardcoded locations and events 
 
   const availableEvents = [
-      {
+    {
       id: 1,
       title: 'Comic Con',
       location: 'CBD',
@@ -28,7 +53,7 @@ function EventsPage () {
       date: '19 Febuary',
       image: 'https://www.my3c.tv/landing/wp-content/uploads/2025/03/G12-2026-1024x576.jpg',
       status: 'active',
-    }, 
+    },
     {
       id: 3,
       title: 'Youth Fest',
@@ -75,7 +100,7 @@ function EventsPage () {
 
   const filteredLocation = allEvents.filter((event) => {
     const matchChoice = choosenStatus === 'all' || event.status === choosenStatus;
-    const matchLocations = choosenLocation === 'all' ||  event.location === choosenLocation;
+    const matchLocations = choosenLocation === 'all' || event.location === choosenLocation;
     return matchChoice && matchLocations;
   })
 
@@ -83,6 +108,9 @@ function EventsPage () {
 
   return (
     <div className="eventPage">
+
+      <Navbar />
+
 
       <header className="eventsHeader">
         <div className="container headerSection">
@@ -94,7 +122,7 @@ function EventsPage () {
 
           {/* Works with the filter code to pull and bring up events as well as the user's booking history :) I'm so smart!! */}
           <nav>
-            <button className={`nav-btn ${currentTab === 'search' ? 'active' : ''}`} onClick={() => setCurrentTab('search')}>Browser Events</button>
+            <button className={`nav-btn ${currentTab === 'search' ? 'active' : ''}`} onClick={() => setCurrentTab('search')}>Browse Events</button>
 
             <button className={`nav-btn ${currentTab === 'history' ? 'active' : ''}`} onClick={() => setCurrentTab('history')}>Booking History</button>
           </nav>
@@ -109,38 +137,38 @@ function EventsPage () {
             <section className="filterBar">
 
               <div className="filterItem">
-                  <span className="filterIcon">Status</span>
-                    <div className="filterWrapper">
-                      <label>Status Location</label>
-                         <select className="filterDropdown" value={choosenStatus} onChange={(e) => setChoosenStatus(e.target.value)} >
-                            <option value="all">All Events</option>
-                            <option value="active">Currently Happening</option>
-                            <option value="upcoming">Coming Soon</option>
-                         </select>
-                      </div>
-                    </div>
+                <span className="filterIcon">Status</span>
+                <div className="filterWrapper">
+                  <label>Status Location</label>
+                  <select className="filterDropdown" value={choosenStatus} onChange={(e) => setChoosenStatus(e.target.value)} >
+                    <option value="all">All Events</option>
+                    <option value="active">Currently Happening</option>
+                    <option value="upcoming">Coming Soon</option>
+                  </select>
+                </div>
+              </div>
 
               <div className="filterItem">
-                  <span className="filterIcon">Seats</span>
-                    <div className="filterWrapper">
-                      <label>Number Of Seats</label>
-                         <select className="filterDropdown" value={choosenSeat} onChange={(e) => setChoosenSeat(e.target.value)} >
-                            {[...Array(10)].map((_, i) => (<option key={i + 1} value={i + 1}> {i + 1} {i === 0 ? 'Seat' : 'Seats'} </option>))}
-                         </select>
-                      </div>
-                    </div>
+                <span className="filterIcon">Seats</span>
+                <div className="filterWrapper">
+                  <label>Number Of Seats</label>
+                  <select className="filterDropdown" value={choosenSeat} onChange={(e) => setChoosenSeat(e.target.value)} >
+                    {[...Array(10)].map((_, i) => (<option key={i + 1} value={i + 1}> {i + 1} {i === 0 ? 'Seat' : 'Seats'} </option>))}
+                  </select>
+                </div>
+              </div>
 
               <div className="filterItem">
-                  <span className="filterIcon">Location</span>
-                    <div className="filterWrapper">
-                      <label>Status Location</label>
-                         <select className="filterDropdown" value={choosenLocation} onChange={(e) => setChoosenLocation(e.target.value)} >
-                            <option value="all">All Locations</option>{dropLocation.map((locate, index) => (<option key={index} value={locate}>{locate}</option>))}
-                         </select>
-                      </div>
-                    </div>
+                <span className="filterIcon">Location</span>
+                <div className="filterWrapper">
+                  <label>Status Location</label>
+                  <select className="filterDropdown" value={choosenLocation} onChange={(e) => setChoosenLocation(e.target.value)} >
+                    <option value="all">All Locations</option>{dropLocation.map((locate, index) => (<option key={index} value={locate}>{locate}</option>))}
+                  </select>
+                </div>
+              </div>
 
-                  <button className="mainBtn searchBtn">Search ({choosenSeat} Seats)</button>
+              <button className="mainBtn searchBtn">Search ({choosenSeat} Seats)</button>
             </section>
 
             {/* The grid in which the events will take placed in dynamically... I think, Jonathan and Laura please confirm ;) */}
@@ -150,7 +178,30 @@ function EventsPage () {
                 {choosenStatus === 'active' ? 'Currently Happening Events' : choosenStatus === 'upcoming' ? 'Coming Soon Events' : 'Available Events'}
               </h2>
 
-              {filteredLocation.length === 0 ? ( <p className="noMatch">No events found.</p> ) : (
+              {allEventsData && allEventsData.map((event) => {
+                //   {filteredLocation.length === 0 ? ( <p className="noMatch">No events found.</p> ) : (
+                // <div className="eventsGrid">
+                // {filteredLocation.map((event) => ( 
+               return( <div className="eventCard" key={event._id}>
+                  <div className="eventImageWrapper">
+                    <img src={event.image} alt={event.title} className="eventImage" />
+                    {event.tag && <span className="eventBagde">{event.tag}</span>}
+                  </div>
+                  <div className="eventDetails">
+                    <h3 className="eventCardTitle">{event.venue}</h3>
+                    <p className="eventCardLoaction">{event.address}</p>
+                    <div>
+                      <span className="eventDate">{event.eventDate}</span>
+                      <button className="mainBtn infoBtn">More Info</button>
+                    </div>
+                  </div>
+                </div>)
+                // ))}
+                // </div>
+              })
+              }
+
+              {/* {filteredLocation.length === 0 ? ( <p className="noMatch">No events found.</p> ) : (
                 <div className="eventsGrid">
                   {filteredLocation.map((event) => ( 
                     <div className="eventCard" key={event.id}>
@@ -169,7 +220,7 @@ function EventsPage () {
                     </div>
                   ))}
                 </div>
-              )}
+              )} */}
             </section>
           </>
           // booking history part of the page, it's hardcoded for now, it should be tho!
@@ -185,8 +236,8 @@ function EventsPage () {
                   <p className="numberOfSeats">Seats: A5, A6</p>
                 </div>
                 <div className="bookingStatusWrapper">
-                    <span className="badgeIsConfirmed">Confirmed</span>
-                    <span className="totalAmount">R700</span>
+                  <span className="badgeIsConfirmed">Confirmed</span>
+                  <span className="totalAmount">R700</span>
                 </div>
               </div>
             </div>
@@ -197,4 +248,4 @@ function EventsPage () {
   )
 }
 
-export default EventsPage
+export default EventsPage;
