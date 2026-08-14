@@ -5,7 +5,12 @@ import './Navbar.css';
 function Navbar() {
 
   // const [userRole, setUserRole] = useState();
-  const [navDisplay, setNavDisplay] = useState();
+  const [navDisplay, setNavDisplay] = useState(<nav>
+    <Link className="navLink" to="/">Home</Link>
+    <Link className="navLink" to="/Events">Events</Link>
+    <Link className="navLink" to="/Booking">My Bookings</Link>
+    <Link className="navLink" to="/UserProfile">Profile</Link>
+  </nav>);
 
   useEffect(() => {
 
@@ -32,7 +37,8 @@ function Navbar() {
             <nav>
               <Link className="navLink" to="/">Home</Link>
               <Link className="navLink" to="/Events">Events</Link>
-              <Link className="navLink" to="/users">Users</Link>
+              {/* <Link className="navLink" to="/users">Users</Link> */}
+    <Link className="navLink" to="/Booking">Booking</Link>
               <Link className="navLink" to="/RegisterVenue">Venues</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
             </nav>
@@ -47,25 +53,25 @@ function Navbar() {
               <Link className="navLink" to="/">Home</Link>
               <Link className="navLink" to="/Events">Events</Link>
               <Link className="navLink" to="/RegisterVenue">My Venues</Link>
-              <Link className="navLink" to="/bookings">Bookings</Link>
+              <Link className="navLink" to="/Booking">Booking</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
             </nav>
           )
           // );
         }
 
-        else if (data.role === "customer") {
+        // else if (data.role === "customer") {
           // return (
-          setNavDisplay(
-            <nav>
-              <Link className="navLink" to="/">Home</Link>
-              <Link className="navLink" to="/Events">Events</Link>
-              <Link className="navLink" to="/bookings">My Bookings</Link>
-              <Link className="navLink" to="/UserProfile">Profile</Link>
-            </nav>
-          )
+          // setNavDisplay(
+          //   <nav>
+          //     <Link className="navLink" to="/">Home</Link>
+          //     <Link className="navLink" to="/Events">Events</Link>
+          //     <Link className="navLink" to="/Booking">My Bookings</Link>
+          //     <Link className="navLink" to="/UserProfile">Profile</Link>
+          //   </nav>
+          // )
           // );
-        }
+        // }
       }
       catch (error) {
         console.error("Error displaying the navbar: ", error);
@@ -74,7 +80,7 @@ function Navbar() {
     handleNavbarDisplay();
   }, [])
 
-  return  navDisplay;
+  return navDisplay;
 
 }
 

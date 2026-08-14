@@ -113,7 +113,7 @@ function LoginPage() {
 
         <div className="signupContainer">
           <p>
-            Don't have an Account? <span className="goToSignin" onClick={() => { navigate("/Signup") }}>Signup</span>
+            Don't have an Account? <span className="goToSignin" onClick={() => { navigate("/Signin") }}>Signup</span>
           </p>
         </div>
       </div>

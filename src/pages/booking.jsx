@@ -1,10 +1,11 @@
 import React from 'react';
-import './booking.css';
+import './Booking.css';
+import Navbar from '../components/Navbar';
 
-function BookingPage () {
+function Booking () {
   return (
     <div className="page">
-
+<Navbar />
       <main className="content">
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h1 className="title">Select Your Seats</h1>
@@ -80,4 +81,4 @@ function BookingPage () {
   );
 }
 
-export default BookingPage
+export default Booking;
