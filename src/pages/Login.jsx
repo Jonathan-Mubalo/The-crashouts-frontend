@@ -28,7 +28,6 @@ function LoginPage() {
 
       const data = await response.json();
         // console.log("Error out of  if statement: ", response.status );
-        // console.log("Error out of  if statement: ", data.message );
 
       if (response.status !== 200) {
         // console.log("Error in if statement: ",response.status);
