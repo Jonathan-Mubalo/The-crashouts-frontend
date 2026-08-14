@@ -1,6 +1,11 @@
 .logOutBtn{
-    padding:10px 15px;
+    padding:5px 10px;
     border-radius: 10px;
     background-color: rgb(119, 174, 211);
     margin: auto;
+    position:fixed;
+    z-index: 2;
+    top:10px;
+    right: 3px;
+    
 }
