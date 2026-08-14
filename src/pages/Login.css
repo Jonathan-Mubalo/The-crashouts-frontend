@@ -6,6 +6,7 @@
 
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    overflow-y: hidden;
 }
 
 .loginPage{
@@ -17,7 +18,7 @@ body {
 }
 
 .loginPage {
-  position: relative;
+  /* position: relative; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,11 +32,11 @@ body {
   z-index: 0;
 }
 
-.shape {
+/* .shape {
   position: absolute;
   width: 24rem;
   height: 24rem;
-  border-radius: 9999px;
+  border-radius: 50;
   filter: blur(64px);
 }
 
@@ -51,7 +52,7 @@ body {
   right: -6rem;
   background-color: #3b82f6;
   opacity: 0.5;
-}
+} */
 
 /* transparent login card and features e.g inputs*/
 
