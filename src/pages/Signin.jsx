@@ -61,12 +61,9 @@ function SignIn() {
 
 
   return (
+    <>
     <div className="loginPage">
-      <div className="backgroundWrapper">
-        <div className="shape shapeOne">lhfd</div>
-        <div className="shape shapeTwo">h,kjgnfc</div>
-      </div>
-
+     
       {/* Glassmorphism Sign-Up Card */}
       <div className="signupCard">
         <h2 className="signupTitle">Create an Account</h2>
@@ -141,6 +138,7 @@ function SignIn() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
