@@ -52,10 +52,10 @@ function LoginPage() {
   return (
 
     <div className="loginPage">
-      <div className="backgroundWrapper" >
-        <div className="shape shapeOne">o;iul.k,ymjhbv</div>
-        <div className="shape shapeTwo">;.uilymgbfs</div>
-      </div>
+  {/* /   <div className="backgroundWrapper" >
+      <div className="shape shapeOne">o;iul.k,ymjhbv</div>
+         <div className="shape shapeTwo">;.uilymgbfs</div>
+      </div> */}
 
       {/* Glassmorphism Card  */}
 

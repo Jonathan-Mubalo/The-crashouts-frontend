@@ -10,7 +10,7 @@ import UserProfile from './pages/UserProfile'
 import ProtectedRoute from './authentication/ProtectedRoute'
 import RestrictedAccess from './authentication/ProtectedRoute'
 import RegisterVenue from './pages/RegisterVenue'
-import Booking from './pages/Booking'
+import SeatBooking from './pages/SeatBooking'
 
 function App() {
   return (
@@ -36,8 +36,8 @@ function App() {
             <RegisterVenue />
           </ProtectedRoute>} />
 
-          <Route path="/Booking" element={<ProtectedRoute>
-            <Booking />
+           <Route path="/SeatBooking" element={<ProtectedRoute>
+            <SeatBooking />
           </ProtectedRoute>} />
           <Route path="/UserProfile" element={<ProtectedRoute>
             <UserProfile />
