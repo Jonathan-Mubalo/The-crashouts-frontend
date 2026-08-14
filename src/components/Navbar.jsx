@@ -22,8 +22,8 @@ function Navbar() {
 
         const data = await response.json();
         // setUserRole(data.role);
-        console.log("The current role: ", data.role)
-        console.log("The current message: ", data.message)
+        // console.log("The current role: ", data.role)
+        // console.log("The current message: ", data.message)
 
         if (data.role === "admin") {
           // return (
@@ -31,6 +31,7 @@ function Navbar() {
           setNavDisplay(
             <nav>
               <Link className="navLink" to="/">Home</Link>
+              <Link className="navLink" to="/Events">Events</Link>
               <Link className="navLink" to="/users">Users</Link>
               <Link className="navLink" to="/RegisterVenue">Venues</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
@@ -44,6 +45,7 @@ function Navbar() {
           setNavDisplay(
             <nav>
               <Link className="navLink" to="/">Home</Link>
+              <Link className="navLink" to="/Events">Events</Link>
               <Link className="navLink" to="/RegisterVenue">My Venues</Link>
               <Link className="navLink" to="/bookings">Bookings</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
@@ -57,6 +59,7 @@ function Navbar() {
           setNavDisplay(
             <nav>
               <Link className="navLink" to="/">Home</Link>
+              <Link className="navLink" to="/Events">Events</Link>
               <Link className="navLink" to="/bookings">My Bookings</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
             </nav>

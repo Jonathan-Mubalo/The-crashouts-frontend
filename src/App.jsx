@@ -5,6 +5,7 @@ import Navbar from './components/Navbar'
 import LoginPage from './pages/Login'
 import SignUpPage from './pages/Signin'
 import Home from './pages/Home'
+import EventsPage from './pages/Events'
 import UserRole from './pages/UserRole'
 import UserProfile from './pages/UserProfile'
 import ProtectedRoute from './authentication/ProtectedRoute'
@@ -15,11 +16,7 @@ import EventPage from './pages/Events'
 function App({ user }) {
   return (
     <>
-<<<<<<< HEAD
       <BrowserRouter>
-=======
-    {/* <BrowserRouter>
->>>>>>> fa75a45f7ba66e72073135bc2aa580af3830bc67
 
         <Routes>
           <Route path="/Login" element={<LoginPage />} />
@@ -30,15 +27,14 @@ function App({ user }) {
             <Home />
           </ProtectedRoute>} />
 
-          <Route path="/Event" element={<ProtectedRoute>
-            <EventPage />
+          <Route path="/Events" element={<ProtectedRoute>
+            <EventsPage />
           </ProtectedRoute>} />
 
           <Route path="/UserProfile" element={<ProtectedRoute>
             <UserProfile />
           </ProtectedRoute>} />
 
-<<<<<<< HEAD
           <Route path="/RegisterVenue" element={<ProtectedRoute>
             <RegisterVenue />
           </ProtectedRoute>} />
@@ -61,28 +57,6 @@ function App({ user }) {
 
         </Routes>
       </BrowserRouter>
-=======
-        <Route path="/UserProfile" element={<ProtectedRoute> 
-      <UserProfile />
-        </ProtectedRoute>} />
-        <Route path="/UserProfile" element={<ProtectedRoute> 
-      <UserProfile />
-        </ProtectedRoute>} />
-        <Route path="/UserProfile" element={<ProtectedRoute> 
-      <UserProfile />
-        </ProtectedRoute>} />
-        <Route path="/UserProfile" element={<ProtectedRoute> 
-      <UserProfile />
-        </ProtectedRoute>} />
-           <Route path="/UserRole" element={<RestrictedAccess> 
-      <UserRole />
-        </RestrictedAccess>} />
-        
-      </Routes>
-</BrowserRouter> */}
-
-<EventPage />
->>>>>>> fa75a45f7ba66e72073135bc2aa580af3830bc67
 
     </>
   )
