@@ -53,8 +53,8 @@ function LoginPage() {
 
     <div className="loginPage">
       <div className="backgroundWrapper" >
-        <div className="shape shapeOne"></div>
-        <div className="shape shapeTwo"></div>
+        <div className="shape shapeOne">o;iul.k,ymjhbv</div>
+        <div className="shape shapeTwo">;.uilymgbfs</div>
       </div>
 
       {/* Glassmorphism Card  */}
