@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from '../components/Navbar';
 import './Events.css'
 
-function EventsPage() {
+function Events() {
   const [currentTab, setCurrentTab] = useState('search');
 
   // For the filter part to work 
@@ -248,4 +248,4 @@ function EventsPage() {
   )
 }
 
-export default EventsPage;
+export default Events;
