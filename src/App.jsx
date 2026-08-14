@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import Navbar from './components/Navbar'
 import LoginPage from './pages/Login'
 import SignUpPage from './pages/Signin'
 import Home from './pages/Home'
@@ -12,13 +11,10 @@ import RestrictedAccess from './authentication/ProtectedRoute'
 import RegisterVenue  from './pages/RegisterVenue'
 import EventPage from './pages/Events'
 
-function App( {user} ) {
+function App() {
   return (
     <>
     <BrowserRouter>
-
-    <Navbar role={user?.role} />
-
     <Routes>
       <Route path="/Login" element={<LoginPage />} />
 
