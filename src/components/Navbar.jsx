@@ -37,7 +37,7 @@ function Navbar() {
             <nav>
               <Link className="navLink" to="/">Home</Link>
               <Link className="navLink" to="/Events">Events</Link>
-              <Link className="navLink" to="/users">Users</Link>
+              {/* <Link className="navLink" to="/users">Users</Link> */}
     <Link className="navLink" to="/Booking">Booking</Link>
               <Link className="navLink" to="/RegisterVenue">Venues</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
