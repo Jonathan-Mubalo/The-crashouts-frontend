@@ -11,6 +11,7 @@ function Events() {
   const [choosenSeat, setChoosenSeat] = useState('1')
   const [choosenLocation, setChoosenLocation] = useState('all');
   const [allEventsData, setAllEventsData] = useState([]);
+  const [bookingHistoryData, setBookingHistoryData] = useState([]);
 
   // THE ENDPOINT FUNCTION THAT GETS ALL OF THE EVENTS
 
@@ -25,7 +26,7 @@ function Events() {
           }
         );
         const data = await response.json();
-        console.log(data.message)
+        // console.log(data.message)
         setAllEventsData(data.message);
       }
       catch (error) {
@@ -33,6 +34,32 @@ function Events() {
       }
     }
     getAllEvents()
+  }, [])
+
+  useEffect(() => {
+    const getBookingHistory = async () => {
+
+
+      try {
+     
+      const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
+      console.log(accessToken)
+      const response = await fetch(`http://localhost:3000/seatPaymentsHistory/${accessToken}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        }
+      )
+
+      const data = await response.json();
+      // console.log(data.message)
+      setBookingHistoryData(data.seatHistory);
+    }
+    catch (error){
+      console.error("There was a problem trying to get the users bookingHistory info",error)
+    }
+    }
+    getBookingHistory()
   }, [])
 
   // hardcoded locations and events 
@@ -182,17 +209,17 @@ function Events() {
                 //   {filteredLocation.length === 0 ? ( <p className="noMatch">No events found.</p> ) : (
                 // <div className="eventsGrid">
                 // {filteredLocation.map((event) => ( 
-               return( <div className="eventCard" key={event._id}>
+                return (<div className="eventCard" key={event._id}>
                   <div className="eventImageWrapper">
                     <img src={event.image} alt={event.title} className="eventImage" />
                     {event.tag && <span className="eventBagde">{event.tag}</span>}
                   </div>
                   <div className="eventDetails">
-                    <h3 className="eventCardTitle">{event.venue}</h3>
+                    <h3 className="eventCardTitle">{event.venueName}</h3>
                     <p className="eventCardLoaction">{event.address}</p>
                     <div>
                       <span className="eventDate">{event.eventDate}</span>
-                      <button className="mainBtn infoBtn">More Info</button>
+                      <button className="mainBtn infoBtn" id={event._id}>More Info</button>
                     </div>
                   </div>
                 </div>)
@@ -228,7 +255,23 @@ function Events() {
           <section className="section">
             <h2 className="section-title">Booking History</h2>
             <div className="bookingHistoryList">
-              <div className="bookingHistoryCard">
+              {bookingHistoryData && bookingHistoryData.map((booking) => {
+                return (
+                  <div className="bookingHistoryCard" key={booking._id}>
+                    <div className="bookingInfo">
+                      <span className="bookingReference">Booked by: {booking.userName}</span>
+                      <h3>{booking.venueName}</h3>
+                      <p>{booking.address} - {booking.eventDate}</p>
+                      <p className="numberOfSeats">Seats:{booking.seatNumber.map((item)=>{ return (` ${item.seat}`)})}</p>
+                    </div>
+                    <div className="bookingStatusWrapper">
+                      <span className="badgeIsConfirmed">Confirmed</span>
+                      <span className="totalAmount">Total: R{booking.bookingPrice * booking.numberOfSeats}</span>
+                    </div>
+                  </div>
+                )
+              })}
+              {/* <div className="bookingHistoryCard">
                 <div className="bookingInfo">
                   <span className="bookingReference">Ref: RSA-0707262</span>
                   <h3>AGT Women's Conference</h3>
@@ -239,7 +282,7 @@ function Events() {
                   <span className="badgeIsConfirmed">Confirmed</span>
                   <span className="totalAmount">R700</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </section>
         )}
