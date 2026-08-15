@@ -316,3 +316,55 @@ body {
   font-weight: 700;
   color: #0f172a;
 }
+
+/* STYLING FOR THE SEATS DIALOG */
+
+.seatsDialog{
+  position: fixed;
+  left: 4%;
+  right: 4%;
+  top: 4%;
+  bottom: 4%;
+  width: 92%;
+  height: auto;
+  border-radius: 10px;
+  border: 2px solid rgba(20, 9, 175, 0.562);
+  background-color: #b8c7e7;
+   overflow-y: hidden;
+}
+
+.dialogBtn{
+  background-color: #2563eb;
+  margin: 2% 45%;
+   min-width : 100px;
+   width: 10%;
+   padding: 5px 10px;
+   color: white;
+}
+
+/* DYNAMIC SEATS DISPLAY */
+
+.seatsGrid{
+  display: flex;
+  flex-flow: row nowrap;
+  width: 80%;
+  margin: 5% auto 2%;
+  justify-content: center;
+  /* border: 3px solid red; */
+  padding: 10px 5px;
+}
+
+.seatsRow{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+.seat{
+  margin: 5px 2px;
+}
+
+.seat:hover{
+transform: scale(1.1);
+}
