@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from '../components/Navbar';
 import './Events.css'
 
 function Events() {
+
   const [currentTab, setCurrentTab] = useState('search');
 
   // For the filter part to work 
@@ -10,8 +11,17 @@ function Events() {
   const [choosenStatus, setChoosenStatus] = useState('all')
   const [choosenSeat, setChoosenSeat] = useState('1')
   const [choosenLocation, setChoosenLocation] = useState('all');
+
+  // FOR DYNAMIC MAPPING BASED ON WHATS STORED IN THE DATABASE
   const [allEventsData, setAllEventsData] = useState([]);
   const [bookingHistoryData, setBookingHistoryData] = useState([]);
+
+  // USED TO DISPLAY THE SPECIFIC SEATING ARRANGEMENTS
+  const dialog = useRef();
+
+  // USE STATE USED TO FILTER AND STORE ALL OF THE INFORMATION OF AN EVENT THAT NEEDS TO BE VIEWED
+
+  const [currentFilteredEvent, setCurrentFilteredEvent] = useState();
 
   // THE ENDPOINT FUNCTION THAT GETS ALL OF THE EVENTS
 
@@ -41,95 +51,86 @@ function Events() {
 
 
       try {
-     
-      const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
-      console.log(accessToken)
-      const response = await fetch(`http://localhost:3000/seatPaymentsHistory/${accessToken}`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" }
-        }
-      )
 
-      const data = await response.json();
-      // console.log(data.message)
-      setBookingHistoryData(data.seatHistory);
-    }
-    catch (error){
-      console.error("There was a problem trying to get the users bookingHistory info",error)
-    }
+        const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
+        console.log(accessToken)
+        const response = await fetch(`http://localhost:3000/seatPaymentsHistory/${accessToken}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+          }
+        )
+
+        const data = await response.json();
+        // console.log(data.message)
+        if (response.status === 200) {
+          setBookingHistoryData(data.seatHistory);
+        }
+
+        // If the user does not have a booking history this array will be the default state value that will be displayed to them
+        else {
+          setBookingHistoryData([{
+            _id: "qwerty78",
+            userName: "N/A",
+            venueName: "N/A",
+            address: "N/A",
+            eventDate: "N/A",
+            seat: "N/A",
+            bookingPrice: 0,
+            numberOfSeats: 0
+
+          }]
+          )
+        }
+      }
+      catch (error) {
+        console.error("There was a problem trying to get the users bookingHistory info", error)
+      }
     }
     getBookingHistory()
-  }, [])
+  }, []);
+
+
+  // DISPLAYING THE RIGHT EVENTS INFORMATION INSIDE THE DIALOG TAG BY FILTERING AND EVENT BASED ON THE ID THAT THE BUTTON HAS
+
+  const dialogDisplay = (event) => {
+    const filteredEvent = allEventsData.filter((item) => { return item["_id"] === event.target.id });
+
+    // console.log("Chosen id: ", allEventsData[2]["_id"])
+    // console.log("Targetted id: ", event.target.id);
+    // console.log("filteredId: ", filteredEvent);
+
+    setCurrentFilteredEvent(() => { return filteredEvent })
+    // everyting()
+
+
+    dialog.current.showModal();
+  }
+
+  // const everyting = () => {
+  //   console.log("currentFilteredEvent:", currentFilteredEvent);
+  //   console.log("seatArrangement:", currentFilteredEvent?.seatArrangement);
+  // }
+
 
   // hardcoded locations and events 
 
-  const availableEvents = [
-    {
-      id: 1,
-      title: 'Comic Con',
-      location: 'CBD',
-      date: '27 September',
-      image: 'https://www.howler.co.za/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBOVIzQWc9PSIsImV4cCI6IjIwMjYtMDgtMTNUMTU6NTI6MzMuMjc1WiIsInB1ciI6ImJsb2JfaWQifX0=--0193adfb9c968b9aeb523e5598ba3236ea43f027/CCA%20Social%20Headers%202026_Howler%202',
-      status: 'active',
-    },
-    {
-      id: 2,
-      title: 'G-12 Conference',
-      location: 'Centurion, Irene Park',
-      date: '19 Febuary',
-      image: 'https://www.my3c.tv/landing/wp-content/uploads/2025/03/G12-2026-1024x576.jpg',
-      status: 'active',
-    },
-    {
-      id: 3,
-      title: 'Youth Fest',
-      location: 'Moroleta Park',
-      date: '16 June',
-      image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80',
-      status: 'active',
-    },
-    {
-      id: 4,
-      title: 'Leadership Summit',
-      location: 'Centurion, Irene Park',
-      date: '03 December',
-      image: 'https://pics.ics.co.za/Content/Images/UploadedImage/ProductScript/_789480128.jpg?r=0.28938767967761436',
-      status: 'active',
-    }
-  ]
+  // const availableEvents = [
 
-  const comingSoonEvents = [
-    {
-      id: 5,
-      title: 'Apartheid Photo Exhibition',
-      location: 'Johannesburg, CBD',
-      date: '30 November',
-      image: 'https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=600&q=80',
-      status: 'upcoming',
-    },
-    {
-      id: 6,
-      title: 'Apartheid Photo Exhibition',
-      location: 'Cape Town',
-      date: '15 December',
-      image: 'https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=600&q=80',
-      status: 'upcoming',
-    },
-  ]
+  // ]
 
   // this makes the filter part with create unique locations for the select dropdown
   // uses array destructing to store the state of each event
 
-  const allEvents = [...availableEvents, ...comingSoonEvents];
+  // const allEvents = [...availableEvents, ...comingSoonEvents];
 
-  const dropLocation = Array.from(new Set(allEvents.map((e) => e.location)));
+  // const dropLocation = Array.from(new Set(allEvents.map((e) => e.location)));
 
-  const filteredLocation = allEvents.filter((event) => {
-    const matchChoice = choosenStatus === 'all' || event.status === choosenStatus;
-    const matchLocations = choosenLocation === 'all' || event.location === choosenLocation;
-    return matchChoice && matchLocations;
-  })
+  // const filteredLocation = allEvents.filter((event) => {
+  //   const matchChoice = choosenStatus === 'all' || event.status === choosenStatus;
+  //   const matchLocations = choosenLocation === 'all' || event.location === choosenLocation;
+  //   return matchChoice && matchLocations;
+  // })
 
   // this makes the filter part with create unique locations for the select dropdown
 
@@ -137,7 +138,6 @@ function Events() {
     <div className="eventPage">
 
       <Navbar />
-
 
       <header className="eventsHeader">
         <div className="container headerSection">
@@ -180,7 +180,7 @@ function Events() {
                 <div className="filterWrapper">
                   <label>Number Of Seats</label>
                   <select className="filterDropdown" value={choosenSeat} onChange={(e) => setChoosenSeat(e.target.value)} >
-                    {[...Array(10)].map((_, i) => (<option key={i + 1} value={i + 1}> {i + 1} {i === 0 ? 'Seat' : 'Seats'} </option>))}
+                    {/*      {[...Array(10)].map((_, i) => (<option key={i + 1} value={i + 1}> {i + 1} {i === 0 ? 'Seat' : 'Seats'} </option>))}  */}
                   </select>
                 </div>
               </div>
@@ -190,7 +190,7 @@ function Events() {
                 <div className="filterWrapper">
                   <label>Status Location</label>
                   <select className="filterDropdown" value={choosenLocation} onChange={(e) => setChoosenLocation(e.target.value)} >
-                    <option value="all">All Locations</option>{dropLocation.map((locate, index) => (<option key={index} value={locate}>{locate}</option>))}
+                    {/*     <option value="all">All Locations</option>{dropLocation.map((locate, index) => (<option key={index} value={locate}>{locate}</option>))} */}
                   </select>
                 </div>
               </div>
@@ -206,9 +206,7 @@ function Events() {
               </h2>
 
               {allEventsData && allEventsData.map((event) => {
-                //   {filteredLocation.length === 0 ? ( <p className="noMatch">No events found.</p> ) : (
-                // <div className="eventsGrid">
-                // {filteredLocation.map((event) => ( 
+
                 return (<div className="eventCard" key={event._id}>
                   <div className="eventImageWrapper">
                     <img src={event.image} alt={event.title} className="eventImage" />
@@ -219,7 +217,7 @@ function Events() {
                     <p className="eventCardLoaction">{event.address}</p>
                     <div>
                       <span className="eventDate">{event.eventDate}</span>
-                      <button className="mainBtn infoBtn" id={event._id}>More Info</button>
+                      <button className="mainBtn infoBtn" id={event._id} onClick={dialogDisplay}>Book a seat</button>
                     </div>
                   </div>
                 </div>)
@@ -248,9 +246,29 @@ function Events() {
                   ))}
                 </div>
               )} */}
+
+              <dialog ref={dialog} className="seatsDialog">
+                <div className="seatsGrid">
+                  {currentFilteredEvent && currentFilteredEvent[0].seatArrangement.map((arr) => {
+                    return (<div className="seatRow" key={arr[0]["seat"]}>
+                      {arr.map((seatObj) => {
+                        return (<div key={seatObj.seat} className="seat">
+                          <span>{seatObj.seat}</span>
+                          <span className="seatpricetag">R250</span>
+                        </div>
+                        )
+                      })
+                      }
+                    </div>
+                    )
+                  })
+                  }
+                </div>
+                <button className="mainBtn infoBtn dialogBtn" onClick={() => { dialog.current.close() }}>Show less</button>
+              </dialog>
             </section>
           </>
-          // booking history part of the page, it's hardcoded for now, it should be tho!
+          // booking history part of the page, is now  dynamic and fetching from the database 
         ) : (
           <section className="section">
             <h2 className="section-title">Booking History</h2>
@@ -262,7 +280,7 @@ function Events() {
                       <span className="bookingReference">Booked by: {booking.userName}</span>
                       <h3>{booking.venueName}</h3>
                       <p>{booking.address} - {booking.eventDate}</p>
-                      <p className="numberOfSeats">Seats:{booking.seatNumber.map((item)=>{ return (` ${item.seat}`)})}</p>
+                      <p className="numberOfSeats">Seats:{booking.seatNumber.map((item) => { return (` ${item.seat}`) })}</p>
                     </div>
                     <div className="bookingStatusWrapper">
                       <span className="badgeIsConfirmed">Confirmed</span>
@@ -271,18 +289,6 @@ function Events() {
                   </div>
                 )
               })}
-              {/* <div className="bookingHistoryCard">
-                <div className="bookingInfo">
-                  <span className="bookingReference">Ref: RSA-0707262</span>
-                  <h3>AGT Women's Conference</h3>
-                  <p>Centurion, Irene Park - 05 September 2025</p>
-                  <p className="numberOfSeats">Seats: A5, A6</p>
-                </div>
-                <div className="bookingStatusWrapper">
-                  <span className="badgeIsConfirmed">Confirmed</span>
-                  <span className="totalAmount">R700</span>
-                </div>
-              </div> */}
             </div>
           </section>
         )}
