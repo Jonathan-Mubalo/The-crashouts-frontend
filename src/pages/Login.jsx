@@ -28,7 +28,6 @@ function LoginPage() {
 
       const data = await response.json();
         // console.log("Error out of  if statement: ", response.status );
-        // console.log("Error out of  if statement: ", data.message );
 
       if (response.status !== 200) {
         // console.log("Error in if statement: ",response.status);
@@ -53,10 +52,6 @@ function LoginPage() {
   return (
 
     <div className="loginPage">
-      <div className="backgroundWrapper" >
-        <div className="shape shapeOne"></div>
-        <div className="shape shapeTwo"></div>
-      </div>
 
       {/* Glassmorphism Card  */}
 
@@ -114,7 +109,7 @@ function LoginPage() {
 
         <div className="signupContainer">
           <p>
-            Don't have an Account? <span className="goToSignin" onClick={() => { navigate("/Signup") }}>Signup</span>
+            Don't have an Account? <span className="goToSignin" onClick={() => { navigate("/Signin") }}>Signup</span>
           </p>
         </div>
       </div>

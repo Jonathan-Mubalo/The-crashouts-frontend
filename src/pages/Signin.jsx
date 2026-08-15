@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Signin.css';
 import { auth } from "../firebase";
 
-function SignUpPage() {
+function SignIn() {
 
   const navigate = useNavigate();
   const userName = useRef();
@@ -13,6 +13,7 @@ function SignUpPage() {
   const loginSuccess = useRef();
 
   // Firebase signin mixed with mongodb
+  
   const handleSignUp = async (e) => {
 
     e.preventDefault();
@@ -60,12 +61,9 @@ function SignUpPage() {
 
 
   return (
+    <>
     <div className="loginPage">
-      <div className="backgroundWrapper">
-        <div className="shape shapeOne"></div>
-        <div className="shape shapeTwo"></div>
-      </div>
-
+     
       {/* Glassmorphism Sign-Up Card */}
       <div className="signupCard">
         <h2 className="signupTitle">Create an Account</h2>
@@ -140,7 +138,8 @@ function SignUpPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
-export default SignUpPage;
+export default SignIn;
