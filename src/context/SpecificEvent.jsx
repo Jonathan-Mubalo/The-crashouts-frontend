@@ -5,7 +5,7 @@ import React, { createContext, useState, useEffect } from 'react';
 
 const SpecificEvent = (props) => {
 
-    const [storedEvents, setStoredEvents] = useState()
+    const [storedEvent, setStoredEvent] = useState()
     const [allEventsData, setAllEventsData] = useState();
 
     useEffect(() => {
@@ -33,7 +33,7 @@ const SpecificEvent = (props) => {
           
     return (
         <>
-            <EventContext.Provider value={{ storedEvents, setStoredEvents, allEventsData, setAllEventsData }}>
+            <EventContext.Provider value={{ storedEvent, setStoredEvent, allEventsData, setAllEventsData }}>
                 {props.children}
             </EventContext.Provider>
         </>

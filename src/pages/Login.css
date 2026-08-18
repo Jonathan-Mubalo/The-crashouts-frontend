@@ -1,14 +1,3 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    /* overflow-y: hidden; */
-}
-
 .loginPage{
  background-image: url("/backgroundOne.jpg");
     background-position: center;

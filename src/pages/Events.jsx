@@ -7,19 +7,19 @@ import { useNavigate } from 'react-router-dom';
 function Events() {
 
   // THIS NAVIGATION ELEMENT IS USED TO NAVIGATE TO THE NEXT PAGE WHENEVER SOMEONE WANTS TO BOOK A SEAT
-
   const navigate = useNavigate();
 
   const [currentTab, setCurrentTab] = useState('search');
 
   // For the filter part to work 
-
   const [choosenStatus, setChoosenStatus] = useState('all')
   const [choosenSeat, setChoosenSeat] = useState('1')
   const [choosenLocation, setChoosenLocation] = useState('all');
 
-  // FOR DYNAMIC MAPPING BASED ON WHATS STORED IN THE DATABASE
-  const { allEventsData, setAllEventsData } = useContext(EventContext);
+  // CONTEXT FILE STATE VARIABLES
+  const { setStoredEvent, allEventsData, setAllEventsData } = useContext(EventContext);
+
+
   const [bookingHistoryData, setBookingHistoryData] = useState([{
               _id: "qwerty78",
               userName: "N/A",
@@ -32,22 +32,12 @@ function Events() {
 
             }]);
 
-            console.log("State provided default value",bookingHistoryData)
-
-  // USED TO DISPLAY THE SPECIFIC SEATING ARRANGEMENTS
-  const dialog = useRef();
-
   // USE STATE USED TO FILTER AND STORE ALL OF THE INFORMATION OF AN EVENT THAT NEEDS TO BE VIEWED
-
   const [currentFilteredEvent, setCurrentFilteredEvent] = useState();
 
   // THE ENDPOINT FUNCTION THAT GETS ALL OF THE EVENTS
-
-
-
   useEffect(() => {
     const getBookingHistory = async () => {
-
 
       try {
 
@@ -65,7 +55,6 @@ function Events() {
         if (response.status === 200) {
           setBookingHistoryData(data.seatHistory);
         }
-        return;
             }
 
       catch (error) {
@@ -74,6 +63,12 @@ function Events() {
     }
     getBookingHistory()
   }, []);
+
+  const displaySeatBooking = (event) =>{
+console.log(event.target.id);
+setStoredEvent(event.target.id)
+navigate("/SeatBooking");
+  }
 
 
 
@@ -197,7 +192,7 @@ function Events() {
                     <p className="eventCardLoaction">{event.address}</p>
                     <div>
                       <span className="eventDate">{event.eventDate}</span>
-                      <button className="mainBtn infoBtn" id={event._id} onClick={() => { navigate("/SeatBooking") }}>Book a seat</button>
+                      <button className="mainBtn infoBtn" id={event._id} onClick={ displaySeatBooking }>Book a seat</button>
                     </div>
                   </div>
                 </div>)
