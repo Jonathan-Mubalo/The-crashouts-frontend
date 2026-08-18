@@ -20,7 +20,19 @@ function Events() {
 
   // FOR DYNAMIC MAPPING BASED ON WHATS STORED IN THE DATABASE
   const { allEventsData, setAllEventsData } = useContext(EventContext);
-  const [bookingHistoryData, setBookingHistoryData] = useState([]);
+  const [bookingHistoryData, setBookingHistoryData] = useState([{
+              _id: "qwerty78",
+              userName: "N/A",
+              venueName: "N/A",
+              address: "",
+              eventDate: "N/A",
+              seatNumber: [{seat:"N/A"}],
+              bookingPrice: 0,
+              numberOfSeats: 0
+
+            }]);
+
+            console.log("State provided default value",bookingHistoryData)
 
   // USED TO DISPLAY THE SPECIFIC SEATING ARRANGEMENTS
   const dialog = useRef();
@@ -53,30 +65,9 @@ function Events() {
         if (response.status === 200) {
           setBookingHistoryData(data.seatHistory);
         }
+        return;
+            }
 
-        // If the user does not have a booking history this array will be the default state value that will be displayed to them
-        else {
-          setBookingHistoryData(() => {
-            return ([{
-              _id: "qwerty78",
-              userName: "N/A",
-              venueName: "N/A",
-              address: "N/A",
-              eventDate: "N/A",
-              seat: "N/A",
-              bookingPrice: 0,
-              numberOfSeats: 0
-
-            }]
-          
-         )
-          }
-          )
-         console.log("The seatBooking history for janeDoe in else: ", bookingHistoryData)
-        }
-         console.log("The seatBooking history for janeDoe out else: ", bookingHistoryData)
-
-      }
       catch (error) {
         console.error("There was a problem trying to get the users bookingHistory info", error)
       }

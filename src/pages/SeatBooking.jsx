@@ -276,33 +276,7 @@ const { allEventsData, setAllEventsData } = useContext( EventContext )
 
 
 
-    <div className="page">
-      <Navbar />
-      <main className="content">
-        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <h1 className="title">Select Your Seats</h1>
-
-          <div className="grid">
-
-            <div className="box">
-              <span className="tag">Auditorium Layout</span>
-              <div className="screen">SCREEN</div>
-
-            
-
-
-            </div>
-
-
-          </div>
-
-          <div className="buttongroup">
-            <button className="btn">Book seats</button>
-          </div>
-        </div>
-      </main>
-
-    </div>
+ 
   </>
 );
 }
