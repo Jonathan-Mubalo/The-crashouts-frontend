@@ -9,20 +9,20 @@ function Contact () {
         <Navbar />
             <div className='contactForm'>
                     
-                <h2>Contact Us!</h2>
+                <h2 className="contact_h2">Contact Us!</h2>
 
                     <form className='formBoxTwo'>
                         
                         <div className='conDiv'>
                             <label className="inputLabel">Full Name: </label>
                             <br />
-                            <input type='text' placeholder='Full Name'/>
+                            <input className="contactInput" type='text' placeholder='Full Name'/>
                         </div>
 
                         <div className='conDiv'>
                             <label className="inputLabel">Email: </label>
                             <br />
-                            <input type='email' placeholder='e.g johndoe@hotmail.com'/>
+                            <input className="contactInput" type='email' placeholder='e.g johndoe@hotmail.com'/>
                         </div>
 
                         <div className='conDiv'>
@@ -31,7 +31,7 @@ function Contact () {
                             <input type='text' placeholder='Write your message here...' className='messageBox'/>
                         </div>
 
-                        <button type='submit'>Send</button>
+                        <button type='submit' className="contactBtn">Send</button>
 
                     </form>
             </div>

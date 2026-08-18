@@ -29,14 +29,14 @@
   flex-direction: column;
 }
 
-h2 {
+.contact_h2 {
     color: #fff;
     font-weight: 900;
     font-size: 2rem;
     text-align: center;
 }
 
-input {
+.contactInput {
     border: 1px solid black;
     border-radius: 10px;
     width: 30%;
@@ -54,7 +54,7 @@ input {
   color: rgba(255, 255, 255, 0.8);
 }
 
-button {
+.contactBtn {
     color: #fff;
     background-color: #4d88d6;
     border: none;
