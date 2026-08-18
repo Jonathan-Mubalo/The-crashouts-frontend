@@ -1,14 +1,4 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
 
-body {
-  background-color: #ffffff;
-  color: #334155;
-}
 
 .page {
   min-height: 100vh;
@@ -216,4 +206,414 @@ body {
   font-size: 1.05rem;
   background-color: #4182ed;
   color: #ffffff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Color Variables & Resets */
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.eventsHeader {
+  background: #ffffff;
+  padding: 30px 0;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 30px;
+}
+
+.headerSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.headerSection h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+.headerSection p {
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.headerSection nav {
+  display: flex;
+  gap: 10px;
+}
+
+.nav_btn {
+  background: #2563eb;
+  border: 1px solid #e2e8f0;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #eff0f1;
+  transition: all 0.2s;
+}
+
+.nav_btn.active {
+  background: #f3f4f7;
+  color: #2563eb;
+  border-color: #2563eb;
+}
+
+/* Main Content & Sections */
+.mainContent {
+  padding-bottom: 60px;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #0f172a;
+}
+
+/* Filter Bar */
+.filterBar {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.08);
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.filterItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.filterIcon {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.filterWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.filterWrapper label {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.filterDropdown {
+  background: transparent;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+  cursor: pointer;
+  padding-top: 2px;
+}
+
+.mainBtn {
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.mainBtn:hover {
+  background-color: #1d4ed8;
+}
+
+.searchBtn {
+  padding: 14px 24px;
+}
+
+/* Grid & Cards */
+.eventsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.eventCard {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.eventCard:hover {
+  transform: translateY(-4px);
+}
+
+.eventImageWrapper {
+  position: relative;
+  height: 160px;
+  width: 100%;
+}
+
+.eventImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.eventBagde {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #2563eb;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.eventDetails {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.eventCardTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.eventCardLoaction {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+
+.eventDetails > div:last-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+}
+
+.eventDate {
+  font-weight: 600;
+  color: #2563eb;
+  font-size: 0.9rem;
+}
+
+.infoBtn {
+  background-color: transparent;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+}
+
+.infoBtn:hover {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+.noMatch {
+  color: #64748b;
+  font-size: 1rem;
+  padding: 20px 0;
+}
+
+/* Booking History Styles */
+.bookingHistoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bookingHistoryCard {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.bookingReference {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #2563eb;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.bookingInfo h3 {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.bookingInfo p {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.numberOfSeats {
+  margin-top: 6px;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.bookingStatusWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.badgeIsConfirmed {
+  background-color: #dcfce7;
+  color: #15803d;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.totalAmount {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* STYLING FOR THE SEATS DIALOG */
+
+.seatsDialog{
+  border: 2px solid rgba(20, 9, 175, 0.562);
+}
+
+.seatsDialog::-webkit-scrollbar {
+    display: none;
+}
+
+.dialog_main{
+    display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  overflow-x: hidden;
+  
+}
+
+/* STYLING FOR TITLE IN THE SEATS DIALOG */
+.dialog_h1{
+  margin-top:2%;
+  text-decoration: underline;
+}
+
+/* DYNAMIC SEATS DISPLAY */
+
+.seatsGrid{
+  display: flex;
+  flex-flow: column nowrap;
+  width: auto;
+  margin: 1% auto 2%;
+  justify-content: center;
+  border: 3px solid red;
+  /* padding: 5px 5px; */
+}
+
+.seatRow{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  /* margin: 5px; */
+  /* border: 3px solid rgb(43, 255, 0); */
+}
+
+  .seat {
+  width: 50px;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border: none;
+  background-color: #e2e8f0;
+  color: #334155;
+  margin: 5px 2px;
+
+}
+
+.seat:hover{
+transform: scale(1.1);
+}
+
+.dialogBtn{
+  background-color: #2563eb;
+  margin: 2% 45%;
+   min-width : 100px;
+   width: 10%;
+   padding: 5px 10px;
+   color: white;
+}
+
+/* EVENT INFORMATION SECTION TAG */
+.singleEventDetails{
+  border: 2px solid maroon;
+  width:90%;
+  margin: auto;
 }
