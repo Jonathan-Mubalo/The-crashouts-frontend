@@ -11,21 +11,31 @@ import ProtectedRoute from './authentication/ProtectedRoute'
 import RestrictedAccess from './authentication/ProtectedRoute'
 import RegisterVenue from './pages/RegisterVenue'
 import SeatBooking from './pages/SeatBooking'
+import SpecificEvent from './context/SpecificEvent'
 
 function App() {
   return (
     <>
-    <BrowserRouter>
-    <Routes>
-      <Route path="/Login" element={<Login />} />
-      <Route path="/Signin" element={<SignIn />} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Signin" element={<SignIn />} />
 
           <Route path="/" element={<ProtectedRoute>
             <Home />
           </ProtectedRoute>} />
 
+
           <Route path="/Events" element={<ProtectedRoute>
-            <Events />
+            <SpecificEvent>
+              <Events />
+            </SpecificEvent>
+          </ProtectedRoute>} />
+
+          <Route path="/SeatBooking" element={<ProtectedRoute>
+            <SpecificEvent>
+              <SeatBooking />
+            </SpecificEvent>
           </ProtectedRoute>} />
 
           <Route path="/UserProfile" element={<ProtectedRoute>
@@ -36,9 +46,7 @@ function App() {
             <RegisterVenue />
           </ProtectedRoute>} />
 
-           <Route path="/SeatBooking" element={<ProtectedRoute>
-            <SeatBooking />
-          </ProtectedRoute>} />
+
           <Route path="/UserProfile" element={<ProtectedRoute>
             <UserProfile />
           </ProtectedRoute>} />

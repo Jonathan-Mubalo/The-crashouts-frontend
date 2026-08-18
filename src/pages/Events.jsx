@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import Navbar from '../components/Navbar';
+import { EventContext } from "../context/SpecificEvent";
 import './Events.css'
 
 function Events() {
@@ -13,7 +14,7 @@ function Events() {
   const [choosenLocation, setChoosenLocation] = useState('all');
 
   // FOR DYNAMIC MAPPING BASED ON WHATS STORED IN THE DATABASE
-  const [allEventsData, setAllEventsData] = useState([]);
+  const { allEventsData, setAllEventsData } = useContext( EventContext );
   const [bookingHistoryData, setBookingHistoryData] = useState([]);
 
   // USED TO DISPLAY THE SPECIFIC SEATING ARRANGEMENTS
@@ -25,26 +26,7 @@ function Events() {
 
   // THE ENDPOINT FUNCTION THAT GETS ALL OF THE EVENTS
 
-  useEffect(() => {
-    const getAllEvents = async () => {
-      try {
-
-        const response = await fetch('http://localhost:3000/upcomingEvent',
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" }
-          }
-        );
-        const data = await response.json();
-        // console.log(data.message)
-        setAllEventsData(data.message);
-      }
-      catch (error) {
-        console.error("There was a frontend error trying to get all of the events ", error)
-      }
-    }
-    getAllEvents()
-  }, [])
+ 
 
   useEffect(() => {
     const getBookingHistory = async () => {
@@ -106,6 +88,17 @@ function Events() {
 
     dialog.current.showModal();
   }
+
+  // BOOKING A SEAT AND SELECTING IT
+  const selectedSeat = (event) => {
+    if( event.target.tagName === "SPAN"){
+ event.target.parentElementstyle.backgroundColor =  '#4182ed';
+ return;
+  }
+  else{
+ event.target.parentElementstyle.backgroundColor =  '#4182ed';
+  }
+}
 
   // const everyting = () => {
   //   console.log("currentFilteredEvent:", currentFilteredEvent);
@@ -248,23 +241,63 @@ function Events() {
               )} */}
 
               <dialog ref={dialog} className="seatsDialog">
-                <div className="seatsGrid">
-                  {currentFilteredEvent && currentFilteredEvent[0].seatArrangement.map((arr) => {
-                    return (<div className="seatRow" key={arr[0]["seat"]}>
-                      {arr.map((seatObj) => {
-                        return (<div key={seatObj.seat} className="seat">
-                          <span>{seatObj.seat}</span>
-                          <span className="seatpricetag">R250</span>
-                        </div>
-                        )
-                      })
-                      }
+                <main className="dialog_main">
+                  <h2 className="dialog_h1">Book a seat by selecting it</h2>
+                  <div className="seatsGrid">
+                    {currentFilteredEvent && currentFilteredEvent[0].seatArrangement.map((arr) => {
+                      return (<div className="seatRow" key={arr[0]["seat"]}>
+                        {arr.map((seatObj) => {
+                          return (<div key={seatObj.seat} className="seat" onClick={selectedSeat}>
+                            <span>{seatObj.seat}</span>
+                            <span className="seatpricetag">R250</span>
+                          </div>
+                          )
+                        }
+                        )}
+                      </div>
+                      )
+                    }
+                    )}
+                  </div>
+
+                  <div className="legend">
+                    <div className="seatStatus">
+                      <div className="statusItem" style={{ backgroundColor: '#e2e8f0' }} /> Available
                     </div>
-                    )
-                  })
-                  }
-                </div>
-                <button className="mainBtn infoBtn dialogBtn" onClick={() => { dialog.current.close() }}>Show less</button>
+                    <div className="seatStatus">
+                      <div className="statusItem" style={{ backgroundColor: '#4182ed' }} /> Selected
+                    </div>
+                    <div className="seatStatus">
+                      <div className="statusItem" style={{ backgroundColor: '#072447' }} /> Booked
+                    </div>
+                  </div>
+
+                  <section className="singleEventDetails">
+                    {currentFilteredEvent && currentFilteredEvent.map((event) => {
+
+                      return (<div className="singleEventCard" key={event._id}>
+                        <div className="singleEventImageWrapper">
+                          <img src={event.image} alt={event.title} className="singleEventImage" />
+                          {event.tag && <span className="singleEventBagde">{event.tag}</span>}
+                        </div>
+                        <div className="singleEventDetails">
+                          <h3 className="singleEventCardTitle">{event.venueName}</h3>
+                          <p className="singleEventCardLoaction">{event.address}</p>
+                          <div>
+                            <span className="singleEventDate">{event.eventDate}</span>
+                            {/* <button className="mainBtn infoBtn" id={event._id} onClick={dialogDisplay}>Book a seat</button> */}
+                          </div>
+                        </div>
+                      </div>)
+                    })
+                    }
+                  </section>
+
+                  <button className="mainBtn infoBtn dialogBtn" onClick={() => {
+                    console.log("modal should be closed")
+                    return dialog.current.close()
+                  }}>Show less</button>
+                </main>
               </dialog>
             </section>
           </>
