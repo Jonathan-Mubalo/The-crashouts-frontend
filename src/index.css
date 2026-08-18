@@ -3,3 +3,7 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+:root{
+    --myLightBlue:#89b2f3;
+}
