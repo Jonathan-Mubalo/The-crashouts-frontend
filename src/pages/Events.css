@@ -50,20 +50,20 @@
   gap: 10px;
 }
 
-.nav-btn {
-  background: transparent;
+.nav_btn {
+  background: #2563eb;
   border: 1px solid #e2e8f0;
   padding: 8px 16px;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
-  color: #64748b;
+  color: #eff0f1;
   transition: all 0.2s;
 }
 
-.nav-btn.active {
-  background: #2563eb;
-  color: #fff;
+.nav_btn.active {
+  background: #f3f4f7;
+  color: #2563eb;
   border-color: #2563eb;
 }
 

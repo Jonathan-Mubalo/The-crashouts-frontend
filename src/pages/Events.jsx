@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import Navbar from '../components/Navbar';
 import { EventContext } from "../context/SpecificEvent";
-import './Events.css'
+import './Events.css';
+import { useNavigate } from 'react-router-dom';
 
 function Events() {
+
+  // THIS NAVIGATION ELEMENT IS USED TO NAVIGATE TO THE NEXT PAGE WHENEVER SOMEONE WANTS TO BOOK A SEAT
+
+  const navigate = useNavigate();
 
   const [currentTab, setCurrentTab] = useState('search');
 
@@ -14,7 +19,7 @@ function Events() {
   const [choosenLocation, setChoosenLocation] = useState('all');
 
   // FOR DYNAMIC MAPPING BASED ON WHATS STORED IN THE DATABASE
-  const { allEventsData, setAllEventsData } = useContext( EventContext );
+  const { allEventsData, setAllEventsData } = useContext(EventContext);
   const [bookingHistoryData, setBookingHistoryData] = useState([]);
 
   // USED TO DISPLAY THE SPECIFIC SEATING ARRANGEMENTS
@@ -26,7 +31,7 @@ function Events() {
 
   // THE ENDPOINT FUNCTION THAT GETS ALL OF THE EVENTS
 
- 
+
 
   useEffect(() => {
     const getBookingHistory = async () => {
@@ -51,19 +56,26 @@ function Events() {
 
         // If the user does not have a booking history this array will be the default state value that will be displayed to them
         else {
-          setBookingHistoryData([{
-            _id: "qwerty78",
-            userName: "N/A",
-            venueName: "N/A",
-            address: "N/A",
-            eventDate: "N/A",
-            seat: "N/A",
-            bookingPrice: 0,
-            numberOfSeats: 0
+          setBookingHistoryData(() => {
+            return ([{
+              _id: "qwerty78",
+              userName: "N/A",
+              venueName: "N/A",
+              address: "N/A",
+              eventDate: "N/A",
+              seat: "N/A",
+              bookingPrice: 0,
+              numberOfSeats: 0
 
-          }]
+            }]
+          
+         )
+          }
           )
+         console.log("The seatBooking history for janeDoe in else: ", bookingHistoryData)
         }
+         console.log("The seatBooking history for janeDoe out else: ", bookingHistoryData)
+
       }
       catch (error) {
         console.error("There was a problem trying to get the users bookingHistory info", error)
@@ -73,32 +85,16 @@ function Events() {
   }, []);
 
 
-  // DISPLAYING THE RIGHT EVENTS INFORMATION INSIDE THE DIALOG TAG BY FILTERING AND EVENT BASED ON THE ID THAT THE BUTTON HAS
-
-  const dialogDisplay = (event) => {
-    const filteredEvent = allEventsData.filter((item) => { return item["_id"] === event.target.id });
-
-    // console.log("Chosen id: ", allEventsData[2]["_id"])
-    // console.log("Targetted id: ", event.target.id);
-    // console.log("filteredId: ", filteredEvent);
-
-    setCurrentFilteredEvent(() => { return filteredEvent })
-    // everyting()
 
 
-    dialog.current.showModal();
-  }
 
-  // BOOKING A SEAT AND SELECTING IT
-  const selectedSeat = (event) => {
-    if( event.target.tagName === "SPAN"){
- event.target.parentElementstyle.backgroundColor =  '#4182ed';
- return;
-  }
-  else{
- event.target.parentElementstyle.backgroundColor =  '#4182ed';
-  }
-}
+
+
+
+
+
+
+
 
   // const everyting = () => {
   //   console.log("currentFilteredEvent:", currentFilteredEvent);
@@ -142,9 +138,9 @@ function Events() {
 
           {/* Works with the filter code to pull and bring up events as well as the user's booking history :) I'm so smart!! */}
           <nav>
-            <button className={`nav-btn ${currentTab === 'search' ? 'active' : ''}`} onClick={() => setCurrentTab('search')}>Browse Events</button>
+            <button className={`nav_btn ${currentTab === 'search' ? 'active' : ''}`} onClick={() => setCurrentTab('search')}>Browse Events</button>
 
-            <button className={`nav-btn ${currentTab === 'history' ? 'active' : ''}`} onClick={() => setCurrentTab('history')}>Booking History</button>
+            <button className={`nav_btn ${currentTab === 'history' ? 'active' : ''}`} onClick={() => setCurrentTab('history')}>Booking History</button>
           </nav>
         </div>
       </header>
@@ -210,7 +206,7 @@ function Events() {
                     <p className="eventCardLoaction">{event.address}</p>
                     <div>
                       <span className="eventDate">{event.eventDate}</span>
-                      <button className="mainBtn infoBtn" id={event._id} onClick={dialogDisplay}>Book a seat</button>
+                      <button className="mainBtn infoBtn" id={event._id} onClick={() => { navigate("/SeatBooking") }}>Book a seat</button>
                     </div>
                   </div>
                 </div>)
@@ -240,65 +236,7 @@ function Events() {
                 </div>
               )} */}
 
-              <dialog ref={dialog} className="seatsDialog">
-                <main className="dialog_main">
-                  <h2 className="dialog_h1">Book a seat by selecting it</h2>
-                  <div className="seatsGrid">
-                    {currentFilteredEvent && currentFilteredEvent[0].seatArrangement.map((arr) => {
-                      return (<div className="seatRow" key={arr[0]["seat"]}>
-                        {arr.map((seatObj) => {
-                          return (<div key={seatObj.seat} className="seat" onClick={selectedSeat}>
-                            <span>{seatObj.seat}</span>
-                            <span className="seatpricetag">R250</span>
-                          </div>
-                          )
-                        }
-                        )}
-                      </div>
-                      )
-                    }
-                    )}
-                  </div>
 
-                  <div className="legend">
-                    <div className="seatStatus">
-                      <div className="statusItem" style={{ backgroundColor: '#e2e8f0' }} /> Available
-                    </div>
-                    <div className="seatStatus">
-                      <div className="statusItem" style={{ backgroundColor: '#4182ed' }} /> Selected
-                    </div>
-                    <div className="seatStatus">
-                      <div className="statusItem" style={{ backgroundColor: '#072447' }} /> Booked
-                    </div>
-                  </div>
-
-                  <section className="singleEventDetails">
-                    {currentFilteredEvent && currentFilteredEvent.map((event) => {
-
-                      return (<div className="singleEventCard" key={event._id}>
-                        <div className="singleEventImageWrapper">
-                          <img src={event.image} alt={event.title} className="singleEventImage" />
-                          {event.tag && <span className="singleEventBagde">{event.tag}</span>}
-                        </div>
-                        <div className="singleEventDetails">
-                          <h3 className="singleEventCardTitle">{event.venueName}</h3>
-                          <p className="singleEventCardLoaction">{event.address}</p>
-                          <div>
-                            <span className="singleEventDate">{event.eventDate}</span>
-                            {/* <button className="mainBtn infoBtn" id={event._id} onClick={dialogDisplay}>Book a seat</button> */}
-                          </div>
-                        </div>
-                      </div>)
-                    })
-                    }
-                  </section>
-
-                  <button className="mainBtn infoBtn dialogBtn" onClick={() => {
-                    console.log("modal should be closed")
-                    return dialog.current.close()
-                  }}>Show less</button>
-                </main>
-              </dialog>
             </section>
           </>
           // booking history part of the page, is now  dynamic and fetching from the database 

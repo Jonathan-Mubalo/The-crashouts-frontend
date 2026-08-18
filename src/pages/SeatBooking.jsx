@@ -96,13 +96,15 @@ const { allEventsData, setAllEventsData } = useContext( EventContext )
 
   // BOOKING A SEAT AND SELECTING IT
   const selectedSeat = (event) => {
+
     if( event.target.tagName === "SPAN"){
- event.target.parentElementstyle.backgroundColor =  '#4182ed';
+ event.target.parentElement.style.backgroundColor =  '#4182ed';
  return;
   }
   else{
- event.target.parentElementstyle.backgroundColor =  '#4182ed';
+ event.target.style.backgroundColor =  '#4182ed';
   }
+
 }
 
   return (
@@ -122,9 +124,9 @@ const { allEventsData, setAllEventsData } = useContext( EventContext )
 
           {/* Works with the filter code to pull and bring up events as well as the user's booking history :) I'm so smart!! */}
           <nav>
-            <button className={`nav-btn ${currentTab === 'search' ? 'active' : ''}`} onClick={() => setCurrentTab('search')}>Browse Events</button>
+            <button className={`nav_btn ${currentTab === 'search' ? 'active' : ''}`} onClick={() => setCurrentTab('search')}>Browse Events</button>
 
-            <button className={`nav-btn ${currentTab === 'history' ? 'active' : ''}`} onClick={() => setCurrentTab('history')}>Booking History</button>
+            <button className={`nav_btn ${currentTab === 'history' ? 'active' : ''}`} onClick={() => setCurrentTab('history')}>Booking History</button>
           </nav>
         </div>
       </header>
