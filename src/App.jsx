@@ -12,6 +12,7 @@ import RestrictedAccess from './authentication/ProtectedRoute'
 import RegisterVenue from './pages/RegisterVenue'
 import SeatBooking from './pages/SeatBooking'
 import SpecificEvent from './context/SpecificEvent'
+import Contact from './pages/Contact'
 
 function App() {
   return (
@@ -47,8 +48,8 @@ function App() {
           </ProtectedRoute>} />
 
 
-          <Route path="/UserProfile" element={<ProtectedRoute>
-            <UserProfile />
+          <Route path="/Contact" element={<ProtectedRoute>
+            <Contact />
           </ProtectedRoute>} />
           <Route path="/UserProfile" element={<ProtectedRoute>
             <UserProfile />

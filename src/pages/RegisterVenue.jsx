@@ -248,9 +248,11 @@ const actualSubmission = submissionData.entries;
               </div>
             </>
           )}
-
         </form>
         </div>
+        <main>
+          
+        </main>
       </div>
     </>
   );
