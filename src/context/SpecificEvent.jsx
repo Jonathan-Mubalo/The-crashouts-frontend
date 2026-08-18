@@ -30,9 +30,7 @@ const SpecificEvent = (props) => {
         getAllEvents()
     }, [])
 
-          console.log("Context info",storedEvents)
-
-
+          
     return (
         <>
             <EventContext.Provider value={{ storedEvents, setStoredEvents, allEventsData, setAllEventsData }}>
