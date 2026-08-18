@@ -1,65 +1,159 @@
-.contactForm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.contactPage {
+    min-height: calc(100vh - 140px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 1.5rem;
+    background: radial-gradient( circle at top left,rgba(37, 99, 235, 0.15), transparent 35%), radial-gradient( circle at bottom right, rgba(96, 165, 250, 0.12), transparent 35% );
 }
 
-.formBox {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  max-width: 28rem;
-  padding: 2rem;
-  margin: 0 1rem;
-  background: #2563eb;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 1.5rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  color: #fff;
+.contactForm {
+    width: 100%;
+    max-width: 560px;
+    padding: 2.5rem;
+    background: #2563eb;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 0 8px 20px rgba(37, 99, 235, 0.05);
+    color: #172554;
+}
+
+.contactHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.contactHeader h2 {
+    margin: 0 0 0.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    letter-spacing: -0.03em;
+}
+
+.contactHeader p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.95rem;
 }
 
 .formBoxTwo {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
 .conDiv {
-  display: flex;
-  flex-direction: column;
-}
-
-.contact_h2 {
-    color: #fff;
-    font-weight: 900;
-    font-size: 2rem;
-    text-align: center;
-}
-
-.contactInput {
-    border: 1px solid black;
-    border-radius: 10px;
-    width: 30%;
-}
-
-.messageBox {
-    height: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .inputLabel {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  margin-bottom: 0.25rem;
-  color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #334155;
+    letter-spacing: 0.01em;
 }
 
-.contactBtn {
-    color: #fff;
-    background-color: #4d88d6;
+.inputBox {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #dbe3ef;
+    border-radius: 12px;
+    color: #1e293b;
+    font-family: inherit;
+    font-size: 0.95rem;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.inputBox::placeholder {
+    color: #94a3b8;
+}
+
+.inputBox:hover {
+    border-color: #bfdbfe;
+}
+
+.inputBox:focus {
+    background: #ffffff;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+.messageBox {
+    min-height: 130px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.submitBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.95rem 1.25rem;
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1d4ed8
+    );
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
     border: none;
-    /* border: 1px solid black; */
-    border-radius: 30px;
-    width: 10%;
-    max-width: 3rem;
+    border-radius: 12px;
+    box-shadow:
+        0 8px 16px rgba(37, 99, 235, 0.2);
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.submitBtn span {
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+.submitBtn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 12px 22px rgba(37, 99, 235, 0.28);
+}
+
+.submitBtn:hover span {
+    transform: translateX(4px);
+}
+
+.submitBtn:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+    .contactPage {
+        min-height: auto;
+        padding: 3rem 1rem;
+    }
+
+    .contactForm {
+        padding: 2rem 1.25rem;
+        border-radius: 20px;
+    }
+
+    .contactHeader h2 {
+        font-size: 1.7rem;
+    }
 }

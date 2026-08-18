@@ -2,42 +2,69 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import './Contact.css'
 
-function Contact () {
-
+function Contact() {
     return (
         <>
-        <Navbar />
-            <div className='contactForm'>
-                    
-                <h2 className="contact_h2">Contact Us!</h2>
+            <Navbar />
 
-                    <form className='formBoxTwo'>
-                        
-                        <div className='conDiv'>
-                            <label className="inputLabel">Full Name: </label>
-                            <br />
-                            <input className="contactInput" type='text' placeholder='Full Name'/>
+            <main className="contactPage">
+                <section className="contactForm">
+                    <div className="contactHeader">
+                        <h2>Contact Us</h2>
+                        <p>Have a question? We'd love to hear from you.</p>
+                    </div>
+
+                    <form className="formBoxTwo">
+                        <div className="conDiv">
+                            <label className="inputLabel" htmlFor="fullName">
+                                Full Name
+                            </label>
+
+                            <input
+                                id="fullName"
+                                className="inputBox"
+                                type="text"
+                                placeholder="John Doe"
+                            />
                         </div>
 
-                        <div className='conDiv'>
-                            <label className="inputLabel">Email: </label>
-                            <br />
-                            <input className="contactInput" type='email' placeholder='e.g johndoe@hotmail.com'/>
+                        <div className="conDiv">
+                            <label className="inputLabel" htmlFor="email">
+                                Email Address
+                            </label>
+
+                            <input
+                                id="email"
+                                className="inputBox"
+                                type="email"
+                                placeholder="johndoe@hotmail.com"
+                            />
                         </div>
 
-                        <div className='conDiv'>
-                            <label className="inputLabel">Message: </label>
-                            <br />
-                            <input type='text' placeholder='Write your message here...' className='messageBox'/>
+                        <div className="conDiv">
+                            <label className="inputLabel" htmlFor="message">
+                                Message
+                            </label>
+
+                            <textarea
+                                id="message"
+                                className="inputBox messageBox"
+                                placeholder="Write your message here..."
+                                rows="5"
+                            />
                         </div>
 
-                        <button type='submit' className="contactBtn">Send</button>
-
+                        <button type="submit" className="submitBtn">
+                            Send Message
+                            <span>→</span>
+                        </button>
                     </form>
-            </div>
-        <Footer />
+                </section>
+            </main>
+
+            <Footer />
         </>
     )
 }
 
-export default Contact;
+export default Contact
