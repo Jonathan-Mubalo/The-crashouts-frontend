@@ -247,6 +247,7 @@ const { allEventsData, setAllEventsData } = useContext( EventContext )
             </div>
           </section>
         )}
+          
       </main>
     </div>
 
