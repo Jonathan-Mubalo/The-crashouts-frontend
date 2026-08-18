@@ -10,6 +10,7 @@ function Navbar() {
     <Link className="navLink" to="/Events">Events</Link>
     <Link className="navLink" to="/SeatBooking">My Bookings</Link>
     <Link className="navLink" to="/UserProfile">Profile</Link>
+    <Link className="navLink" to="/Contact">Contact</Link>
   </nav>);
 
   useEffect(() => {
@@ -38,9 +39,10 @@ function Navbar() {
               <Link className="navLink" to="/">Home</Link>
               <Link className="navLink" to="/Events">Events</Link>
               {/* <Link className="navLink" to="/users">Users</Link> */}
-    <Link className="navLink" to="/SeatBooking">Booking</Link>
+              <Link className="navLink" to="/SeatBooking">Booking</Link>
               <Link className="navLink" to="/RegisterVenue">Venues</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
+              <Link className="navLink" to="/Contact">Contact</Link>
             </nav>
           )
           // );
