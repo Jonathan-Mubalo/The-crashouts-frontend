@@ -51,7 +51,7 @@ useEffect(()=>{ const filteredEvent = allEventsData.filter((item) => { return it
     <>
 
     <Navbar />
-    <div className="eventPage">
+    <div className="seatBookingPage">
 
       {/* used ternary to make sures when pressing the browser it displays only the browser content and used the state "currentTab"*/}
       <main className="container mainContent">

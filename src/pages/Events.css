@@ -4,6 +4,14 @@
   padding: 0 20px;
 }
 
+/* EVENTS DISPLAY */
+
+.currentEvents{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  border: 2px solid navy;
+}
+
 /* Header */
 .eventsHeader {
   background: #ffffff;
@@ -149,17 +157,18 @@
 }
 
 .eventCard {
-  background: #ffffff;
+  background-color: #ffffff;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
+margin: 2%;
 }
 
 .eventCard:hover {
-  transform: translateY(-4px);
+  transform: translateY(-1px);
 }
 
 .eventImageWrapper {
