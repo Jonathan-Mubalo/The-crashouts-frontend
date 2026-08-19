@@ -13,6 +13,7 @@ import RegisterVenue from './pages/RegisterVenue'
 import SeatBooking from './pages/SeatBooking'
 import SpecificEvent from './context/SpecificEvent'
 import Contact from './pages/Contact'
+import Venues from './pages/Venues'
 
 function App() {
   return (
@@ -51,9 +52,12 @@ function App() {
           <Route path="/Contact" element={<ProtectedRoute>
             <Contact />
           </ProtectedRoute>} />
-          <Route path="/UserProfile" element={<ProtectedRoute>
-            <UserProfile />
+
+          <Route path="/Venues" element={<ProtectedRoute>
+            <Venues />
           </ProtectedRoute>} />
+
+          
           <Route path="/UserProfile" element={<ProtectedRoute>
             <UserProfile />
           </ProtectedRoute>} />

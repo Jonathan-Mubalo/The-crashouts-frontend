@@ -40,7 +40,8 @@ function Navbar() {
               <Link className="navLink" to="/Events">Events</Link>
               {/* <Link className="navLink" to="/users">Users</Link> */}
               <Link className="navLink" to="/SeatBooking">Booking</Link>
-              <Link className="navLink" to="/RegisterVenue">Venues</Link>
+              <Link className="navLink" to="/Venues">Venues</Link>
+              <Link className="navLink" to="/RegisterVenue">My Venues</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
               <Link className="navLink" to="/Contact">Contact</Link>
             </nav>
@@ -54,6 +55,7 @@ function Navbar() {
             <nav>
               <Link className="navLink" to="/">Home</Link>
               <Link className="navLink" to="/Events">Events</Link>
+              <Link className="navLink" to="/Venues">Venues</Link>
               <Link className="navLink" to="/RegisterVenue">My Venues</Link>
               <Link className="navLink" to="/SeatBooking">Booking</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
