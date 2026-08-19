@@ -21,16 +21,16 @@ function Events() {
 
 
   const [bookingHistoryData, setBookingHistoryData] = useState([{
-              _id: "qwerty78",
-              userName: "N/A",
-              venueName: "N/A",
-              address: "",
-              eventDate: "N/A",
-              seatNumber: [{seat:"N/A"}],
-              bookingPrice: 0,
-              numberOfSeats: 0
+    _id: "qwerty78",
+    userName: "N/A",
+    venueName: "N/A",
+    address: "",
+    eventDate: "N/A",
+    seatNumber: [{ seat: "N/A" }],
+    bookingPrice: 0,
+    numberOfSeats: 0
 
-            }]);
+  }]);
 
   // USE STATE USED TO FILTER AND STORE ALL OF THE INFORMATION OF AN EVENT THAT NEEDS TO BE VIEWED
   const [currentFilteredEvent, setCurrentFilteredEvent] = useState();
@@ -55,7 +55,7 @@ function Events() {
         if (response.status === 200) {
           setBookingHistoryData(data.seatHistory);
         }
-            }
+      }
 
       catch (error) {
         console.error("There was a problem trying to get the users bookingHistory info", error)
@@ -64,10 +64,10 @@ function Events() {
     getBookingHistory()
   }, []);
 
-  const displaySeatBooking = (event) =>{
-console.log(event.target.id);
-setStoredEvent(event.target.id)
-navigate("/SeatBooking");
+  const displaySeatBooking = (event) => {
+    console.log(event.target.id);
+    setStoredEvent(event.target.id)
+    navigate("/SeatBooking");
   }
 
 
@@ -175,10 +175,11 @@ navigate("/SeatBooking");
 
             {/* The grid in which the events will take placed in dynamically... I think, Jonathan and Laura please confirm ;) */}
 
-            <section className="section">
-              <h2 className="sectionTitle">
-                {choosenStatus === 'active' ? 'Currently Happening Events' : choosenStatus === 'upcoming' ? 'Coming Soon Events' : 'Available Events'}
-              </h2>
+            <h2 className="sectionTitle">
+              {choosenStatus === 'active' ? 'Currently Happening Events' : choosenStatus === 'upcoming' ? 'Coming Soon Events' : 'Available Events'}
+            </h2>
+            <section className="section currentEvents">
+
 
               {allEventsData && allEventsData.map((event) => {
 
@@ -192,7 +193,7 @@ navigate("/SeatBooking");
                     <p className="eventCardLoaction">{event.address}</p>
                     <div>
                       <span className="eventDate">{event.eventDate}</span>
-                      <button className="mainBtn infoBtn" id={event._id} onClick={ displaySeatBooking }>Book a seat</button>
+                      <button className="mainBtn infoBtn" id={event._id} onClick={displaySeatBooking}>Book a seat</button>
                     </div>
                   </div>
                 </div>)
