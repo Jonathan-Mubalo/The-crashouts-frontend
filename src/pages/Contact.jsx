@@ -56,7 +56,7 @@ function Contact() {
 
                         <button type="submit" className="submitBtn">
                             Send Message
-                            <span>→</span>
+                            <span>&#x2192;</span>
                         </button>
                     </form>
                 </section>
