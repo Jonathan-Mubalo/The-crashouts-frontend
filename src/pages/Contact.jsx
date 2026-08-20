@@ -39,51 +39,24 @@ function Contact() {
 
                     <form className="formBoxTwo" action={submitForm}>
                         <div className="conDiv">
-                            <label className="inputLabel" htmlFor="fullName">
-                                Full Name
-                            </label>
+                            <label className="inputLabel" htmlFor="fullName">Full Name</label>
 
-                            <input
-                                id="fullName"
-                                className="inputBox"
-                                type="text"
-                                placeholder="John Doe"
-                                ref={fullName}
-                            />
+                            <input id="fullName" className="inputBox" type="text" placeholder="John Doe" />
                         </div>
 
                         <div className="conDiv">
-                            <label className="inputLabel" htmlFor="email">
-                                Email Address
-                            </label>
+                            <label className="inputLabel" htmlFor="email">Email Address</label>
 
-                            <input
-                                id="email"
-                                className="inputBox"
-                                type="email"
-                                placeholder="johndoe@hotmail.com"
-                                ref={email}
-                            />
+                            <input id="email" className="inputBox" type="email" placeholder="johndoe@hotmail.com"/>
                         </div>
 
                         <div className="conDiv">
-                            <label className="inputLabel" htmlFor="message">
-                                Message
-                            </label>
+                            <label className="inputLabel" htmlFor="message">Message</label>
 
-                            <textarea
-                                id="message"
-                                className="inputBox messageBox"
-                                placeholder="Write your message here..."
-                                rows="5"
-                                ref={message}
-                            />
+                            <textarea id="message" className="inputBox messageBox" placeholder="Write your message here..." rows="5"/>
                         </div>
 
-                        <button type="submit" className="submitBtn">
-                            Send Message
-                            <span>&#x2192;</span>
-                        </button>
+                        <button type="submit" className="submitBtn">Send Message<span>&#x2192;</span></button>
                     </form>
                 </section>
             </main>

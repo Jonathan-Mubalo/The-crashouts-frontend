@@ -500,6 +500,54 @@ a {
   font-size: 7px;
 }
 
+.venuesSection {
+  padding: 30px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.venuesSection h2 {
+  font-size: 40px;
+  font-weight: 800;
+  margin: 12px 0 48px 0;
+}
+
+.venuesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.venueBox {
+  height: 240px;
+  background: #64748b;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transform: 0.5s;
+}
+
+.venueBox:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.venuesFooter {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.venuesFooter a {
+  color: #b2ebf2;
+  text-decoration: none;
+  margin-left: 8px;
+}
+
+.venuesFooter a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 850px) {
   .event-section {
     grid-template-columns: 1fr;
@@ -516,6 +564,9 @@ a {
 
   .testimonial {
     max-width: 500px;
+  }
+  .venuesGrid {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 
