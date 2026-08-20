@@ -105,6 +105,26 @@
   font-weight: 700;
 }
 
+.bookNowBtn {
+  width: 20%;
+  padding: 5px 1px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #24599c;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.bookNowBtn:hover {
+  background-color: #3966a0;
+}
+
+
+
 @media (max-width: 900px) {
   .venuePage {
     grid-template-columns: repeat(2, 1fr);
