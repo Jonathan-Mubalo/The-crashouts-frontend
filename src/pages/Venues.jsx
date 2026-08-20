@@ -1,126 +1,128 @@
-import React, {useState} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer"
 import "./Venues.css";
 
 const Venues = () => {
 
+    const [currentTab, setCurrentTab] = useState('search');
   
-  
-  
-  
-  
-  
-  const [currentTab, setCurrentTab] = useState('search');
+  // STATE VARIABLE THAT IS USED TO STORE ALL OF THE VENUES THAT ARE AVAILABLE
+  const [allVenues, setAllVenues] = useState();
 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+  // STATE VARIABLE THAT IS USED TO STORE ALL OF THE VENUES THAT ARE AVAILABLE
+  const [myVenues, setMyVenues] = useState();
+
+  // COLLECTING ALL OF THE AVAILABLE VENUES FROM THE VENUES COLLECTION
+  useEffect(() => {
+
+    const getAllVenues = async () => {
+
+      try {
+        const response = await fetch('//localhost:3000/allVenues');
+        const data = await response.json();
+
+        // MAKES SURE THAT THE PROPERTIES ARE ACTUALLY COLLECTED AND NO NULL VELUE IS RETURNED
+        if (response.status === 200) {
+          return setAllVenues(() => { return data.message });
+        }
+        else {
+          alert("Unable to collect all of the available prperties, please try again later.")
+          return setAllVenues(() => {
+            return ([{
+
+              _id: 'N/A',
+              venueName: 'N/A',
+              phoneNumber: 'N/A',
+              registrationNo: 'N/A',
+              address: 'N/A',
+              facilities: 'N/A',
+              numberOfSeats: N / A,
+              seatRows: 0,
+              seatColumns: 0,
+              seatArrangement: [[{
+                seat: "N/A",
+                isBoked: "N/A"
+              }]],
+              email: 'N/A',
+              images: [
+                'N/A'
+              ],
+              documents: [
+                'N/A'
+              ],
+              createdAt: 'N/A'
+
+
+            }])
+          });
+
+        }
+      } catch (error) {
+        console.error("Problem in the front end when getting all of the venues", error);
+      }
+    };
+
+    getAllVenues();
+
+  }, []);
+
+  // USEEFFECT THAT WILL BE USED TO GET A USERS PERSONAL VENUES
+  useEffect(() => {
+    const getMyPersonalVenues = async () => {
+      try {
+
+        const accessTokenEmail = JSON.parse(sessionStorage.getItem('accessToken'));
+
+        const response = await fetch(`//localhost:3000/myVenues/${accessTokenEmail}`)
+        const data = await response.json();
+
+        if (response.status === 200) {
+          return setMyVenues(() => { return data.message })
+        }
+        else {
+
+          alert("Unable to collect all of the available prperties, please try again later.")
+          return setMyVenues(() => {
+            return ([{
+
+              _id: 'N/A',
+              venueName: 'N/A',
+              phoneNumber: 'N/A',
+              registrationNo: 'N/A',
+              address: 'N/A',
+              facilities: 'N/A',
+              numberOfSeats: N / A,
+              seatRows: 0,
+              seatColumns: 0,
+              seatArrangement: [[{
+                seat: "N/A",
+                isBoked: "N/A"
+              }]],
+              email: 'N/A',
+              images: [
+                'N/A'
+              ],
+              documents: [
+                'N/A'
+              ],
+              createdAt: 'N/A'
+
+
+            }])
+          })
+
+        }
+
+      } catch (error) {
+        console.error("Problem in the front end when getting personal venues", error);
+      }
+    };
+
+    getMyPersonalVenues();
+
+  }, [])
+
   return (
     <>
       <Navbar />
@@ -223,8 +225,6 @@ const Venues = () => {
             </div>
           </article>
         </div>
-
-
 
         <div className="venueGrid">
           <article className="venueCard">
