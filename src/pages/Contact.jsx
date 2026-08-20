@@ -1,8 +1,31 @@
+import React,{ useRef } from 'react';
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import './Contact.css'
 
 function Contact() {
+
+    const fullName = useRef();
+    const email = useRef();
+    const message = useRef();
+
+    const submitForm = async () =>{
+
+        const response = await fetch('//localhost:3000/postForms',{
+            method:'POST',
+            headers:{'Content-Type': "application/json"},
+            body:JSON.stringify({
+                fullName: fullName.current.value,
+                email: email.current.value,
+               message: message.current.value
+            })
+        })
+
+        const data = await response.json();
+
+        return ( response.status === 200 ) ? alert(data.message): alert(data.message);
+
+    }
     return (
         <>
             <Navbar />
@@ -14,7 +37,7 @@ function Contact() {
                         <p>Have a question? We'd love to hear from you.</p>
                     </div>
 
-                    <form className="formBoxTwo">
+                    <form className="formBoxTwo" action={submitForm}>
                         <div className="conDiv">
                             <label className="inputLabel" htmlFor="fullName">Full Name</label>
 
