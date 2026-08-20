@@ -84,8 +84,7 @@ const actualSubmission = submissionData.entries;
     alert("Form Submitted successfully!");
 
     // CLEARING THE FORM ONCE A PROPERTY HAS BEEN CREATED
-    setFormData({
-    venueName: "",
+    setFormData(() => { return( {venueName: "",
     registrationNo: "",
     number: "",
     address: "",
@@ -94,8 +93,8 @@ const actualSubmission = submissionData.entries;
     facilities: "",
     noOfSeats: "",
     noOfRows: "",
-    noOfColumns: "",
-  });
+    noOfColumns: ""}
+  )});
 
   };
 
