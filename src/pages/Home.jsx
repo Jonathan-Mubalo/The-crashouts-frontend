@@ -1,7 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signOut, getAuth } from "firebase/auth";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import "./Home.css";
 
 const Home = () => {
@@ -217,7 +218,27 @@ const Home = () => {
             </div>
           </div>
         </section>
+
+        <section className="venuesSection">
+        <span className="sectionTag">For Your Convenience</span>
+        <h2>Venues</h2>
+
+        <div className="venuesGrid">
+          <div className="venueBox"></div>
+          <div className="venueBox"></div>
+          <div className="venueBox"></div>
+          <div className="venueBox"></div>
+          <div className="venueBox"></div>
+          <div className="venueBox"></div>
+        </div>
+
+        <div className="venuesFooter">
+          FOR VENUE MANAGERS <Link to='/Venues'>ADD YOUR VENUE NOW </Link>
+        </div>
+      </section>
       </div>
+
+      <Footer />
     </>
   );
 };
