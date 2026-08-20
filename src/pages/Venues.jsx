@@ -1,24 +1,151 @@
-import React from 'react';
-import Navbar from '../components/Navbar';
-import './Venues.css'
-
+import React from "react";
+import Navbar from "../components/Navbar";
+import "./Venues.css";
 
 const Venues = () => {
-    const Venues = [
-        {id:1, name: "The Glen", image: "https://thumbs.dreamstime.com/z/glen-shopping-centre-glen-waverley-melbourne-major-mall-eastern-suburb-australia-situated-54941528.jpg?w=992", address: "Cnr Orpen Rd &, Letaba Rd, Oakdene, Johannesburg, 2001" },
-        {id:2, name: "Emperors Palace", image: "https://imagenesyogonet.b-cdn.net/data/imagenes/2017/11/27/16390/1625228222-emperors-palace-sudafrica-04.jpg", address: "64 Jones Road, Kempton Park Johannesburg, South Africa"},
-        {id:3, name: "The Pavilion", image: "https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg", address: "The Pavilion Shopping Centre Jack Martens Drive Westville 3611"},
-    ]
-
-    return ( 
+  return (
     <>
-        <Navbar />
+      <Navbar />
 
-        <div className=''>
+      <h1 className="venueTitle">All Venues</h1>
+      
+      <main className="venuePage">
 
+        <div className="venueGrid">
+          <article className="venueCard">
+            <div>
+              <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
+            </div>
+
+            <div className="cardContent">
+              <div className="cardContentTop">
+                <p className="placeholder placePrice">R900</p>
+                <p className="placeholder placeRating">&#9733; 8.9</p>
+              </div>
+
+              <h2 className="placeholder placeholderTitle">The Pavilion</h2>
+
+              <div className="venueDetails">
+                <p className="venueLocation">The Pavilion Shopping Centre, Jack Martens Drive Westville, 3611</p>
+              </div>
+            </div>
+          </article>
         </div>
-    </> 
-    );
-}
- 
+
+        <div className="venueGrid">
+          <article className="venueCard">
+            <div>
+              <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
+            </div>
+
+            <div className="cardContent">
+              <div className="cardContentTop">
+                <p className="placeholder placePrice">R900</p>
+                <p className="placeholder placeRating">&#9733; 8.9</p>
+              </div>
+
+              <h2 className="placeholder placeholderTitle">The Pavilion</h2>
+
+              <div className="venueDetails">
+                <p className="venueLocation">The Pavilion Shopping Centre, Jack Martens Drive Westville, 3611</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div className="venueGrid">
+          <article className="venueCard">
+            <div>
+              <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
+            </div>
+
+            <div className="cardContent">
+              <div className="cardContentTop">
+                <p className="placeholder placePrice">R900</p>
+                <p className="placeholder placeRating">&#9733; 8.9</p>
+              </div>
+
+              <h2 className="placeholder placeholderTitle">The Pavilion</h2>
+
+              <div className="venueDetails">
+                <p className="venueLocation">The Pavilion Shopping Centre, Jack Martens Drive Westville, 3611</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+      </main>
+
+      <main className="venuePage">
+
+        <div className="venueGrid">
+          <article className="venueCard">
+            <div>
+              <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
+            </div>
+
+            <div className="cardContent">
+              <div className="cardContentTop">
+                <p className="placeholder placePrice">R900</p>
+                <p className="placeholder placeRating">&#9733; 8.9</p>
+              </div>
+
+              <h2 className="placeholder placeholderTitle">The Pavilion</h2>
+
+              <div className="venueDetails">
+                <p className="venueLocation">The Pavilion Shopping Centre, Jack Martens Drive Westville, 3611</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div className="venueGrid">
+          <article className="venueCard">
+            <div>
+              <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
+            </div>
+
+            <div className="cardContent">
+              <div className="cardContentTop">
+                <p className="placeholder placePrice">R900</p>
+                <p className="placeholder placeRating">&#9733; 8.9</p>
+              </div>
+
+              <h2 className="placeholder placeholderTitle">The Pavilion</h2>
+
+              <div className="venueDetails">
+                <p className="venueLocation">The Pavilion Shopping Centre, Jack Martens Drive Westville, 3611</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div className="venueGrid">
+          <article className="venueCard">
+            <div>
+              <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
+            </div>
+
+            <div className="cardContent">
+              <div className="cardContentTop">
+                <p className="placeholder placePrice">R900</p>
+                <p className="placeholder placeRating">&#9733; 8.9</p>
+              </div>
+
+              <h2 className="placeholder placeholderTitle">The Pavilion</h2>
+
+              <div className="venueDetails">
+                <p className="venueLocation">The Pavilion Shopping Centre, Jack Martens Drive Westville, 3611</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+      </main>
+
+    
+    </>
+  );
+};
+
 export default Venues;
