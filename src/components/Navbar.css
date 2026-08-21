@@ -13,7 +13,7 @@ nav {
 .navLogo{
     width: 100px;
     height: auto;
-    
+    filter:invert(100%)
 }
 
 .navLink {
