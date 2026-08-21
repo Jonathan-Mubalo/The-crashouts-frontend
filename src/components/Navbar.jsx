@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import Logo from "../assets/Logo.png"
 
 function Navbar() {
 
   // const [userRole, setUserRole] = useState();
   const [navDisplay, setNavDisplay] = useState(<nav>
+    <Link to="/"><img src={Logo} alt="Logo" className="navLogo" /></Link>
     <Link className="navLink" to="/">Home</Link>
     <Link className="navLink" to="/Events">Events</Link>
     <Link className="navLink" to="/SeatBooking">My Bookings</Link>
@@ -36,6 +38,7 @@ function Navbar() {
 
           setNavDisplay(
             <nav>
+              <Link to="/"><img src={Logo} alt="Logo" className="navLogo" /></Link>
               <Link className="navLink" to="/">Home</Link>
               <Link className="navLink" to="/Events">Events</Link>
               {/* <Link className="navLink" to="/users">Users</Link> */}
@@ -53,6 +56,7 @@ function Navbar() {
           // return (
           setNavDisplay(
             <nav>
+              <Link to="/"><img src={Logo} alt="Logo" className="navLogo" /></Link>
               <Link className="navLink" to="/">Home</Link>
               <Link className="navLink" to="/Events">Events</Link>
               <Link className="navLink" to="/Venues">Venues</Link>

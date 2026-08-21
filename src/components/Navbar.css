@@ -10,6 +10,12 @@ nav {
     background-color: #2563eb;
 }
 
+.navLogo{
+    width: 100px;
+    height: auto;
+    
+}
+
 .navLink {
     text-decoration: none;
     color: #fff;
