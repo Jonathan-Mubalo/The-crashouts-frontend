@@ -4,8 +4,6 @@ import Navbar from "../components/Navbar";
 
 function RegisterVenue() {
 
-  const result = useRef();
-
   // Needed to change the useState name from "formDate" to "formData" because the forms are using "formData" but the useState created was named "formDate"
   const [formData, setFormData] = useState({
     venueName: "",
@@ -71,11 +69,7 @@ function RegisterVenue() {
 
     const data = await response.json();
 
-    if(data.message){
-    result.current.innerText = data.message;
-    }
-
-const actualSubmission = submissionData.entries;
+   const actualSubmission = submissionData.entries;
  for (const [key, value] of submissionData.entries()) {
     console.log(key, value);
 }

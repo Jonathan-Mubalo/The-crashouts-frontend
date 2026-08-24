@@ -149,11 +149,13 @@ const Venues = () => {
 </header>
       
       <main className="venuePage">
+{ allVenues && allVenues.map( (venue) => {
 
-        <div className="venueGrid">
+
+   return(   <div className="venueGrid" key={venue["_id"]}>
           <article className="venueCard">
             <div>
-              <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
+              <img src={venue.images[0]} />
             </div>
 
             <div className="cardContent">
@@ -162,20 +164,49 @@ const Venues = () => {
                 <p className="placeholder placeRating">&#9733; 8.9</p>
               </div>
 
-              <h2 className="placeholder placeholderTitle">The Pavilion</h2>
+              <h2 className="placeholder placeholderTitle">{venue.venueName}</h2>
 
               <div className="venueDetails">
-                <p className="venueLocation">The Pavilion Shopping Centre, Jack Martens Drive Westville, 3611</p>
+                <p className="venueLocation">{venue.address}</p>
 
-              <div className="venueActions">
-                  <button className="bookNowBtn"> Book Now </button>
+           
 
-                  <button className="editBtn"> Edit </button>
+              </div>
+                 <div className="venuePageActions">
+                  <button className="venueDetailsBtn" id={venue["_id"]}> Venue details </button>
 
-                  <button className="deleteBtn"> Delete </button>
+
                 </div>
+            </div>
+          </article>
+        </div>
+ ) })
+}
+        {/* <div className="venueGrid">
+          <article className="venueCard">
+            <div>
+              <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
+            </div>
+
+            <div className="cardContent">
+              <div className="cardContentTop">
+                <p className="placeholder placePrice">R900</p>
+                <p className="placeholder placeRating">&#9733; 8.9</p>
+              </div>
+
+              <h2 className="placeholder placeholderTitle">The Pavilion</h2>
+
+              <div className="venueDetails">
+                <p className="venueLocation">The Pavilion Shopping Centre, Jack Martens Drive Westville, 3611</p>
+
+           
 
               </div>
+                 <div className="venuePageActions">
+                  <button className="venueDetailsBtn"> Venue details </button>
+
+
+                </div>
             </div>
           </article>
         </div>
@@ -293,7 +324,7 @@ const Venues = () => {
               </div>
             </div>
           </article>
-        </div>
+        </div> */}
 
       </main>
     <Footer />

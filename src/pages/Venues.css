@@ -119,6 +119,27 @@
   transition: background-color 0.2s ease;
 }
 
+.venuePageActions{
+  display: block;
+}
+
+.venueDetailsBtn {
+  width: 80%;
+  padding: 5px 1px;
+  margin-top: 15px;
+  margin-left: 10%;
+  margin-right: 10%;
+  border: none;
+  border-radius: 6px;
+  background-color: #24599c;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  height: 40px
+}
+
 .bookNowBtn:hover {
   background-color: #3966a0;
 }
