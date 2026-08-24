@@ -47,6 +47,7 @@ function Navbar() {
               <Link className="navLink" to="/RegisterVenue">My Venues</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
               <Link className="navLink" to="/Contact">Contact</Link>
+              <Link className="navLink" to="/Dashboard">Dashboard</Link>
             </nav>
           )
           // );

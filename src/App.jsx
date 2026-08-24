@@ -15,6 +15,7 @@ import SpecificEvent from './context/SpecificEvent'
 import Contact from './pages/Contact'
 import Venues from './pages/Venues'
 import PageNotFound from './pages/PageNotFound'
+import Dashboard from './pages/Dashboard'
 
 function App() {
   return (
@@ -63,9 +64,16 @@ function App() {
           <Route path="/UserProfile" element={<ProtectedRoute>
             <UserProfile />
           </ProtectedRoute>} />
+
+          <Route path="/Dashboard" element={<ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>} />
+
           <Route path="/UserRole" element={<RestrictedAccess>
             <UserRole />
           </RestrictedAccess>} />
+
+          
 
         </Routes>
       </BrowserRouter>
