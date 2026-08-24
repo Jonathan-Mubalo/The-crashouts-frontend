@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import "./Dashboard.css"
 import React from 'react'
 import { useState } from "react";
+import Logo from "../assets/Logo.png"
 
 const Dashboard = () =>{
 
@@ -64,15 +65,59 @@ const ownersData = [{
         owner.email.toLowerCase().includes(search.toLowerCase())
     );
 
-    return(
-        <>
+   return (
         <div className="dashboard">
-            its working
+
+            <aside className="sidebar">
+
+                <div className="logo">
+                  <img src={Logo} alt="Logo" className="navLogo" />
+                </div>
+
+                <nav className="sidebar-menu">
+
+                    <a href="#" className="menu-item active">
+                        <span className="dashboard-icon"></span>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="#" className="menu-item">
+                        <span className="dashboard-icon"></span>
+                        <span>Users</span>
+                    </a>
+
+                    <a href="#" className="menu-item">
+                        <span className="dashboard-icon"></span>
+                        <span>Hotel Owners</span>
+                    </a>
+
+                    <a href="#" className="menu-item">
+                        <span className="dashboard-icon"></span>
+                        <span>Booking Details</span>
+                    </a>
+
+                    <div className="menu-spacer"></div>
+
+                    <a href="#" className="menu-item">
+                        <span className="dashboard-icon"></span>
+                        <span>Help</span>
+                    </a>
+
+                    <a href="#" className="menu-item">
+                        <span className="dashboard-icon"></span>
+                        <span>Setting</span>
+                    </a>
+
+                </nav>
+
+            </aside>
+
+
+            <main className="dashboard-main">
+
+            </main>
         </div>
-        </>
-    )
-
-}
-
+    );
+};
 export default Dashboard;
 
