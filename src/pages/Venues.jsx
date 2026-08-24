@@ -14,6 +14,11 @@ const Venues = () => {
   // STATE VARIABLE THAT IS USED TO STORE ALL OF THE VENUES THAT ARE AVAILABLE
   const [myVenues, setMyVenues] = useState();
 
+  // USEREF TO CONTROL THE VENUE BOOKING DIALOD DISPLAY
+const eventDialog = useRef();
+
+
+
   // COLLECTING ALL OF THE AVAILABLE VENUES FROM THE VENUES COLLECTION
   useEffect(() => {
 
@@ -124,6 +129,12 @@ const Venues = () => {
 
   }, [])
 
+  // FUNCTION USED TO DISPLAY THE DIALOG
+
+  const displayDialog = () => {
+    eventDialog.current.showModal();
+  }
+
   return (
     <>
       <Navbar />
@@ -148,6 +159,32 @@ const Venues = () => {
 
   </div>
 </header>
+<dialog className="eventBooking_dialog" ref={eventDialog}>
+<form className="venue_eventBookingForm">
+<h1>Event Title</h1>
+  <h3>Event address</h3>
+  <label htmlFor="venue_EventName">Event Name</label>
+  <input id="venue_EventName" type="text" placeholder="Spiderman No way home" required />
+  <label htmlFor="venue_EventDescription" >Provide a short description of the event taking place</label>
+  <textarea id="venue_EventDescription" rows="5" cols="50"  minLength="30" placeholder="Come and watch the premiere of spiderman brand new day; where he tries to live as the neighbourhoods friendly spiderman; but no one seems to remember him..."  required ></textarea>
+  <label htmlFor="seatPrice">Price per seat</label>
+  <input id="venue_EventPrice" type="number" placeholder="100" />
+  <label htmlFor="venue_eventDate">Select your event date</label>
+  <input type="date" id="venue_eventDate" required />
+  <h3> Payment details to book the venue</h3>
+  <p>Venue booking price "Actual price"</p>
+  <label htmlFor="venue_CardNumber">Card number</label>
+  <input id="venue_CardNumber" type="text" placeholder="0000 0000 0000" required minLength="14" maxLength="14" />
+  <label htmlFor="venue_ExpireryDate" >Card expiration date</label>
+  <input id="venue_ExpireryDate" type="text" placeholder="YY/MM" required />
+  <label htmlFor="venue_CardCVV">CVV</label>
+  <input type="number" id="venue_CardCVV" placeholder="000" required />
+  <section>
+  <button type="submit" className="event_venueBookingBtn">Book event</button>
+  <button type="submit" className="event_venueBookingBtn" onClick={()=>{ return eventDialog.current.close() }}>Cancel</button>
+ </section>
+  </form>
+</dialog>
       
       <main className="venuePage">
 { allVenues && allVenues.map( (venue) => {
@@ -173,11 +210,10 @@ const Venues = () => {
            
 
               </div>
-                 <div className="venuePageActions">
-                  <button className="venueDetailsBtn" id={venue["_id"]}> Venue details </button>
-
-
-                </div>
+                 <div className="venuePageActions" id={venue["_id"]} >
+                  <button className="venueDetailsBtn" onClick={ displayDialog } > Book venue </button>
+                  <button className="venueDetailsBtn"  > Venue details </button>
+               </div>
             </div>
           </article>
         </div>
