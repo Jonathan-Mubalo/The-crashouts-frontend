@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer"
 import "./Venues.css";
+import GoogleMap from "../components/GoogleMap";
 
 const Venues = () => {
 
@@ -325,7 +326,7 @@ const Venues = () => {
             </div>
           </article>
         </div> */}
-
+      <GoogleMap />
       </main>
     <Footer />
     </>
