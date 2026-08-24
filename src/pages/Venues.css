@@ -211,6 +211,7 @@ color: rgb(6, 6, 100);
 
 }
 
+
 /* VENUE BOOKING BTN */
 
 .event_venueBookingBtn{
@@ -221,8 +222,6 @@ margin: 10px 10px 7px;
 border-radius: 10px;
 width: 150px;
 }
-
-
 
 @media (max-width: 900px) {
   .venuePage {
