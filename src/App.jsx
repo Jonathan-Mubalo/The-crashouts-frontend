@@ -14,6 +14,7 @@ import SeatBooking from './pages/SeatBooking'
 import SpecificEvent from './context/SpecificEvent'
 import Contact from './pages/Contact'
 import Venues from './pages/Venues'
+import PageNotFound from './pages/PageNotFound'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/Login" element={<Login />} />
           <Route path="/Signin" element={<SignIn />} />
+          <Route path="*" element={<PageNotFound />} />
 
           <Route path="/" element={<ProtectedRoute>
             <Home />
