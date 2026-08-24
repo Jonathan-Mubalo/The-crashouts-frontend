@@ -91,7 +91,8 @@ function RegisterVenue() {
         facilities: "",
         noOfSeats: "",
         noOfRows: "",
-        noOfColumns: ""
+        noOfColumns: "",
+        venueBookingPrice: ""
       }
       )
     });
@@ -241,8 +242,8 @@ function RegisterVenue() {
                   <label htmlFor="venueBookingPrice">Venue booking price</label>
                   <input
                     type="number"
-                    id="noOfColumns"
-                    placeholder="e.g 250"
+                    id="venueBookingPrice"
+                    placeholder="e.g 25000"
                     value={formData.venueBookingPrice}
                     onChange={handleChange}
                     required
