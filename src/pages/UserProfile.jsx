@@ -1,12 +1,164 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
+import "./UserProfile.css"
+
 const UserProfile = () => {
-    return ( 
+
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    return (
         <>
-        <Navbar />
-        <h1>User Profile page</h1>
+            <Navbar />
+
+            <div className="user-profile">
+
+                <div className="profile-header">
+                    <h1>Hi Laura</h1>
+                </div>
+
+                <div className="profile-section">
+
+                    <div className="profile-picture">
+                        <div className="profile-head"></div>
+                        <div className="profile-body"></div>
+                    </div>
+
+                    <h2>Laura Malengi</h2>
+                    <p>User</p>
+
+                </div>
+
+                <div className="profile-card">
+
+                    <div className="profile-message">
+                        Your profile information is managed by church administrators.
+                        <br />
+                        You can only change your email, number and password.
+                    </div>
+
+                    <div className="profile-details">
+
+                        <div className="profile-field">
+                            <label>Fullname</label>
+                            <input
+                                type="text"
+                                value="Laura malengi"
+                                readOnly
+                            />
+                        </div>
+
+                        <div className="profile-field">
+                            <label>Gender</label>
+                            <input
+                                type="text"
+                                value="Female"
+                                readOnly
+                            />
+                        </div>
+
+                        <div className="profile-field">
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                value="lauramalengi06@gmail.com"
+                                readOnly
+                            />
+                        </div>
+
+                        <div className="profile-field">
+                            <label>Number</label>
+                            <input
+                                type="text"
+                                value="067800062"
+                                readOnly
+                            />
+                        </div>
+
+                    </div>
+
+                    <div className="advanced-settings">
+
+                        <div className="advanced-heading">
+                            <h2>Advanced Settings</h2>
+                            <span>(Change Password)</span>
+                        </div>
+
+
+                        <div className="password-container">
+
+                            <div className="current-password">
+                                <label>Current Password</label>
+
+                                <input
+                                    type="password"
+                                />
+                            </div>
+
+                            <div className="password-row">
+
+                                <div className="password-field">
+                                    <label>New Password</label>
+
+                                    <div className="password-input">
+                                        <input
+                                            type={
+                                                showNewPassword
+                                                    ? "text"
+                                                    : "password"
+                                            }
+                                        />
+
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setShowNewPassword(
+                                                    !showNewPassword
+                                                )
+                                            }
+                                        >
+                                            {showNewPassword ? "hide" : "show"}
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                                <div className="password-field">
+                                    <label>New Password</label>
+
+                                    <div className="password-input">
+                                        <input
+                                            type={
+                                                showConfirmPassword
+                                                    ? "text"
+                                                    : "password"
+                                            }
+                                        />
+
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setShowConfirmPassword(
+                                                    !showConfirmPassword
+                                                )
+                                            }
+                                        >
+                                            {showConfirmPassword ? "hide" : "show"}
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
         </>
-     );
-}
+    );
+};
  
 export default UserProfile;
