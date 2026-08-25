@@ -183,6 +183,14 @@ function Events() {
 
               {allEventsData && allEventsData.map((event) => {
 
+              // gets the events address and displays the directions
+
+                const handleGetDirections = (address) => {
+                const encodedAddress = encodeURIComponent(address);
+                const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
+                 window.open(directionsUrl, '_blank');
+              };
+
                 return (<div className="eventCard" key={event._id}>
                   <div className="eventImageWrapper">
                     <img src={event.image} alt={event.title} className="eventImage" />
@@ -194,6 +202,8 @@ function Events() {
                     <div>
                       <span className="eventDate">{event.eventDate}</span>
                       <button className="mainBtn infoBtn" id={event._id} onClick={displaySeatBooking}>Book a seat</button>
+
+                      <button className="mainBtn directionsBtn" onClick={() => handleGetDirections(event.address)}>Get Directions</button>
                     </div>
                   </div>
                 </div>)
