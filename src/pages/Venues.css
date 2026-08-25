@@ -185,6 +185,10 @@ border-radius: 10px;
 
 } 
 
+.venue_eventBookingForm p{
+  margin-top: 8px;
+}
+
 .venue_eventBookingForm h1, .venue_eventBookingForm h3{
   margin-top: 10px;
 }
@@ -209,6 +213,12 @@ color: rgb(6, 6, 100);
   border: 1px solid var(--buttonBlue);
   background-color: rgb(202, 223, 231);
 
+}
+
+.venue_eventbookingPriceDisplay{
+font-family: italics;  
+color: var(--buttonBlue);
+font-weight: 600;
 }
 
 
