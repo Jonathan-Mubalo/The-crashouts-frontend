@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import { EventContext } from "../context/SpecificEvent";
 import './Events.css';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer'
 
 function Events() {
 
@@ -261,7 +262,9 @@ function Events() {
           </section>
         )}
       </main>
+      <Footer />
     </div>
+    
   )
 }
 
