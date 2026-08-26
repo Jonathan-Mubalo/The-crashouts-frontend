@@ -49,6 +49,7 @@ function Navbar() {
               <Link className="navLink" to="/Contact">Contact</Link>
               <Link className="navLink" to="/Dashboard">Dashboard</Link>
               <Link className="navLink" to="/DisplayVenue">DisplayVenue</Link>
+              <Link className="navLink" to="/VenueUpdated">VenueUpdated</Link>
             </nav>
           )
           // );
