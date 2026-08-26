@@ -5,12 +5,10 @@ import Logo from "../assets/Logo.png"
 
 function Navbar() {
 
-  // const [userRole, setUserRole] = useState();
   const [navDisplay, setNavDisplay] = useState(<nav>
     <Link to="/"><img src={Logo} alt="Logo" className="navLogo" /></Link>
     <Link className="navLink" to="/">Home</Link>
     <Link className="navLink" to="/Events">Events</Link>
-    {/* <Link className="navLink" to="/SeatBooking">My Bookings</Link> */}
     <Link className="navLink" to="/UserProfile">Profile</Link>
     <Link className="navLink" to="/Contact">Contact</Link>
   </nav>);
@@ -29,20 +27,15 @@ function Navbar() {
           });
 
         const data = await response.json();
-        // setUserRole(data.role);
-        // console.log("The current role: ", data.role)
-        // console.log("The current message: ", data.message)
+  
 
         if (data.role === "admin") {
-          // return (
-
+        
           setNavDisplay(
             <nav>
               <Link to="/"><img src={Logo} alt="Logo" className="navLogo" /></Link>
               <Link className="navLink" to="/">Home</Link>
               <Link className="navLink" to="/Events">Events</Link>
-              {/* <Link className="navLink" to="/users">Users</Link> */}
-              {/* <Link className="navLink" to="/SeatBooking">Booking</Link> */}
               <Link className="navLink" to="/Venues">Venues</Link>
               <Link className="navLink" to="/RegisterVenue">My Venues</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
@@ -52,11 +45,9 @@ function Navbar() {
               <Link className="navLink" to="/VenueUpdated">VenueUpdated</Link>
             </nav>
           )
-          // );
         }
 
         else if (data.role === "manager") {
-          // return (
           setNavDisplay(
             <nav>
               <Link to="/"><img src={Logo} alt="Logo" className="navLogo" /></Link>
@@ -64,11 +55,9 @@ function Navbar() {
               <Link className="navLink" to="/Events">Events</Link>
               <Link className="navLink" to="/Venues">Venues</Link>
               <Link className="navLink" to="/RegisterVenue">My Venues</Link>
-              {/* <Link className="navLink" to="/SeatBooking">Booking</Link> */}
               <Link className="navLink" to="/UserProfile">Profile</Link>
             </nav>
           )
-          // );
         }
 
         // else if (data.role === "customer") {
