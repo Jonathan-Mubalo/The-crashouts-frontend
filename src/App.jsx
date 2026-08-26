@@ -16,6 +16,7 @@ import Contact from './pages/Contact'
 import Venues from './pages/Venues'
 import PageNotFound from './pages/PageNotFound'
 import Dashboard from './pages/Dashboard'
+import DisplayVenue from './components/DisplayVenue'
 
 function App() {
   return (
@@ -67,6 +68,10 @@ function App() {
 
           <Route path="/Dashboard" element={<ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>} />
+
+           <Route path="/DisplayVenue" element={<ProtectedRoute>
+            <DisplayVenue />
           </ProtectedRoute>} />
 
           <Route path="/UserRole" element={<RestrictedAccess>
