@@ -47,31 +47,25 @@ const SeatBooking = () => {
     <>
       <Navbar />
       <div className="seatBookingPage">
-        {/* used ternary to make sures when pressing the browser it displays only the browser content and used the state "currentTab"*/}
         <main className="container mainContent">
-          {/* The grid in which the events will take placed in dynamically... I think, Jonathan and Laura please confirm ;) */}
           <section className="section">
             <section className="seatsDialog">
               <main className="dialog_main">
+                
                 <div className="bookingHeaderCard">
                   <h2 className="dialog_h1">Select Your Seat</h2>
-                  <p className="dialog_subtitle">
-                    Choose your preferred seat from the seating chart below.
-                  </p>
+                  <p className="dialog_subtitle">Choose your preferred spot from the seating chart below.</p>
                   <div className="screenIndicator">STAGE / SCREEN</div>
                 </div>
-                <div className="seatsGrid">
-                  {currentFilteredEvent &&
-                    currentFilteredEvent[0].seatArrangement.map((arr) => {
+
+                <div className="seatsGridContainer">
+                  <div className="seatsGrid">
+                    {currentFilteredEvent && currentFilteredEvent[0].seatArrangement.map((arr) => {
                       return (
                         <div className="seatRow" key={arr[0]["seat"]}>
                           {arr.map((seatObj) => {
                             return (
-                              <div
-                                key={seatObj.seat}
-                                className="seat"
-                                onClick={selectedSeat}
-                              >
+                              <div key={seatObj.seat} className="seat" onClick={selectedSeat}>
                                 <span>{seatObj.seat}</span>
                                 <span className="seatpricetag">R250</span>
                               </div>
@@ -80,74 +74,44 @@ const SeatBooking = () => {
                         </div>
                       );
                     })}
+                  </div>
                 </div>
 
                 <div className="legend">
                   <div className="seatStatus">
-                    <div
-                      className="statusItem"
-                      style={{ backgroundColor: "#e2e8f0" }}
-                    />{" "}
-                    Available
+                    <div className="statusItem" style={{ backgroundColor: '#e2e8f0' }} /> Available
                   </div>
                   <div className="seatStatus">
-                    <div
-                      className="statusItem"
-                      style={{ backgroundColor: "#4182ed" }}
-                    />{" "}
-                    Selected
+                    <div className="statusItem" style={{ backgroundColor: '#4182ed' }} /> Selected
                   </div>
                   <div className="seatStatus">
-                    <div
-                      className="statusItem"
-                      style={{ backgroundColor: "#072447" }}
-                    />{" "}
-                    Booked
+                    <div className="statusItem" style={{ backgroundColor: '#072447' }} /> Booked
                   </div>
                 </div>
 
-                <section className="singleEventDetails">
-                  {currentFilteredEvent &&
-                    currentFilteredEvent.map((event) => {
-                      return (
-                        <div className="singleEventCard" key={event._id}>
+                <section className="singleEventDetailsWrapper">
+                  {currentFilteredEvent && currentFilteredEvent.map((event) => {
+                    return (
+                      <div className="singleEventCard" key={event._id}>
+                        {event.image && (
                           <div className="singleEventImageWrapper">
-                            <img
-                              src={event.image}
-                              alt={event.title}
-                              className="singleEventImage"
-                            />
-                            {event.tag && (
-                              <span className="singleEventBagde">
-                                {event.tag}
-                              </span>
-                            )}
+                            <img src={event.image} alt={event.title} className="singleEventImage" />
+                            {event.tag && <span className="singleEventBadge">{event.tag}</span>}
                           </div>
-                          <div className="singleEventDetail">
-                            <h3 className="singleEventCardTitle">
-                              {event.venueName}
-                            </h3>
-                            <p className="singleEventCardLoaction">
-                              {event.address}
-                            </p>
-                            <div>
-                              <span className="singleEventDate">
-                                {event.eventDate}
-                              </span>
-                              {/* <button className="mainBtn infoBtn" id={event._id} onClick={dialogDisplay}>Book a seat</button> */}
-                            </div>
+                        )}
+                        <div className="singleEventDetailContent">
+                          <h3 className="singleEventCardTitle">{event.venueName || event.title}</h3>
+                          <p className="singleEventCardLocation">{event.address}</p>
+                          <div className="singleEventMeta">
+                            <span className="singleEventDate">{event.eventDate}</span>
                           </div>
                         </div>
-                      );
-                    })}
+                      </div>
+                    );
+                  })}
                 </section>
 
-                <button
-                  className="mainBtn infoBtn dialogBtn"
-                  onClick={() => {
-                    navigate(-1);
-                  }}
-                >
+                <button className="mainBtn infoBtn dialogBtn" onClick={() => { navigate(-1); }}>
                   Go back to events
                 </button>
               </main>
