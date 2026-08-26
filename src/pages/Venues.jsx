@@ -461,7 +461,6 @@ const bookVenue = async(event) =>{
             </div>
           </article>
         </div> */}
-        <GoogleMap />
       </main>
       <Footer />
     </>

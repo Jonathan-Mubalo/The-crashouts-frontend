@@ -9,7 +9,7 @@
 .currentEvents{
   display: grid;
   grid-template-columns: repeat(2,1fr);
-  border: 2px solid navy;
+  /* border: 2px solid navy; */
 }
 
 /* Header */
@@ -76,6 +76,7 @@
   font-weight: 600;
   margin-bottom: 20px;
   color: #0f172a;
+  text-align: center;
 }
 
 /* Filter Bar */
