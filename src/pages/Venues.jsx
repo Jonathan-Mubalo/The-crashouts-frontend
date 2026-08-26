@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer"
 import "./Venues.css";
+import './DisplayVenue.css';
 
 const Venues = () => {
 
@@ -10,11 +11,17 @@ const Venues = () => {
   // STATE VARIABLE THAT IS USED TO STORE ALL OF THE VENUES THAT ARE AVAILABLE
   const [allVenues, setAllVenues] = useState();
 
+  // DISPLAYING A VENUES DETAILS TO A MANAGER
+  const [venueDetails, setVenueDetails] = useState();
+
   // STATE VARIABLE THAT IS USED TO STORE ALL OF THE VENUES THAT ARE AVAILABLE
   const [myVenues, setMyVenues] = useState();
 
   // FILTERED VENUE TO BOOK
   const [bookedVenue, setBookedVenue] = useState()
+
+  // USEREF TO CONTROL THE VENUE DETAILS DISPLAY
+  const venueDetailsDialog = useRef();
 
   // USEREF TO CONTROL THE VENUE BOOKING DIALOD DISPLAY
   const eventDialog = useRef();
@@ -241,6 +248,19 @@ const Venues = () => {
     }
   }
 
+  // FUNCTION USED TO DISPLAY THE VENUE DETAILS DIALOG
+
+  const displayVenueDetailsDialog = (event) => {
+    const filteredVenue = allVenues.filter((venue) => { return venue["_id"] === event.target.parentElement.id })
+    console.log("filtered venue to display in the dialog: ", filteredVenue)
+    setVenueDetails(() => { return filteredVenue });
+    venueDetailsDialog.current.showModal();
+  }
+
+  const closeVenueDetailsDialog = () => {
+    venueDetailsDialog.current.close();
+  }
+
   return (
     <>
       <Navbar />
@@ -260,7 +280,7 @@ const Venues = () => {
           {/* Used to conditionally render the display of venues based on what you select */}
           <nav>
             <button className={`nav_btn ${currentTab === 'search' ? 'active' : ''}`} onClick={() => setCurrentTab('search')} > Browse Venues </button>
-            <button className={`nav_btn ${currentTab === 'history' ? 'active' : ''}`} onClick={() => setCurrentTab('history')} > Venue History </button>
+            <button className={`nav_btn ${currentTab === 'history' ? 'active' : ''}`} onClick={() => setCurrentTab('history')} > Personal Venues </button>
           </nav>
 
         </div>
@@ -325,6 +345,167 @@ const Venues = () => {
               </dialog>
 
 
+              {/* DIALOG USED TO DISPLAY A SPECIFIC VENUE */}
+              <dialog ref={venueDetailsDialog} className="venue-overlay" >
+                {venueDetails && venueDetails.map((venue) => {
+                  return (
+
+                    <div className="venue-details-panel" key={venue["_id"]}>
+
+                      <div className="venue-details-header">
+
+                        <div>
+                          <h2>Venue Details</h2>
+                          <p>View your venue information</p>
+                        </div>
+
+                        <button className="close-details"  >
+                          <span onClick={closeVenueDetailsDialog}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                              <path fill="currentColor" fillRule="evenodd" d="M2 12C2 6.485 6.485 2 12 2s10 4.485 10 10s-4.485 10-10 10S2 17.515 2 12m1.5 0c0 4.685 3.815 8.5 8.5 8.5s8.5-3.815 8.5-8.5s-3.815-8.5-8.5-8.5S3.5 7.315 3.5 12m8.5-1.06l3.22-3.22l1.06 1.06L13.06 12l3.22 3.22l-1.06 1.06L12 13.06l-3.22 3.22l-1.06-1.06L10.94 12L7.72 8.78l1.06-1.06z" clipRule="evenodd">
+
+                              </path>
+                            </svg>
+                          </span>
+                        </button>
+
+                      </div>
+
+                      <div className="venue-details-content">
+
+                        <div className="details-section">
+
+                          <h3>Venue Information</h3>
+
+                          { } <div className="details-grid">
+
+                            <div className="detail-item">
+                              <span>Venue Name</span>
+                              <strong>
+                                {venue.venueName}
+                              </strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Registration Number</span>
+                              <strong>
+                                {venue.registrationNo}
+                              </strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Contact Number</span>
+                              <strong>
+                                {venue.phoneNumber}
+                              </strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Address</span>
+                              <strong>
+                                {venue.address}
+                              </strong>
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        <div className="details-section">
+
+                          <h3>Venue Facilities</h3>
+
+                          <div className="detail-item full-width">
+
+                            <span>Facilities</span>
+
+                            <strong>
+                              {venue.facilities}
+                            </strong>
+
+                          </div>
+
+                        </div>
+
+                        <div className="details-section">
+
+                          <h3>Seating Information</h3>
+
+                          <div className="details-grid">
+
+                            <div className="detail-item">
+                              <span>Number of Seats</span>
+                              <strong>{venue.numberOfSeats}</strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Number of Rows</span>
+                              <strong>{venue.seatRows}</strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Number of Columns</span>
+                              <strong>{venue.seatColumns}</strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Venue Booking Price</span>
+                              <strong>R {venue.venueBookingPrice}</strong>
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        <div className="details-section">
+
+                          <h3>Venue Images</h3>
+
+                          <div className="venue-images">
+
+                            {venue.images.map((img, index) => {
+                              return (
+                                <div className="image-placeholder" key={index}>
+                                  <img src={img} className="venueDetailsImage" />
+                                </div>
+                              )
+                            })}
+
+                          </div>
+
+                        </div>
+
+                        <div className="details-section">
+
+                          <h3>Documents</h3>
+
+                          <div className="venue-documents">
+                            {venue.documents.map((document,index) => {
+                              return (
+                                <div className="document-item" key={index}>
+                                  <span><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 16 16"><g fill="#0c4196"><path d="M7 4a3 3 0 0 0 3 3h3v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h2zm-2.5 8a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0-2a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm6 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm-6-2a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1z"></path><path d="M13 6h-3a2 2 0 0 1-2-2V1z"></path></g></svg></span>
+                                  <a href={document} className="venueDocumentation">
+                                    {document.split("").slice(0,40).join("")}
+                                  </a>
+                                </div>
+                              )
+                            })}
+
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+                  )
+                })
+                }
+              </dialog>
+
+
+
               <main className="venuePage">
                 {allVenues && allVenues.map((venue) => {
 
@@ -351,7 +532,7 @@ const Venues = () => {
                         </div>
                         <div className="venuePageActions" id={venue["_id"]} >
                           <button className="venueDetailsBtn" onClick={displayDialog} > Book venue </button>
-                          <button className="venueDetailsBtn"  > Venue details </button>
+                          <button className="venueDetailsBtn" onClick={displayVenueDetailsDialog} > Venue details </button>
                         </div>
                       </div>
                     </article>
@@ -439,6 +620,168 @@ const Venues = () => {
             </>
           ) : (
             <>
+
+                          {/* DIALOG USED TO DISPLAY A SPECIFIC VENUE */}
+              <dialog ref={venueDetailsDialog} className="venue-overlay" >
+                {venueDetails && venueDetails.map((venue) => {
+                  return (
+
+                    <div className="venue-details-panel" key={venue["_id"]}>
+
+                      <div className="venue-details-header">
+
+                        <div>
+                          <h2>Venue Details</h2>
+                          <p>View your venue information</p>
+                        </div>
+
+                        <button className="close-details"  >
+                          <span onClick={closeVenueDetailsDialog}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                              <path fill="currentColor" fillRule="evenodd" d="M2 12C2 6.485 6.485 2 12 2s10 4.485 10 10s-4.485 10-10 10S2 17.515 2 12m1.5 0c0 4.685 3.815 8.5 8.5 8.5s8.5-3.815 8.5-8.5s-3.815-8.5-8.5-8.5S3.5 7.315 3.5 12m8.5-1.06l3.22-3.22l1.06 1.06L13.06 12l3.22 3.22l-1.06 1.06L12 13.06l-3.22 3.22l-1.06-1.06L10.94 12L7.72 8.78l1.06-1.06z" clipRule="evenodd">
+
+                              </path>
+                            </svg>
+                          </span>
+                        </button>
+
+                      </div>
+
+                      <div className="venue-details-content">
+
+                        <div className="details-section">
+
+                          <h3>Venue Information</h3>
+
+                          <div className="details-grid">
+
+                            <div className="detail-item">
+                              <span>Venue Name</span>
+                              <strong>
+                                {venue.venueName}
+                              </strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Registration Number</span>
+                              <strong>
+                                {venue.registrationNo}
+                              </strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Contact Number</span>
+                              <strong>
+                                {venue.phoneNumber}
+                              </strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Address</span>
+                              <strong>
+                                {venue.address}
+                              </strong>
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        <div className="details-section">
+
+                          <h3>Venue Facilities</h3>
+
+                          <div className="detail-item full-width">
+
+                            <span>Facilities</span>
+
+                            <strong>
+                              {venue.facilities}
+                            </strong>
+
+                          </div>
+
+                        </div>
+
+                        <div className="details-section">
+
+                          <h3>Seating Information</h3>
+
+                          <div className="details-grid">
+
+                            <div className="detail-item">
+                              <span>Number of Seats</span>
+                              <strong>{venue.numberOfSeats}</strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Number of Rows</span>
+                              <strong>{venue.seatRows}</strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Number of Columns</span>
+                              <strong>{venue.seatColumns}</strong>
+                            </div>
+
+                            <div className="detail-item">
+                              <span>Venue Booking Price</span>
+                              <strong>R {venue.venueBookingPrice}</strong>
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        <div className="details-section">
+
+                          <h3>Venue Images</h3>
+
+                          <div className="venue-images">
+
+                            {venue.images.map((img, index) => {
+                              return (
+                                <div className="image-placeholder" key={index}>
+                                  <img src={img} className="venueDetailsImage" />
+                                </div>
+                              )
+                            })}
+
+                          </div>
+
+                        </div>
+
+                        <div className="details-section">
+
+                          <h3>Documents</h3>
+
+                          <div className="venue-documents">
+                            {venue.documents.map((document,index) => {
+                              return (
+                                <div className="document-item" key={index}>
+                                  <span><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 16 16"><g fill="#0c4196"><path d="M7 4a3 3 0 0 0 3 3h3v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h2zm-2.5 8a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zm0-2a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm6 0a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zm-6-2a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1z"></path><path d="M13 6h-3a2 2 0 0 1-2-2V1z"></path></g></svg></span>
+                                  <a href={document} className="venueDocumentation">
+                                    {document.split("").slice(0,40).join("")}
+                                  </a>
+                                </div>
+                              )
+                            })}
+
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+                  )
+                })
+                }
+              </dialog>
+
+
+
               <main className="venuePage">
 
                 {myVenues && myVenues.map((venue, index) => {
@@ -465,7 +808,7 @@ const Venues = () => {
 
                         </div>
                         <div className="venuePageActions" id={venue["_id"]} >
-                          <button className="personalVenueDetailsBtn" onClick={displayDialog} > Venue details </button>
+                          <button className="personalVenueDetailsBtn" onClick={displayVenueDetailsDialog} > Venue details </button>
                           <section className="personalVenuesEditsBtnsContainer">
                             <button className="updateVenueBtn" id={venue["_id"]} > Update venue </button>
                             <button className="deleteVenueBtn" id={`${venue.venueName}${index}`} onClick={deletePersonalVenue} > Delete venue </button>
@@ -487,6 +830,6 @@ const Venues = () => {
 
     </>)
 }
-  
+
 
 export default Venues;
