@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from "../assets/Logo.png"
 import './Footer.css';
 
 function Footer() {
@@ -9,7 +10,7 @@ function Footer() {
         
         <div className="footerMain">
           <div className="footerLogo">
-            Reserve<span>X</span>
+           <img src={Logo} alt="Logo" className="navLogo" />
           </div>
 
           <p className="footerDetail">Attending an event, has never been this easy! Click, Tap, And Pay. Without the stress of inconvenience!</p>
