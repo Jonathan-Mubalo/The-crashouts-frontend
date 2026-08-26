@@ -17,6 +17,7 @@ import Venues from './pages/Venues'
 import PageNotFound from './pages/PageNotFound'
 import Dashboard from './pages/Dashboard'
 import DisplayVenue from './components/DisplayVenue'
+import VenueUpdated from './pages/VenueUpdated'
 
 function App() {
   return (
@@ -72,6 +73,10 @@ function App() {
 
            <Route path="/DisplayVenue" element={<ProtectedRoute>
             <DisplayVenue />
+          </ProtectedRoute>} />
+
+          <Route path="/VenueUpdated" element={<ProtectedRoute>
+            <VenueUpdated />
           </ProtectedRoute>} />
 
           <Route path="/UserRole" element={<RestrictedAccess>
