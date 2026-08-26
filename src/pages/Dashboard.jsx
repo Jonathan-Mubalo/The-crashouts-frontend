@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import "./Dashboard.css"
 import React from 'react'
 import { useState } from "react";
+import Footer from "../components/Footer"   
 import Logo from "../assets/Logo.png"
 
 const Dashboard = () =>{
@@ -266,9 +267,8 @@ const ownersData = [{
                         </div>
 
                     </section>
-
                 </section>
-
+                <Footer />
             </main>
 
         </div>
