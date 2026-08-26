@@ -45,17 +45,17 @@ const Checkout = () => {
 
   return (
     <div className="containerCheck">
-      <h2>Confirm Checkout</h2>
-      <form onSubmit={handlePayment}>
+      <h2 className="checkTitle">Confirm Checkout</h2>
+      <form onSubmit={handlePayment} className="formContainer">
         <div>
-          <label>Name:</label>
+          <label className="labelCheck">Name:</label>
           <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
         </div>
         <div>
-          <label>Email Address:</label>
+          <label className="labelCheck">Email Address:</label>
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </div>
-        <button type="submit"> Pay Now</button>
+        <button type="submit">Pay Now</button>
       </form>
     </div>
   );
