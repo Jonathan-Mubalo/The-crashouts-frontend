@@ -233,6 +233,67 @@ border-radius: 10px;
 width: 150px;
 }
 
+
+/* Personal venues styling */
+
+.personalVenueDetailsBtn {
+  width: 90%;
+  padding: 5px 1px;
+  margin-top: 15px;
+  margin-left: 5%;
+  margin-right: 5%;
+  border: none;
+  border-radius: 6px;
+  background-color: #24599c;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  height: 40px
+}
+/* Container for buttons used to delete or update venue */
+
+
+.personalVenuesEditsBtnsContainer{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 7px;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  height: 40px;
+}
+
+.deleteVenueBtn, .updateVenueBtn{
+  width: 48%;
+  border-radius: 10px;
+  padding: 10px 5px;
+}
+
+.updateVenueBtn{
+  color: white;
+  background-color: var(--buttonBlue);
+  border: black;
+}
+
+
+.deleteVenueBtn{
+  color: white;
+  background-color: rgb(145, 5, 5);
+  border: 1px solid black;
+}
+
+/* BUTTONS HOVERING EFFECT */
+
+.deleteVenueBtn:hover, .updateVenueBtn:hover, .personalVenueDetailsBtn:hover {
+transform: scale(1.05);
+border-color: black;
+}
+
+
+/* MEDIA QUERRIES */
+
 @media (max-width: 900px) {
   .venuePage {
     grid-template-columns: repeat(2, 1fr);

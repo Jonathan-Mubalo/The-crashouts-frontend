@@ -28,13 +28,13 @@ const Venues = () => {
   // Stores the price for booking a seat
   const eventSeatPrice = useRef();
 
-    // Stores the date when the event will take place 
-      const eventDate = useRef();
+  // Stores the date when the event will take place 
+  const eventDate = useRef();
 
-      // MANAGERS CARD DETAILS WHEN OOKING AN EVENT
-      const cardNumber = useRef();
-      const cardExpireryDate = useRef();
-      const cardCVV = useRef();
+  // MANAGERS CARD DETAILS WHEN OOKING AN EVENT
+  const cardNumber = useRef();
+  const cardExpireryDate = useRef();
+  const cardCVV = useRef();
 
 
   // COLLECTING ALL OF THE AVAILABLE VENUES FROM THE VENUES COLLECTION
@@ -92,7 +92,7 @@ const Venues = () => {
 
 
   // USEEFFECT THAT WILL BE USED TO GET A USERS PERSONAL VENUES
-  
+
   useEffect(() => {
     const getMyPersonalVenues = async () => {
       try {
@@ -101,13 +101,12 @@ const Venues = () => {
 
         const response = await fetch(`//localhost:3000/myVenues/${accessTokenEmail}`)
         const data = await response.json();
-
         if (response.status === 200) {
           return setMyVenues(() => { return data.message })
         }
         else {
 
-          alert("Unable to collect all of the available prperties, please try again later.")
+          alert("Unable to collect all of the available properties, please try again later.")
           return setMyVenues(() => {
             return ([{
 
@@ -150,59 +149,97 @@ const Venues = () => {
   // FUNCTION USED TO DISPLAY THE DIALOG
 
   const displayDialog = (event) => {
-let selectedId = event.target.parentElement.id;
-console.log( "Selected property's id: ", selectedId);
+    let selectedId = event.target.parentElement.id;
+    console.log("Selected property's id: ", selectedId);
 
-const selectedVenue = allVenues.filter( (item) => {
-  return item["_id"] === selectedId;
-});
+    const selectedVenue = allVenues.filter((item) => {
+      return item["_id"] === selectedId;
+    });
 
-setBookedVenue( ()=>{ return selectedVenue[0] })
+    setBookedVenue(() => { return selectedVenue[0] })
     eventDialog.current.showModal();
   };
 
 
-// ENDPOINT USED TO BOOK A VENUE
+  // ENDPOINT USED TO BOOK A VENUE
 
-const bookVenue = async(event) =>{
-  try{
+  const bookVenue = async (event) => {
+    try {
 
-    event.preventDefault();
-    console.log("function is called")
-  const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
-  const response = await fetch(`//localhost:3000/bookVenue/${accessToken}`,{
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      ...bookedVenue,
-      eventName: eventName.current.value,
-      eventDescription: eventDescription.current.value,
-      eventSeatPrice: eventSeatPrice.current.value,
-      eventDate: eventDate.current.value
-    })
-  });
+      event.preventDefault();
+      console.log("function is called")
+      const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
+      const response = await fetch(`//localhost:3000/bookVenue/${accessToken}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...bookedVenue,
+          eventName: eventName.current.value,
+          eventDescription: eventDescription.current.value,
+          eventSeatPrice: eventSeatPrice.current.value,
+          eventDate: eventDate.current.value
+        })
+      });
 
-  const data = await response.json();
+      const data = await response.json();
 
-  if( response.status !== 200 ){
-    return alert(data.message);
+      if (response.status !== 200) {
+        return alert(data.message);
+      }
+      else {
+        eventName.current.value = "";
+        eventDescription.current.value = "";
+        eventSeatPrice.current.value = "";
+        eventDate.current.value = "";
+        cardNumber.current.value = "";
+        cardExpireryDate.current.value = "";
+        cardCVV.current.value = "";
+        return alert(data.message);
+
+      }
+    }
+    catch (error) {
+      console.error("Error occured while trying to book a venue: ", error);
+    }
   }
-  else{
-    eventName.current.value="";
-    eventDescription.current.value="";
-    eventSeatPrice.current.value="";
-     eventDate.current.value="";
-     cardNumber.current.value="";
-     cardExpireryDate.current.value="";
-     cardCVV.current.value="";
-    return alert(data.message);
+  // FUNCTION USED TO DELETE A PERSONAL VENUE 
 
+  const deletePersonalVenue = async (event) => {
+
+    try {
+
+      // THE VENUE ID REPRESENTS THE VENUE NAME AND THE INDEX OF THE WHOLE VENUE IN THE ARRAY AS THE LAST CHARACTER OF THE ID
+      const selectedVenueName = event.target.id;
+      console.log("selectedVenueName before the slicing effect: ", selectedVenueName)
+
+      // SPECIFICALLY GETTING THE VENUE INDEX FROM THE ID WITH THE VENUE NAME AND INDEX
+      const venueIndex = selectedVenueName.split("").slice(-1).join("");
+      console.log("Sliced index value: ", venueIndex)
+
+      // SPECIFICALLY GETTING THE VENUE NAME FROM THE ID WITH THE VENUE NAME AND INDEX
+      const venueName = selectedVenueName.split("").slice(0, -1).join("");
+      console.log("selectedVenueName after the slicing effect: ", venueName)
+
+
+      const response = await fetch(`//localhost:3000/removeMyVenue/${venueName}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "appliction/json" },
+      });
+
+      const data = await response.json();
+      if (response.status !== 200) {
+        return alert(data.message);
+      }
+      else {
+        let venuesUpdate = myVenues.splice((venueIndex), 1);
+        setMyVenues(() => { return [...myVenues] })
+        console.log(data.message)
+      }
+    }
+    catch (error) {
+      console.error("There was an error trying to delete your property: ", error);
+    }
   }
-  }
-  catch (error) {
-    console.error( "Error occured while trying to book a venue: ", error);
-  }
-}
 
   return (
     <>
@@ -220,7 +257,7 @@ const bookVenue = async(event) =>{
               <p>Venue History</p>
             )}
           </div>
-
+          {/* Used to conditionally render the display of venues based on what you select */}
           <nav>
             <button className={`nav_btn ${currentTab === 'search' ? 'active' : ''}`} onClick={() => setCurrentTab('search')} > Browse Venues </button>
             <button className={`nav_btn ${currentTab === 'history' ? 'active' : ''}`} onClick={() => setCurrentTab('history')} > Venue History </button>
@@ -228,37 +265,40 @@ const bookVenue = async(event) =>{
 
         </div>
       </header>
-      <dialog className="eventBooking_dialog" ref={eventDialog}>
 
+      <section>
+        {/* CONDITIONALLY RENDERING THE PAGE */}
+        <>
+          {(currentTab === 'search') ? (
+            <>
+              <dialog className="eventBooking_dialog" ref={eventDialog}>
 
-  <form className="venue_eventBookingForm" >
+                <form className="venue_eventBookingForm" >
+                  <h1>{bookedVenue && bookedVenue.venueName}</h1>
+                  <h3>{bookedVenue && bookedVenue.address}</h3>
+                  <label htmlFor="venue_EventName">Event Name</label>
+                  <input id="venue_EventName" type="text" placeholder="Spiderman No way home" ref={eventName} required />
+                  <label htmlFor="venue_EventDescription" >Provide a short description of the event taking place</label>
+                  <textarea id="venue_EventDescription" rows="5" cols="50" minLength="30" placeholder="Come and watch the premiere of spiderman brand new day; where he tries..." ref={eventDescription} required ></textarea>
+                  <label htmlFor="seatPrice">Price per seat</label>
+                  <input id="venue_EventPrice" type="number" placeholder="100" ref={eventSeatPrice} />
+                  <label htmlFor="venue_eventDate">Select your event date</label>
+                  <input type="date" id="venue_eventDate" ref={eventDate} required />
+                  <h3> Payment details to book the venue</h3>
+                  <p>Venue booking price: R<span className="venue_eventbookingPriceDisplay">{bookedVenue && bookedVenue.venueBookingPrice}</span></p>
+                  <label htmlFor="venue_CardNumber">Card number</label>
+                  <input id="venue_CardNumber" type="text" placeholder="0000 0000 0000" ref={cardNumber} required minLength="14" maxLength="14" />
+                  <label htmlFor="venue_ExpireryDate"  >Card expiration date</label>
+                  <input id="venue_ExpireryDate" type="text" placeholder="YY/MM" maxLength="5" minLength="5" ref={cardExpireryDate} required />
+                  <label htmlFor="venue_CardCVV">CVV</label>
+                  <input type="number" id="venue_CardCVV" ref={cardCVV} placeholder="000" maxLength="3" minLength="3" required />
+                  <section>
+                    <button type="button" className="event_venueBookingBtn" onClick={bookVenue} >Book event</button>
+                    <button type="button" className="event_venueBookingBtn" onClick={() => { return eventDialog.current.close() }}>Cancel</button>
+                  </section>
+                </form>
 
-    
-          <h1>{bookedVenue &&  bookedVenue.venueName}</h1>
-          <h3>{bookedVenue &&  bookedVenue.address}</h3>
-          <label htmlFor="venue_EventName">Event Name</label>
-          <input id="venue_EventName" type="text" placeholder="Spiderman No way home" ref={eventName} required />
-          <label htmlFor="venue_EventDescription" >Provide a short description of the event taking place</label>
-          <textarea id="venue_EventDescription" rows="5" cols="50" minLength="30" placeholder="Come and watch the premiere of spiderman brand new day; where he tries..." ref={eventDescription} required ></textarea>
-          <label htmlFor="seatPrice">Price per seat</label>
-          <input id="venue_EventPrice" type="number" placeholder="100" ref={eventSeatPrice} />
-          <label htmlFor="venue_eventDate">Select your event date</label>
-          <input type="date" id="venue_eventDate" ref={eventDate} required />
-          <h3> Payment details to book the venue</h3>
-          <p>Venue booking price: R<span className="venue_eventbookingPriceDisplay">{bookedVenue &&  bookedVenue.venueBookingPrice}</span></p>
-          <label htmlFor="venue_CardNumber">Card number</label>
-          <input id="venue_CardNumber" type="text" placeholder="0000 0000 0000" ref={cardNumber} required minLength="14" maxLength="14" />
-          <label htmlFor="venue_ExpireryDate"  >Card expiration date</label>
-          <input id="venue_ExpireryDate" type="text" placeholder="YY/MM" maxLength="5" minLength="5" ref={cardExpireryDate} required />
-          <label htmlFor="venue_CardCVV">CVV</label>
-          <input type="number" id="venue_CardCVV" ref={cardCVV} placeholder="000" maxLength="3" minLength="3" required />
-          <section>
-            <button type="button" className="event_venueBookingBtn" onClick={bookVenue} >Book event</button>
-            <button type="button" className="event_venueBookingBtn" onClick={() => { return eventDialog.current.close()}}>Cancel</button>
-          </section>
-        </form>
-
-        {/* <form className="venue_eventBookingForm">
+                {/* <form className="venue_eventBookingForm">
           <h1>Event Title</h1>
           <h3>Event address</h3>
           <label htmlFor="venue_EventName">Event Name</label>
@@ -282,43 +322,44 @@ const bookVenue = async(event) =>{
             <button type="submit" className="event_venueBookingBtn" onClick={() => { return eventDialog.current.close() }}>Cancel</button>
           </section>
         </form> */}
-      </dialog>
-
-      <main className="venuePage">
-        {allVenues && allVenues.map((venue) => {
+              </dialog>
 
 
-          return (<div className="venueGrid" key={venue["_id"]}>
-            <article className="venueCard">
-              <div>
-                <img src={venue.images[0]} />
-              </div>
-
-              <div className="cardContent">
-                <div className="cardContentTop">
-                  <p className="placeholder placePrice">R900</p>
-                  <p className="placeholder placeRating">&#9733; 8.9</p>
-                </div>
-
-                <h2 className="placeholder placeholderTitle">{venue.venueName}</h2>
-
-                <div className="venueDetails">
-                  <p className="venueLocation">{venue.address}</p>
+              <main className="venuePage">
+                {allVenues && allVenues.map((venue) => {
 
 
+                  return (<div className="venueGrid" key={venue["_id"]}>
+                    <article className="venueCard">
+                      <div>
+                        <img src={venue.images[0]} />
+                      </div>
 
-                </div>
-                <div className="venuePageActions" id={venue["_id"]} >
-                  <button className="venueDetailsBtn" onClick={displayDialog} > Book venue </button>
-                  <button className="venueDetailsBtn"  > Venue details </button>
-                </div>
-              </div>
-            </article>
-          </div>
-          )
-        })
-        }
-        {/* <div className="venueGrid">
+                      <div className="cardContent">
+                        <div className="cardContentTop">
+                          <p className="placeholder placePrice">R{venue.venueBookingPrice}</p>
+                          <p className="placeholder placeRating">&#9733; 8.9</p>
+                        </div>
+
+                        <h2 className="placeholder placeholderTitle">{venue.venueName}</h2>
+
+                        <div className="venueDetails">
+                          <p className="venueLocation">{venue.address}</p>
+
+
+
+                        </div>
+                        <div className="venuePageActions" id={venue["_id"]} >
+                          <button className="venueDetailsBtn" onClick={displayDialog} > Book venue </button>
+                          <button className="venueDetailsBtn"  > Venue details </button>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                  )
+                })
+                }
+                {/* <div className="venueGrid">
           <article className="venueCard">
             <div>
               <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
@@ -370,74 +411,6 @@ const bookVenue = async(event) =>{
           </article>
         </div>
 
-        <div className="venueGrid">
-          <article className="venueCard">
-            <div>
-              <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
-            </div>
-
-            <div className="cardContent">
-              <div className="cardContentTop">
-                <p className="placeholder placePrice">R900</p>
-                <p className="placeholder placeRating">&#9733; 8.9</p>
-              </div>
-
-              <h2 className="placeholder placeholderTitle">The Pavilion</h2>
-
-              <div className="venueDetails">
-                <p className="venueLocation">The Pavilion Shopping Centre, Jack Martens Drive Westville, 3611</p>
-
-                <button className="bookNowBtn">Book Now</button>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div className="venueGrid">
-          <article className="venueCard">
-            <div>
-              <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
-            </div>
-
-            <div className="cardContent">
-              <div className="cardContentTop">
-                <p className="placeholder placePrice">R900</p>
-                <p className="placeholder placeRating">&#9733; 8.9</p>
-              </div>
-
-              <h2 className="placeholder placeholderTitle">The Pavilion</h2>
-
-              <div className="venueDetails">
-                <p className="venueLocation">The Pavilion Shopping Centre, Jack Martens Drive Westville, 3611</p>
-
-                <button className="bookNowBtn">Book Now</button>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div className="venueGrid">
-          <article className="venueCard">
-            <div>
-              <img src="https://images.squarespace-cdn.com/content/v1/64d31e9c57de6b03a09da696/abe71d5c-0319-43e7-bf67-36f9aa95652c/The_Pavilion_3.jpg" />
-            </div>
-
-            <div className="cardContent">
-              <div className="cardContentTop">
-                <p className="placeholder placePrice">R900</p>
-                <p className="placeholder placeRating">&#9733; 8.9</p>
-              </div>
-
-              <h2 className="placeholder placeholderTitle">The Pavilion</h2>
-
-              <div className="venueDetails">
-                <p className="venueLocation">The Pavilion Shopping Centre, Jack Martens Drive Westville, 3611</p>
-
-                <button className="bookNowBtn">Book Now</button>
-              </div>
-            </div>
-          </article>
-        </div>
 
         <div className="venueGrid">
           <article className="venueCard">
@@ -461,11 +434,58 @@ const bookVenue = async(event) =>{
             </div>
           </article>
         </div> */}
-        <GoogleMap />
-      </main>
-      <Footer />
-    </>
-  );
-};
+              </main>
+              <Footer />
+            </>
+          ) : (
+            <>
+              <main className="venuePage">
+
+                {myVenues && myVenues.map((venue, index) => {
+
+
+                  return (<div className="venueGrid" key={venue["_id"]}>
+                    <article className="venueCard">
+                      <div>
+                        <img src={venue.images[0]} />
+                      </div>
+
+                      <div className="cardContent">
+                        <div className="cardContentTop">
+                          <p className="placeholder placePrice">R{venue.venueBookingPrice}</p>
+                          <p className="placeholder placeRating">&#9733; 8.9</p>
+                        </div>
+
+                        <h2 className="placeholder placeholderTitle">{venue.venueName}</h2>
+
+                        <div className="venueDetails">
+                          <p className="venueLocation">{venue.address}</p>
+
+
+
+                        </div>
+                        <div className="venuePageActions" id={venue["_id"]} >
+                          <button className="personalVenueDetailsBtn" onClick={displayDialog} > Venue details </button>
+                          <section className="personalVenuesEditsBtnsContainer">
+                            <button className="updateVenueBtn" id={venue["_id"]} > Update venue </button>
+                            <button className="deleteVenueBtn" id={`${venue.venueName}${index}`} onClick={deletePersonalVenue} > Delete venue </button>
+                          </section>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                  )
+                })
+                }
+              </main>
+              <Footer />
+            </>
+          )
+          }
+        </>
+      </section>
+
+    </>)
+}
 
 export default Venues;
