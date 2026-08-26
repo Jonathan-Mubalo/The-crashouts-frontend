@@ -62,6 +62,10 @@ function RegisterVenue() {
       submissionData.append("documents", document);
     }
 
+    // if( submissionData.documents.length === 0 || submissionData.images.length === 0 ){
+    //   alert("Please upload the necessary documents and property images")
+    // }
+
     const accessTokenEmail = JSON.parse(sessionStorage.getItem("accessToken"));
 
     const response = await fetch(`http://localhost:3000/newVenue/${accessTokenEmail}`, {
@@ -149,11 +153,11 @@ function RegisterVenue() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="address">Address</label>
+                  <label htmlFor="address">Full Address</label>
                   <input
                     type="text"
                     id="address"
-                    placeholder="Location"
+                    placeholder="8 Albert street Townsview"
                     value={formData.address}
                     onChange={handleChange}
                     required
@@ -168,6 +172,7 @@ function RegisterVenue() {
                     accept="image/*"
                     multiple
                     onChange={handleFileChange}
+                    required
                   />
                 </div>
 
@@ -178,6 +183,7 @@ function RegisterVenue() {
                     id="documents"
                     multiple
                     onChange={handleFileChange}
+                    required
                   />
                 </div>
 
@@ -222,6 +228,7 @@ function RegisterVenue() {
                     onChange={handleChange}
                     required
                     min="1"
+                    max="26"
                   />
                 </div>
 
