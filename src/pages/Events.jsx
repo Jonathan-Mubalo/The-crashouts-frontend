@@ -1,36 +1,36 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import Navbar from '../components/Navbar';
+import Navbar from "../components/Navbar";
 import { EventContext } from "../context/SpecificEvent";
-import './Events.css';
-import { useNavigate } from 'react-router-dom';
+import "./Events.css";
+import { useNavigate } from "react-router-dom";
 
 function Events() {
-
   // THIS NAVIGATION ELEMENT IS USED TO NAVIGATE TO THE NEXT PAGE WHENEVER SOMEONE WANTS TO BOOK A SEAT
   const navigate = useNavigate();
 
-  const [currentTab, setCurrentTab] = useState('search');
+  const [currentTab, setCurrentTab] = useState("search");
 
-  // For the filter part to work 
-  const [choosenStatus, setChoosenStatus] = useState('all')
-  const [choosenSeat, setChoosenSeat] = useState('1')
-  const [choosenLocation, setChoosenLocation] = useState('all');
+  // For the filter part to work
+  const [choosenStatus, setChoosenStatus] = useState("all");
+  const [choosenSeat, setChoosenSeat] = useState("1");
+  const [choosenLocation, setChoosenLocation] = useState("all");
 
   // CONTEXT FILE STATE VARIABLES
-  const { setStoredEvent, allEventsData, setAllEventsData } = useContext(EventContext);
+  const { setStoredEvent, allEventsData, setAllEventsData } =
+    useContext(EventContext);
 
-
-  const [bookingHistoryData, setBookingHistoryData] = useState([{
-    _id: "qwerty78",
-    userName: "N/A",
-    venueName: "N/A",
-    address: "",
-    eventDate: "N/A",
-    seatNumber: [{ seat: "N/A" }],
-    bookingPrice: 0,
-    numberOfSeats: 0
-
-  }]);
+  const [bookingHistoryData, setBookingHistoryData] = useState([
+    {
+      _id: "qwerty78",
+      userName: "N/A",
+      venueName: "N/A",
+      address: "",
+      eventDate: "N/A",
+      seatNumber: [{ seat: "N/A" }],
+      bookingPrice: 0,
+      numberOfSeats: 0,
+    },
+  ]);
 
   // USE STATE USED TO FILTER AND STORE ALL OF THE INFORMATION OF AN EVENT THAT NEEDS TO BE VIEWED
   const [currentFilteredEvent, setCurrentFilteredEvent] = useState();
@@ -38,57 +38,44 @@ function Events() {
   // THE ENDPOINT FUNCTION THAT GETS ALL OF THE EVENTS
   useEffect(() => {
     const getBookingHistory = async () => {
-
       try {
-
         const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
-        console.log(accessToken)
-        const response = await fetch(`http://localhost:3000/seatPaymentsHistory/${accessToken}`,
+        console.log(accessToken);
+        const response = await fetch(
+          `http://localhost:3000/seatPaymentsHistory/${accessToken}`,
           {
             method: "GET",
-            headers: { "Content-Type": "application/json" }
-          }
-        )
+            headers: { "Content-Type": "application/json" },
+          },
+        );
 
         const data = await response.json();
         // console.log(data.message)
         if (response.status === 200) {
           setBookingHistoryData(data.seatHistory);
         }
+      } catch (error) {
+        console.error(
+          "There was a problem trying to get the users bookingHistory info",
+          error,
+        );
       }
-
-      catch (error) {
-        console.error("There was a problem trying to get the users bookingHistory info", error)
-      }
-    }
-    getBookingHistory()
+    };
+    getBookingHistory();
   }, []);
 
   const displaySeatBooking = (event) => {
     console.log(event.target.id);
-    setStoredEvent(event.target.id)
+    setStoredEvent(event.target.id);
     navigate("/SeatBooking");
-  }
-
-
-
-
-
-
-
-
-
-
-
-
+  };
 
   // const everyting = () => {
   //   console.log("currentFilteredEvent:", currentFilteredEvent);
   //   console.log("seatArrangement:", currentFilteredEvent?.seatArrangement);
   // }
 
-
-  // hardcoded locations and events 
+  // hardcoded locations and events
 
   // const availableEvents = [
 
@@ -111,38 +98,51 @@ function Events() {
 
   return (
     <div className="eventPage">
-
       <Navbar />
 
       <header className="eventsHeader">
         <div className="container headerSection">
-
           <div>
             <h1>Events</h1>
-            <p>Browse available events, choose your seat count, and explore venues.</p>
+            <p>
+              Browse available events, choose your seat count, and explore
+              venues.
+            </p>
           </div>
 
           {/* Works with the filter code to pull and bring up events as well as the user's booking history :) I'm so smart!! */}
           <nav>
-            <button className={`nav_btn ${currentTab === 'search' ? 'active' : ''}`} onClick={() => setCurrentTab('search')}>Browse Events</button>
+            <button
+              className={`nav_btn ${currentTab === "search" ? "active" : ""}`}
+              onClick={() => setCurrentTab("search")}
+            >
+              Browse Events
+            </button>
 
-            <button className={`nav_btn ${currentTab === 'history' ? 'active' : ''}`} onClick={() => setCurrentTab('history')}>Booking History</button>
+            <button
+              className={`nav_btn ${currentTab === "history" ? "active" : ""}`}
+              onClick={() => setCurrentTab("history")}
+            >
+              Booking History
+            </button>
           </nav>
         </div>
       </header>
 
       {/* used ternary to make sures when pressing the browser it displays only the browser content and used the state "currentTab"*/}
       <main className="container mainContent">
-        {currentTab === 'search' ? (
+        {currentTab === "search" ? (
           <>
-
             <section className="filterBar">
-
               <div className="filterItem">
                 <span className="filterIcon">Status</span>
                 <div className="filterWrapper">
                   <label>Status Location</label>
-                  <select className="filterDropdown" value={choosenStatus} onChange={(e) => setChoosenStatus(e.target.value)} >
+                  <select
+                    className="filterDropdown"
+                    value={choosenStatus}
+                    onChange={(e) => setChoosenStatus(e.target.value)}
+                  >
                     <option value="all">All Events</option>
                     <option value="active">Currently Happening</option>
                     <option value="upcoming">Coming Soon</option>
@@ -154,7 +154,11 @@ function Events() {
                 <span className="filterIcon">Seats</span>
                 <div className="filterWrapper">
                   <label>Number Of Seats</label>
-                  <select className="filterDropdown" value={choosenSeat} onChange={(e) => setChoosenSeat(e.target.value)} >
+                  <select
+                    className="filterDropdown"
+                    value={choosenSeat}
+                    onChange={(e) => setChoosenSeat(e.target.value)}
+                  >
                     {/*      {[...Array(10)].map((_, i) => (<option key={i + 1} value={i + 1}> {i + 1} {i === 0 ? 'Seat' : 'Seats'} </option>))}  */}
                   </select>
                 </div>
@@ -164,53 +168,77 @@ function Events() {
                 <span className="filterIcon">Location</span>
                 <div className="filterWrapper">
                   <label>Status Location</label>
-                  <select className="filterDropdown" value={choosenLocation} onChange={(e) => setChoosenLocation(e.target.value)} >
+                  <select
+                    className="filterDropdown"
+                    value={choosenLocation}
+                    onChange={(e) => setChoosenLocation(e.target.value)}
+                  >
                     {/*     <option value="all">All Locations</option>{dropLocation.map((locate, index) => (<option key={index} value={locate}>{locate}</option>))} */}
                   </select>
                 </div>
               </div>
 
-              <button className="mainBtn searchBtn">Search ({choosenSeat} Seats)</button>
+              <button className="mainBtn searchBtn">
+                Search ({choosenSeat} Seats)
+              </button>
             </section>
 
             {/* The grid in which the events will take placed in dynamically... I think, Jonathan and Laura please confirm ;) */}
 
             <h2 className="sectionTitle">
-              {choosenStatus === 'active' ? 'Currently Happening Events' : choosenStatus === 'upcoming' ? 'Coming Soon Events' : 'Available Events'}
+              {choosenStatus === "active"
+                ? "Currently Happening Events"
+                : choosenStatus === "upcoming"
+                  ? "Coming Soon Events"
+                  : "Available Events"}
             </h2>
             <section className="section currentEvents">
+              {allEventsData &&
+                allEventsData.map((event) => {
+                  // gets the events address and displays the directions
+                  const handleGetDirections = (address) => {
+                    const encodedAddress = encodeURIComponent(address);
+                    const interactiveMapUrl = `https://www.openstreetmap.org/search?query=${encodedAddress}`;
+                    window.open(interactiveMapUrl, "_blank");
+                  };
+                  return (
+                    <div className="eventCard" key={event._id}>
+                      <div className="eventImageWrapper">
+                        <img
+                          src={event.image}
+                          alt={event.title}
+                          className="eventImage"
+                        />
+                        {event.tag && (
+                          <span className="eventBagde">{event.tag}</span>
+                        )}
+                      </div>
+                      <div className="eventDetails">
+                        <h3 className="eventCardTitle">{event.venueName}</h3>
+                        <p className="eventCardLoaction">{event.address}</p>
+                        <div>
+                          <span className="eventDate">{event.eventDate}</span>
+                          <button
+                            className="mainBtn infoBtn"
+                            id={event._id}
+                            onClick={displaySeatBooking}
+                          >
+                            Book a seat
+                          </button>
 
-
-              {allEventsData && allEventsData.map((event) => {
-
-              // gets the events address and displays the directions
-
-                const handleGetDirections = (address) => {
-                const encodedAddress = encodeURIComponent(address);
-                const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
-                 window.open(directionsUrl, '_blank');
-              };
-
-                return (<div className="eventCard" key={event._id}>
-                  <div className="eventImageWrapper">
-                    <img src={event.image} alt={event.title} className="eventImage" />
-                    {event.tag && <span className="eventBagde">{event.tag}</span>}
-                  </div>
-                  <div className="eventDetails">
-                    <h3 className="eventCardTitle">{event.venueName}</h3>
-                    <p className="eventCardLoaction">{event.address}</p>
-                    <div>
-                      <span className="eventDate">{event.eventDate}</span>
-                      <button className="mainBtn infoBtn" id={event._id} onClick={displaySeatBooking}>Book a seat</button>
-
-                      <button className="mainBtn directionsBtn" onClick={() => handleGetDirections(event.address)}>Get Directions</button>
+                          <button
+                            className="mainBtn directionsBtn"
+                            onClick={() => handleGetDirections(event.address)}
+                          >
+                            Get Directions
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>)
-                // ))}
-                // </div>
-              })
-              }
+                  );
+                  // ))}
+                  // </div>
+                })}
 
               {/* {filteredLocation.length === 0 ? ( <p className="noMatch">No events found.</p> ) : (
                 <div className="eventsGrid">
@@ -232,37 +260,47 @@ function Events() {
                   ))}
                 </div>
               )} */}
-
-
             </section>
           </>
-          // booking history part of the page, is now  dynamic and fetching from the database 
         ) : (
+          // booking history part of the page, is now  dynamic and fetching from the database
           <section className="section">
             <h2 className="section-title">Booking History</h2>
             <div className="bookingHistoryList">
-              {bookingHistoryData && bookingHistoryData.map((booking) => {
-                return (
-                  <div className="bookingHistoryCard" key={booking._id}>
-                    <div className="bookingInfo">
-                      <span className="bookingReference">Booked by: {booking.userName}</span>
-                      <h3>{booking.venueName}</h3>
-                      <p>{booking.address} - {booking.eventDate}</p>
-                      <p className="numberOfSeats">Seats:{booking.seatNumber.map((item) => { return (` ${item.seat}`) })}</p>
+              {bookingHistoryData &&
+                bookingHistoryData.map((booking) => {
+                  return (
+                    <div className="bookingHistoryCard" key={booking._id}>
+                      <div className="bookingInfo">
+                        <span className="bookingReference">
+                          Booked by: {booking.userName}
+                        </span>
+                        <h3>{booking.venueName}</h3>
+                        <p>
+                          {booking.address} - {booking.eventDate}
+                        </p>
+                        <p className="numberOfSeats">
+                          Seats:
+                          {booking.seatNumber.map((item) => {
+                            return ` ${item.seat}`;
+                          })}
+                        </p>
+                      </div>
+                      <div className="bookingStatusWrapper">
+                        <span className="badgeIsConfirmed">Confirmed</span>
+                        <span className="totalAmount">
+                          Total: R{booking.bookingPrice * booking.numberOfSeats}
+                        </span>
+                      </div>
                     </div>
-                    <div className="bookingStatusWrapper">
-                      <span className="badgeIsConfirmed">Confirmed</span>
-                      <span className="totalAmount">Total: R{booking.bookingPrice * booking.numberOfSeats}</span>
-                    </div>
-                  </div>
-                )
-              })}
+                  );
+                })}
             </div>
           </section>
         )}
       </main>
     </div>
-  )
+  );
 }
 
 export default Events;
