@@ -26,7 +26,7 @@ const SeatBooking = () => {
   const [seatPrice, setSeatPrice] = useState(0);
 
   // STATE VARIALE THAT STORES ALL OF THE BOOKED SEATS IN AN ARRAY
-  const [ bookedSeats, setBookedSeats ]= useState([]);
+  const [bookedSeats, setBookedSeats] = useState([]);
 
   // DISPLAYING THE RIGHT EVENTS INFORMATION INSIDE THE DIALOG TAG BY FILTERING AND EVENT BASED ON THE ID THAT THE BUTTON HAS
   // console.log("Id used to navigate to this page: ", storedEvent);
@@ -68,27 +68,86 @@ const SeatBooking = () => {
     let seat = event.target.innerText;
     if (bookedSeats.includes(seat)) {
 
-    console.log("remove");
+      console.log("remove");
       event.target.style.backgroundColor = '#e2e8f0';
       let num = bookedSeats.indexOf(seat);
       bookedSeats.splice(num, 1);
-      setBookedSeats( ()=>{ return bookedSeats });
+      setBookedSeats(() => { return bookedSeats });
       console.log(bookedSeats)
       return setNumberOfBookedSeats(() => { return bookedSeats.length });
 
     }
     else {
 
-    console.log("add");
+      console.log("add");
       event.target.style.backgroundColor = '#4182ed';
       bookedSeats.push(seat)
-      setBookedSeats( ()=>{ return bookedSeats });
+      setBookedSeats(() => { return bookedSeats });
       console.log(bookedSeats)
       return setNumberOfBookedSeats(() => { return bookedSeats.length });
 
     }
 
   };
+
+
+  // ENDPOINT USED TO BOOK A SEAT
+
+  const bookSeats = async () => {
+
+try{
+
+  console.log("bookSeats function has started");
+
+    const email = JSON.parse(sessionStorage.getItem("accessToken"));
+
+    const response = await fetch(`//localhost:3000/bookingSeat`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        bookingPrice: seatPrice,
+        eventDate: currentFilteredEvent[0].eventDate,
+        bookedBy: email,
+        numberOfSeats: bookedSeats.length,
+        seatNumber: bookedSeats,
+        venueName: currentFilteredEvent[0].venueName,
+        address: currentFilteredEvent[0].address,
+        eventName: currentFilteredEvent[0].eventName
+      })
+    });
+
+    const data = await response.json();
+
+    if (response.status !== 200) {
+      alert(data.message);
+    }
+    else {
+
+      alert(data.message);
+
+      // CURRENT FILTERED EVENT IS AN ARRAY WITH ONE OBJECT CONTAINING
+      //  LITERALLY ALL OF THE INFORMATION THAT IS BEING DISPLAYED ON THE SCREEN 
+      // BY USING THE MAPPING EFFECT
+
+        setBookedSeats( ()=>{ return [...[]] });
+        setNumberOfBookedSeats( ()=>{ return 0 });
+        const newCurrentFilteredEvent = currentFilteredEvent;
+        newCurrentFilteredEvent[0].seatArrangement = data.seatArrangement;
+        setCurrentFilteredEvent( ()=>{ return newCurrentFilteredEvent })
+
+
+      // THIS IS WHAT CAUSES THE SUBMISSION TO GO BACK TO THE EVENTS PAGE
+      // It needs to go back to the events page or the user will not be able to see that their chair was booked because it will not automatically render the component
+      // navigate(-1);
+
+    }
+  }
+  catch (error){
+    console.error("There was an error while trying to book a seat: ", error)
+  }
+  }
+
 
   return (
     <>
@@ -163,9 +222,15 @@ const SeatBooking = () => {
                   })}
                 </section>
 
-                <button className="mainBtn infoBtn dialogBtn" onClick={() => { navigate(-1); }}>
-                  Go back to events
-                </button>
+                <section>
+                  <button className="mainBtn infoBtn dialogBtn" onClick={ bookSeats }>
+                    Book seats
+                  </button>
+                  <button className="mainBtn infoBtn dialogBtn" onClick={() => { navigate(-1); }}>
+                    Go back to events
+                  </button>
+                </section>
+
               </main>
             </section>
           </section>
