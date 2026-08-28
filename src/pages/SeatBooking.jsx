@@ -3,6 +3,10 @@ import "./SeatBooking.css";
 import Navbar from "../components/Navbar";
 import { EventContext } from "../context/SpecificEvent";
 import { useNavigate } from "react-router-dom";
+import PaystackPop from "@paystack/inline-js";
+import axios from "axios";
+
+const publicKey = "pk_test_2c7fa0027b2eb549818e537b4750b0258a2d7bd3";
 
 const SeatBooking = () => {
   // NAVIGATION USED TO GO BACK TO THE EVENTS PAGE
@@ -146,7 +150,53 @@ try{
   catch (error){
     console.error("There was an error while trying to book a seat: ", error)
   }
-  }
+}
+
+// Pay Stack
+
+const handlePaystackPayment = () => {
+    if (bookedSeats.length === 0) {
+      alert("Please select at least one seat!");
+      return;
+    }
+
+    const email = JSON.parse(sessionStorage.getItem("accessToken")) || "customer@example.com";
+    const totalAmountInCents = Math.round(numberOfBookedSeats * seatPrice * 100);
+
+    const paystack = new PaystackPop();
+
+    paystack.newTransaction({
+      key: publicKey,
+      email: email,
+      amount: totalAmountInCents,
+      currency: "ZAR",
+      metadata: {
+        custom_fields: [
+          {
+            display_name: "Selected Seats",
+            variable_name: "selected_seats",
+            value: bookedSeats.join(", "),
+          },
+        ],
+      },
+      onSuccess: (transaction) => {
+        axios
+          .get(`http://localhost:5173/api/paystack/verify/${transaction.reference}`)
+          .then((response) => {
+            if (response.data.status || response.data.data.status === "success") {
+              bookSeats();
+            }
+          })
+          .catch((error) => {
+            console.error("Verification error:", error);
+            alert("Payment was successful, but verification failed.");
+          });
+      },
+      onCancel: () => {
+        alert("Transaction was cancelled.");
+      },
+    });
+  };
 
 
   return (
@@ -223,7 +273,7 @@ try{
                 </section>
 
                 <section>
-                  <button className="mainBtn infoBtn dialogBtn" onClick={ bookSeats }>
+                  <button className="mainBtn infoBtn dialogBtn" onClick={ bookSeats } onClick={handlePaystackPayment}>
                     Book seats
                   </button>
                   <button className="mainBtn infoBtn dialogBtn" onClick={() => { navigate(-1); }}>
