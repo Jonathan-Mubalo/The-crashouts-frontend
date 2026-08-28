@@ -24,7 +24,7 @@ function Events() {
   const [bookingHistoryData, setBookingHistoryData] = useState([{
     _id: "qwerty78",
     userName: "N/A",
-    venueName: "N/A",
+    eventName: "N/A",
     address: "",
     eventDate: "N/A",
     seatNumber: [{ seat: "N/A" }],
@@ -70,16 +70,6 @@ function Events() {
     setStoredEvent(event.target.id)
     navigate("/SeatBooking");
   }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -184,13 +174,13 @@ function Events() {
 
               {allEventsData && allEventsData.map((event) => {
 
-              // gets the events address and displays the directions
+                // gets the events address and displays the directions
 
                 const handleGetDirections = (address) => {
-                const encodedAddress = encodeURIComponent(address);
-                const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
-                 window.open(directionsUrl, '_blank');
-              };
+                  const encodedAddress = encodeURIComponent(address);
+                  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
+                  window.open(directionsUrl, '_blank');
+                };
 
                 return (<div className="eventCard" key={event._id}>
                   <div className="eventImageWrapper">
@@ -198,8 +188,10 @@ function Events() {
                     {event.tag && <span className="eventBagde">{event.tag}</span>}
                   </div>
                   <div className="eventDetails">
-                    <h3 className="eventCardTitle">{event.venueName}</h3>
-                    <p className="eventCardLoaction">{event.address}</p>
+                    <h3 className="eventCardTitle">{event.eventName}</h3>
+                    <p className="eventCardVenue">{event.venueName}
+                      <br />
+                      <span className="eventCardLoaction">{event.address}</span></p>
                     <div>
                       <span className="eventDate">{event.eventDate}</span>
                       <button className="mainBtn infoBtn" id={event._id} onClick={displaySeatBooking}>Book a seat</button>
@@ -208,8 +200,7 @@ function Events() {
                     </div>
                   </div>
                 </div>)
-                // ))}
-                // </div>
+               
               })
               }
 
@@ -264,7 +255,7 @@ function Events() {
       </main>
       <Footer />
     </div>
-    
+
   )
 }
 
