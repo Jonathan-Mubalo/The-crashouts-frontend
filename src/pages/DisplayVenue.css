@@ -1,36 +1,24 @@
 .venue-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.25);
-    z-index: 9999;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: 5%;
+    z-index: 2;
+    border-radius: 10px;
+    border-style: none;
+    width: 90%;
 }
-
 .venue-details-panel {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 50%;
-    height: 100vh;
+    width: 100%;
     background: white;
     box-shadow: -8px 0 25px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
-    animation: slideIn 0.3s ease;
 }
 
-@keyframes slideIn {
-
-    from {
-        transform: translateX(100%);
-    }
-
-    to {
-        transform: translateX(0);
-    }
-
+.venue-overlay::-webkit-scrollbar {
+  display: none;
 }
 
 .venue-details-header {
@@ -140,13 +128,22 @@
 
 .image-placeholder {
     height: 120px;
+    width:100%;
     background: #e8ecf2;
     border-radius: 10px;
-    display: flex;
+    /* display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
     color: #8792a5;
 }
+
+
+.venueDetailsImage{
+width:100%;
+height:100%;
+border-radius: 8px
+}
+
 
 .venue-documents {
     display: flex;
@@ -164,6 +161,10 @@
     border: 1px solid #e5e9ef;
     border-radius: 9px;
     color: #34405a;
+}
+
+.venueDocumentation{
+    width:100%;
 }
 
 
@@ -185,4 +186,4 @@
         width: 90%;
     }
 
-}
+} 

@@ -1,5 +1,5 @@
 import React from "react";
-import "./DisplayVenue.css";
+// import "./DisplayVenue.css";
 
 const DisplayVenue = () => {
 
