@@ -130,6 +130,12 @@
   gap: 8px;
 }
 
+/* BOOKED SEAT'S STYLING */
+
+.seatIsBooked{
+  background-color: #4182ed;
+}
+
 .statusItem {
   width: 14px;
   height: 14px;
