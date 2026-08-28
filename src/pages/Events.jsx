@@ -29,7 +29,7 @@ function Events() {
       seatNumber: [{ seat: "N/A" }],
       bookingPrice: 0,
       numberOfSeats: 0,
-    },
+    }
   ]);
 
   // USE STATE USED TO FILTER AND STORE ALL OF THE INFORMATION OF AN EVENT THAT NEEDS TO BE VIEWED
@@ -236,8 +236,6 @@ function Events() {
                       </div>
                     </div>
                   );
-                  // ))}
-                  // </div>
                 })}
 
               {/* {filteredLocation.length === 0 ? ( <p className="noMatch">No events found.</p> ) : (
@@ -299,7 +297,7 @@ function Events() {
           </section>
         )}
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

@@ -37,7 +37,7 @@ function Navbar() {
               <Link className="navLink" to="/">Home</Link>
               <Link className="navLink" to="/Events">Events</Link>
               <Link className="navLink" to="/Venues">Venues</Link>
-              <Link className="navLink" to="/RegisterVenue">My Venues</Link>
+              <Link className="navLink" to="/RegisterVenue">Create venue</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
               <Link className="navLink" to="/Contact">Contact</Link>
               <Link className="navLink" to="/Dashboard">Dashboard</Link>
@@ -54,7 +54,7 @@ function Navbar() {
               <Link className="navLink" to="/">Home</Link>
               <Link className="navLink" to="/Events">Events</Link>
               <Link className="navLink" to="/Venues">Venues</Link>
-              <Link className="navLink" to="/RegisterVenue">My Venues</Link>
+              <Link className="navLink" to="/RegisterVenue">Create venue</Link>
               <Link className="navLink" to="/UserProfile">Profile</Link>
             </nav>
           )

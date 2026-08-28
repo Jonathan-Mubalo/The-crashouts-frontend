@@ -9,8 +9,7 @@ const SeatBooking = () => {
   const navigate = useNavigate();
 
   // IMPORTING THE VALUES STORED IN THE CONTEXT
-  const { storedEvent, allEventsData, setAllEventsData } =
-    useContext(EventContext);
+  const { storedEvent, allEventsData, setAllEventsData } = useContext(EventContext);
 
   const [currentTab, setCurrentTab] = useState("search");
 
@@ -18,12 +17,34 @@ const SeatBooking = () => {
   const [bookingHistoryData, setBookingHistoryData] = useState([]);
 
   // USE STATE USED TO FILTER AND STORE ALL OF THE INFORMATION OF AN EVENT THAT NEEDS TO BE VIEWED
-
   const [currentFilteredEvent, setCurrentFilteredEvent] = useState();
 
+  // STATE VALUE THAT WILL BE USED TO STORE THE TOTAL FOR THE NUMBER OF SEATS BOOKED
+  const [numberOfBookedSeats, setNumberOfBookedSeats] = useState(0);
+
+  // THE SEAT BOOKING PRICE
+  const [seatPrice, setSeatPrice] = useState(0);
+
+  // STATE VARIALE THAT STORES ALL OF THE BOOKED SEATS IN AN ARRAY
+  const [ bookedSeats, setBookedSeats ]= useState([]);
+
   // DISPLAYING THE RIGHT EVENTS INFORMATION INSIDE THE DIALOG TAG BY FILTERING AND EVENT BASED ON THE ID THAT THE BUTTON HAS
-  console.log("Id used to navigate to this page: ", storedEvent);
+  // console.log("Id used to navigate to this page: ", storedEvent);
+
   useEffect(() => {
+
+    // USED TO COLLECT THE PRODUCT WHENEVER THE PAGE IS RELOADED MAKEING ALL OF THE STATE VARIABLES BECOME NULL OR UNDEFINED
+    if (!storedEvent) {
+      const storedFilteredEvent = JSON.parse(sessionStorage.getItem("filteredEvent"))
+      // console.log("storedFilteredEvent: ", storedFilteredEvent)
+      setCurrentFilteredEvent(() => {
+        return storedFilteredEvent;
+      });
+
+      setSeatPrice(() => { return parseInt(storedFilteredEvent[0].eventSeatPrice) })
+      return;
+    }
+
     const filteredEvent = allEventsData.filter((item) => {
       return item["_id"] === storedEvent;
     });
@@ -31,16 +52,42 @@ const SeatBooking = () => {
     setCurrentFilteredEvent(() => {
       return filteredEvent;
     });
+
+    setSeatPrice(() => { return filteredEvent[0].eventSeatPrice })
+
+    sessionStorage.setItem("filteredEvent", JSON.stringify(filteredEvent))
+
   }, []);
 
   // BOOKING A SEAT AND SELECTING IT
+
+
   const selectedSeat = (event) => {
-    if (event.target.tagName === "SPAN") {
-      event.target.parentElement.style.backgroundColor = "#4182ed";
-      return;
-    } else {
-      event.target.style.backgroundColor = "#4182ed";
+
+
+    let seat = event.target.innerText;
+    if (bookedSeats.includes(seat)) {
+
+    console.log("remove");
+      event.target.style.backgroundColor = '#e2e8f0';
+      let num = bookedSeats.indexOf(seat);
+      bookedSeats.splice(num, 1);
+      setBookedSeats( ()=>{ return bookedSeats });
+      console.log(bookedSeats)
+      return setNumberOfBookedSeats(() => { return bookedSeats.length });
+
     }
+    else {
+
+    console.log("add");
+      event.target.style.backgroundColor = '#4182ed';
+      bookedSeats.push(seat)
+      setBookedSeats( ()=>{ return bookedSeats });
+      console.log(bookedSeats)
+      return setNumberOfBookedSeats(() => { return bookedSeats.length });
+
+    }
+
   };
 
   return (
@@ -51,7 +98,7 @@ const SeatBooking = () => {
           <section className="section">
             <section className="seatsDialog">
               <main className="dialog_main">
-                
+
                 <div className="bookingHeaderCard">
                   <h2 className="dialog_h1">Select Your Seat</h2>
                   <p className="dialog_subtitle">Choose your preferred spot from the seating chart below.</p>
@@ -65,9 +112,8 @@ const SeatBooking = () => {
                         <div className="seatRow" key={arr[0]["seat"]}>
                           {arr.map((seatObj) => {
                             return (
-                              <div key={seatObj.seat} className="seat" onClick={selectedSeat}>
-                                <span>{seatObj.seat}</span>
-                                <span className="seatpricetag">R250</span>
+                              <div key={seatObj.seat} className="seat" style={{ backgroundColor: (seatObj.isBooked) ? '#072447' : '#e2e8f0', color: (seatObj.isBooked) ? '#e2e8f0' : '' }} onClick={(seatObj.isBooked) ? "" : selectedSeat} >
+                                {seatObj.seat}
                               </div>
                             );
                           })}
@@ -88,6 +134,12 @@ const SeatBooking = () => {
                     <div className="statusItem" style={{ backgroundColor: '#072447' }} /> Booked
                   </div>
                 </div>
+
+                {/* SEAT BOOKING SUMMARY */}
+                <section className="bookingSummary">
+                  <p><span>Price per seat: R{seatPrice}</span> <span>Selected seats: {bookedSeats.join(" ")}</span></p>
+                  <p>Total Amount: R{numberOfBookedSeats * seatPrice}</p>
+                </section>
 
                 <section className="singleEventDetailsWrapper">
                   {currentFilteredEvent && currentFilteredEvent.map((event) => {
