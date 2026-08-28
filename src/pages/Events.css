@@ -21,14 +21,14 @@
   gap: 20px;
 }
 
-.headerSection h1 {
+.headerSection {
   font-size: 2rem;
   font-weight: 700;
   color: #0f172a;
   letter-spacing: -0.02em;
 }
 
-.headerSection p {
+.headerSection {
   color: #64748b;
   font-size: 0.95rem;
   margin-top: 4px;
@@ -92,7 +92,7 @@
   width: 100%;
 }
 
-.filterWrapper label {
+.filterWrapper {
   font-size: 0.75rem;
   font-weight: 600;
   color: #64748b;
@@ -283,14 +283,14 @@
   margin-bottom: 4px;
 }
 
-.bookingInfo h3 {
+.bookingInfo {
   font-size: 1.1rem;
   font-weight: 700;
   color: #0f172a;
   margin-bottom: 4px;
 }
 
-.bookingInfo p {
+.bookingInfo {
   font-size: 0.9rem;
   color: #64748b;
 }
