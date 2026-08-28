@@ -1,6 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./RegisterVenue.css";
 import Navbar from "../components/Navbar";
+import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete';
+import '@geoapify/geocoder-autocomplete/styles/minimal.css';
+const GEOAPIFY_API_KEY = import.meta.env.VITE_GEOAPIFY_API_KEY;
 
 function RegisterVenue() {
 
@@ -30,6 +33,15 @@ function RegisterVenue() {
   const handleFileChange = (e) => {
     const { id, files } = e.target;
     setFormData((prev) => ({ ...prev, [id]: files }));
+  };
+
+   const handlePlaceSelect = (place) => {
+    if (place && place.formatted_address) {
+      setFormData((prev) => ({
+        ...prev,
+        address: place.formatted_address,
+      }));
+    }
   };
 
   const nextStep = (e) => {
@@ -104,6 +116,7 @@ function RegisterVenue() {
   };
 
 
+
   return (
     <>
       <Navbar />
@@ -154,14 +167,19 @@ function RegisterVenue() {
 
                 <div className="form-group">
                   <label htmlFor="address">Full Address</label>
-                  <input
-                    type="text"
-                    id="address"
-                    placeholder="8 Albert street Townsview"
-                    value={formData.address}
-                    onChange={handleChange}
-                    required
-                  />
+                  
+                  {/* Geoapify Autocomplete integration wrapping context */}
+                  <GeoapifyContext apiKey={GEOAPIFY_API_KEY}>
+                    <GeoapifyGeocoderAutocomplete
+                      placeholder="8 Albert street Townsview"
+                      value={formData.address}
+                      placeSelect={handlePlaceSelect}
+                      onUserInput={(userInput) => {
+                        // Allow typing fallback to state if user clears or types custom text
+                        setFormData((prev) => ({ ...prev, address: userInput }));
+                      }}
+                    />
+                  </GeoapifyContext>
                 </div>
 
                 <div className="form-group">
@@ -277,4 +295,4 @@ function RegisterVenue() {
   );
 }
 
-export default RegisterVenue;
+export default RegisterVenue
