@@ -205,7 +205,7 @@ function Events() {
                     <div className="eventCard" key={event._id}>
                       <div className="eventImageWrapper">
                         <img
-                          src={event.image}
+                          src={event.images[0]}
                           alt={event.title}
                           className="eventImage"
                         />
