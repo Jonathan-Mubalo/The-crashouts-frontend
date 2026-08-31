@@ -68,7 +68,7 @@ const Home = () => {
         <section>
           <div className="booking">
             <h2>Book A Seat</h2>
-            <span>VIEW AVAILABLE VENUES</span>
+            <a href="/Venues">VIEW AVAILABLE VENUES</a>
           </div>
 
           <div className="bookingSection">
@@ -146,7 +146,7 @@ const Home = () => {
               </p>
             </div>
 
-            <button className="Eventsbutton">Explore Events</button>
+            <button className="Eventsbutton"><Link to="/Events">Explore Events</Link></button>
           </div>
         </section>
 
