@@ -158,32 +158,21 @@
 
 .upload-image-card {
     min-height: 225px;
-
     border: 2px dashed #cfd7e3;
-
     border-radius: 10px;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
-
     gap: 8px;
-
     cursor: pointer;
-
     color: #4d88ed;
-
     transition: 0.2s;
 }
 
 
 .upload-image-card:hover {
     border-color: #4d88ed;
-
     background: #f7faff;
 }
 
@@ -196,16 +185,11 @@
 .upload-icon {
     width: 45px;
     height: 45px;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     background: #edf4ff;
-
     font-size: 28px;
 }
 
@@ -217,42 +201,31 @@
 
 .upload-image-card small {
     color: #929cad;
-
     font-size: 12px;
 }
 
 
 .documents-list {
     display: flex;
-
     flex-direction: column;
-
     gap: 12px;
 }
 
 
 .document-card {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     padding: 15px;
-
     border: 1px solid #e3e7ed;
-
     border-radius: 10px;
-
     background: #fafbfc;
 }
 
 
 .document-left {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
 }
 
@@ -260,75 +233,53 @@
 .document-icon {
     width: 42px;
     height: 42px;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     border-radius: 8px;
-
     background: #edf4ff;
-
     font-size: 20px;
 }
 
 
 .document-left strong {
     display: block;
-
     font-size: 14px;
-
     color: #34405a;
 }
 
 
 .document-left span {
     display: block;
-
     margin-top: 4px;
-
     font-size: 12px;
-
     color: #9aa3b2;
 }
 
 
 .document-card button {
     border: none;
-
     background: transparent;
-
     color: #e05252;
-
     cursor: pointer;
-
     font-weight: 600;
 }
 
 
 .upload-document {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
     padding: 15px;
-
     border: 2px dashed #cfd7e3;
-
     border-radius: 10px;
-
     cursor: pointer;
-
     color: #4d88ed;
 }
 
 
 .upload-document:hover {
     border-color: #4d88ed;
-
     background: #f7faff;
 }
 
@@ -336,16 +287,11 @@
 .upload-document > span {
     width: 40px;
     height: 40px;
-
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     border-radius: 50%;
-
     background: #edf4ff;
-
     font-size: 24px;
 }
 
