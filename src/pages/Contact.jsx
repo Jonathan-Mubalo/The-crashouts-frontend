@@ -2,6 +2,7 @@ import React,{ useRef } from 'react';
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import './Contact.css'
+import { Link } from 'react-router-dom';
 
 function Contact() {
 
@@ -31,37 +32,144 @@ function Contact() {
             <Navbar />
 
             <main className="contactPage">
-                <section className="contactForm">
-                    <div className="contactHeader">
-                        <h2>Contact Us</h2>
-                        <p>Have a question? We'd love to hear from you.</p>
+
+                <section className="contactHero">
+                    <div className="heroOverlay"></div>
+
+                    <div className="contactHeroContent">
+                        <h1>Contact Us</h1>
+
+                        <div className="breadcrumb">
+                            <span><Link to="/Home">Home</Link></span>
+                            <span>/</span>
+                            <span>Contact Us</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section className="contactContent">
+
+                    <div className="contactIntro">
+                        <span className="sectionLabel">Contact Us</span>
+
+                        <h2>
+                            Let's Celebrate
+                            <br />
+                            Something Great
+                        </h2>
+
+                        <p>
+                            Have a event in mind or want to attend an event?
+                            We'd love to hear from you. Send us a message and
+                            let's create something memorable!
+                        </p>
+
+                        <div className="contactDetails">
+
+                            <div className="contactDetail">
+                                <span className="detailNumber">01</span>
+                                <div>
+                                    <h4>Our Location</h4>
+                                    <p>72 Marlborough Road, Springfield</p>
+                                </div>
+                            </div>
+
+                            <div className="contactDetail">
+                                <span className="detailNumber">02</span>
+                                <div>
+                                    <h4>Phone</h4>
+                                    <p>+27 61 908 1742</p>
+                                </div>
+                            </div>
+
+                            <div className="contactDetail">
+                                <span className="detailNumber">03</span>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>eugenieekazi@gmail.com</p>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
 
-                    <form className="formBoxTwo" action={submitForm}>
-                        <div className="conDiv">
-                            <label className="inputLabel" htmlFor="fullName">Full Name</label>
+                    <div className="contactForm">
 
-                            <input id="fullName" className="inputBox" type="text" placeholder="John Doe" />
+                        <div className="formHeader">
+                            <span className="sectionLabel">Get In Touch</span>
+                            <h3>Send Us A Message</h3>
                         </div>
 
-                        <div className="conDiv">
-                            <label className="inputLabel" htmlFor="email">Email Address</label>
+                        <form className="formBoxTwo" action={submitForm}>
 
-                            <input id="email" className="inputBox" type="email" placeholder="johndoe@hotmail.com"/>
-                        </div>
+                            <div className="conDiv">
+                                <label className="inputLabel" htmlFor="fullName">
+                                    Full Name
+                                </label>
 
-                        <div className="conDiv">
-                            <label className="inputLabel" htmlFor="message">Message</label>
+                                <input
+                                    id="fullName"
+                                    className="inputBox"
+                                    type="text"
+                                    placeholder="John Doe"
+                                />
+                            </div>
 
-                            <textarea id="message" className="inputBox messageBox" placeholder="Write your message here..." rows="5"/>
-                        </div>
+                            <div className="conDiv">
+                                <label className="inputLabel" htmlFor="email">
+                                    Email Address
+                                </label>
 
-                        <button type="submit" className="submitBtn">Send Message<span>&#x2192;</span></button>
-                    </form>
+                                <input
+                                    id="email"
+                                    className="inputBox"
+                                    type="email"
+                                    placeholder="johndoe@nomail.com"
+                                />
+                            </div>
+
+                            <div className="conDiv messageDiv">
+                                <label className="inputLabel" htmlFor="message">
+                                    Message
+                                </label>
+
+                                <textarea
+                                    id="message"
+                                    className="inputBox messageBox"
+                                    placeholder="Write your message here..."
+                                    rows="5"
+                                />
+                            </div>
+
+                            <button type="submit" className="submitBtn">
+                                Send Message
+                                <span>&#x2192;</span>
+                            </button>
+
+                        </form>
+                    </div>
+
                 </section>
-            </main>
 
-            <Footer />
+                <section className="contactCta">
+                    <div className="ctaContent">
+                        <span className="sectionLabel">Book Now</span>
+
+                        <h2>
+                            We Are Always Ready
+                            <br />
+                            To Celebrate Something Amazing
+                        </h2>
+
+                        <button className="ctaButton">
+                            <Link to="/Events">Get Started</Link>
+                            <span>&#x2192;</span>
+                        </button>
+                    </div>
+                </section>
+
+            </main>
+            {/* <Footer /> */}
         </>
     )
 }
