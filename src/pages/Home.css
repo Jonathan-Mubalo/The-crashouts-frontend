@@ -136,7 +136,7 @@ a {
   font-size: 25px;
 }
 
-.booking > span {
+.booking > a {
   color: #4d88d6;
   font-size: 8px;
   font-weight: 700;
@@ -689,3 +689,454 @@ a {
     font-size: 28px;
   }
 }
+
+/* css from the react libraries, please do not touch*/
+
+.homePage {
+  animation: heroZoom 15s ease-in-out infinite alternate;
+}
+
+@keyframes heroZoom {
+
+  from {
+    background-size: 100%;
+  }
+
+  to {
+    background-size: 108%;
+  }
+
+}
+
+.bannerOverlay {
+  animation: overlayFade 1.5s ease forwards;
+}
+
+@keyframes overlayFade {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+.bannerContent {
+  animation: heroContent 1.2s ease-out forwards;
+}
+
+@keyframes heroContent {
+
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+.heroLabel {
+  animation: heroLabel 1s ease-out 0.3s both;
+}
+
+@keyframes heroLabel {
+
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+    letter-spacing: 0;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 2px;
+  }
+
+}
+
+.bannerContent h1 {
+  animation: heroTitle 1s ease-out 0.5s both;
+}
+
+@keyframes heroTitle {
+
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+.bannerDescription {
+  animation: heroDescription 1s ease-out 0.8s both;
+}
+
+@keyframes heroDescription {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.revealLeft {
+  opacity: 0;
+  transform: translateX(-70px);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+
+.revealLeft.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.revealRight {
+  opacity: 0;
+  transform: translateX(70px);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+
+.revealRight.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.revealDelay1 {
+  transition-delay: 0.15s;
+}
+
+.revealDelay2 {
+  transition-delay: 0.3s;
+}
+
+.revealDelay3 {
+  transition-delay: 0.45s;
+}
+
+.stat {
+  transition:
+    transform 0.35s ease,
+    background-color 0.35s ease;
+}
+
+.stat:hover {
+  transform: translateY(-8px);
+}
+
+.stat strong {
+  transition:
+    transform 0.3s ease;
+}
+
+.stat:hover strong {
+  transform: scale(1.12);
+}
+
+.bookingSection {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.bookingSection:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.14);
+}
+
+
+.bookingSectionTwo {
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.bookingSectionTwo:hover {
+  background-color: #f7faff;
+  transform: translateY(-2px);
+}
+
+.searchButton,
+.Eventsbutton {
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.searchButton:hover,
+.Eventsbutton:hover {
+  transform: translateY(-4px) scale(1.04);
+
+  box-shadow:
+    0 8px 20px rgba(77, 136, 214, 0.3);
+}
+
+.searchButton:active,
+.Eventsbutton:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.searchButton,
+.Eventsbutton {
+  position: relative;
+  overflow: hidden;
+}
+
+.searchButton::before,
+.Eventsbutton::before {
+
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: skewX(-25deg);
+  transition: left 0.6s ease;
+
+}
+
+.searchButton:hover::before,
+.Eventsbutton:hover::before {
+  left: 130%;
+}
+
+.eventImageMain {
+  overflow: hidden;
+
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.eventImageMain img {
+  transition:
+    transform 0.8s ease;
+}
+
+.eventImageMain:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.18);
+}
+
+.eventImageMain:hover img {
+  transform: scale(1.08);
+}
+
+
+.priceBadge {
+  animation: badgeFloat 4s ease-in-out infinite;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+@keyframes badgeFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+
+}
+
+.priceBadge:hover {
+  animation-play-state: paused;
+  transform: translateY(-8px) scale(1.04);
+  box-shadow:
+    0 15px 35px rgba(40, 90, 150, 0.35);
+}
+
+.benefit {
+  transition:
+    transform 0.3s ease,
+    padding-left 0.3s ease;
+}
+
+.benefit:hover {
+  transform: translateX(8px);
+  padding-left: 5px;
+}
+
+.benefit > span {
+  display: inline-block;
+
+  transition:
+    transform 0.3s ease;
+}
+
+.benefit:hover > span {
+  transform:
+    scale(1.3)
+    rotate(10deg);
+}
+
+.managerImage {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.managerImage img {
+  transition:
+    transform 0.7s ease;
+}
+
+.managerImage:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.managerImage:hover img {
+  transform: scale(1.08);
+}
+
+.managerImage button {
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.managerImage:hover button {
+  transform:
+    translate(-50%, -50%)
+    scale(1.15);
+
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+.featureItem {
+  transition:
+    transform 0.3s ease;
+}
+
+.featureItem:hover {
+  transform: translateX(8px);
+}
+
+.testimonial {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.testimonial:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.15);
+}
+
+.avatar {
+  animation: avatarFloat 3s ease-in-out infinite;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+@keyframes avatarFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+}
+
+.avatar:hover {
+  animation-play-state: paused;
+  transform: scale(1.15);
+  box-shadow:
+    0 5px 18px rgba(77, 136, 214, 0.4);
+}
+
+.venueBox {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.venueBox:hover {
+
+  transform:
+    translateY(-12px)
+    scale(1.03);
+  box-shadow:
+    0 18px 35px rgba(0, 0, 0, 0.18);
+}
+
+.venuesFooter a {
+  position: relative;
+  transition:
+    color 0.3s ease,
+    letter-spacing 0.3s ease;
+}
+
+.venuesFooter a:hover {
+  letter-spacing: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+
+  }
+
+}
+
