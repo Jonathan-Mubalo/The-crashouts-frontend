@@ -270,18 +270,15 @@ function Events() {
                   return (
                     <div className="bookingHistoryCard" key={booking._id}>
                       <div className="bookingInfo">
-                        <span className="bookingReference">
-                          Booked by: {booking.userName}
-                        </span>
+                        <p>
+                         <span className="bookingReference">Booked by:</span> {booking.email}
+                        </p>
                         <h3>{booking.venueName}</h3>
                         <p>
                           {booking.address} - {booking.eventDate}
                         </p>
                         <p className="numberOfSeats">
-                          Seats:
-                          {booking.seatNumber.map((item) => {
-                            return ` ${item.seat}`;
-                          })}
+                          {`Seats: ${booking.seatNumber}`}
                         </p>
                       </div>
                       <div className="bookingStatusWrapper">
