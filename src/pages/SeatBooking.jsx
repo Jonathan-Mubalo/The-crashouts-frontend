@@ -104,7 +104,7 @@ try{
   console.log("bookSeats function has started");
 
     const email = JSON.parse(sessionStorage.getItem("accessToken"));
-
+console.log("email: ",email)
     const response = await fetch(`//localhost:3000/bookingSeat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -190,6 +190,8 @@ const handlePaystackPayment = () => {
           .catch((error) => {
             console.error("Verification error:", error);
             alert("Payment was successful, but verification failed.");
+            alert("You are using a demo version because the business is not registered on paystack; therefore payments will not really occur.");
+              bookSeats();
           });
       },
       onCancel: () => {
@@ -273,7 +275,7 @@ const handlePaystackPayment = () => {
                 </section>
 
                 <section>
-                  <button className="mainBtn infoBtn dialogBtn" onClick={ bookSeats } onClick={handlePaystackPayment}>
+                  <button className="mainBtn infoBtn dialogBtn" onClick={handlePaystackPayment}>
                     Book seats
                   </button>
                   <button className="mainBtn infoBtn dialogBtn" onClick={() => { navigate(-1); }}>
