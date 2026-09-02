@@ -1,14 +1,13 @@
 .edit-venue-page {
     min-height: 100vh;
     background: #f6f8fc;
-    padding: 40px 60px;
+    padding: 40px 20px;
     color: #27334d;
 }
 
 .edit-venue-header {
-    max-width: 150px;
+    max-width: 1000px;
     margin: 0 auto 30px;
-    align-items: baseline;
 }
 
 
@@ -391,30 +390,19 @@
 
 
 @media (max-width: 650px) {
-
-    .edit-venue-page {
-        padding: 20px;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .form-group.full {
-        grid-column: auto;
-    }
-
-    .image-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .form-actions {
-        flex-direction: column;
-    }
-
-    .cancel-button,
-    .update-button {
-        width: 100%;
-    }
-
+  .form-grid { 
+    grid-template-columns: 1fr; 
+  }
+  .form-group.full-width {
+    grid-column: auto;
+  }
+  .image-grid { 
+    grid-template-columns: 1fr; 
+  }
+  .form-actions { 
+    flex-direction: column-reverse;
+  }
+  .cancel-button, .update-button { 
+    width: 100%; 
+  }
 }
