@@ -1,144 +1,162 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Signin.css';
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Login.css";
 import { auth } from "../firebase";
 
 function SignIn() {
-
   const navigate = useNavigate();
+
   const userName = useRef();
   const email = useRef();
   const password = useRef();
   const errorMessages = useRef();
   const loginSuccess = useRef();
 
-  // Firebase signin mixed with mongodb
-  
   const handleSignUp = async (e) => {
-
     e.preventDefault();
 
     try {
+      const response = await fetch("http://localhost:3000/signup", {
+        method: "POST",
 
-      const response = await fetch('http://localhost:3000/signup',
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userName: userName.current.value,
-            email: email.current.value,
-            password: password.current.value
-          })
-        }
-      );
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          userName: userName.current.value,
+
+          email: email.current.value,
+
+          password: password.current.value,
+        }),
+      });
 
       const data = await response.json();
 
       if (response.status !== 200) {
-        return errorMessages.current.innerText = data.message;
-      }
-
-      else {
+        return (errorMessages.current.innerText = data.message);
+      } else {
         loginSuccess.current.innerText = data.message;
+
         sessionStorage.setItem("ReserveX", JSON.stringify(true));
-        sessionStorage.setItem("accessToken", JSON.stringify( data.accessToken));
-        // const token = JSON.parse(sessionStorage.getItem("accessToken"));
-        // console.log("firebaseProvidedToken: ",token );
-        navigate("/")
+
+        sessionStorage.setItem("accessToken", JSON.stringify(data.accessToken));
+
+        navigate("/");
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log("Something mostlikely went wrong in the frontend");
     }
-  }
-
-  // USED TO CLEAR ANY ERROR MESSAGE THAT THE PASSWORD INPUT DISPLAYS FROM FIRBASE
+  };
 
   const clearErrorNotification = () => {
-    errorMessages.current.innerText = ""
-    loginSuccess.current.innerText = ""
-  }
+    errorMessages.current.innerText = "";
 
+    loginSuccess.current.innerText = "";
+  };
 
   return (
-    <>
     <div className="loginPage">
-     
-      {/* Glassmorphism Sign-Up Card */}
-      <div className="signupCard">
-        <h2 className="signupTitle">Create an Account</h2>
-        <p className="loginSuccess" ref={loginSuccess} ></p>
-        <p className="errorMessages" ref={errorMessages} ></p>
+      <div className="authCard">
+        <div className="authVisual">
+          <div className="visualStar">*</div>
 
-        <form onSubmit={handleSignUp} className="signupForm">
+          <div className="visualText">
+            <p>Start your journey</p>
 
-          {/* Username Field */}
+            <h2>Create your account to access Events!</h2>
+          </div>
+        </div>
 
-          <div className="inputGroup">
-            <label className="inputLabel">Username</label>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              className="textInput"
-              required
-              ref={userName}
-              onClick={clearErrorNotification}
-            />
+        <div className="authFormSide">
+          <div className="authHeader">
+            <span className="authSmallStar">*</span>
+
+            <h1>Create an account</h1>
+
+            <p>
+              Create your account and keep your booking history, event schedule and venue booking.
+            </p>
           </div>
 
-          {/* Email Field */}
-          <div className="inputGroup">
-            <label className="inputLabel">E mail</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="name@gmail.com"
-              className="textInput"
-              required
-              ref={email}
-              onClick={clearErrorNotification}
-            />
-          </div>
+          <p className="loginSuccess" ref={loginSuccess}></p>
 
-          {/* Password Field */}
-          <div className="inputGroup">
-            <label className="inputLabel">Password</label>
-            <div className="passwordWrapper">
+          <p className="errorMessages" ref={errorMessages}></p>
+
+          <form onSubmit={handleSignUp} className="authForm">
+            <div className="inputGroup">
+              <label className="inputLabel">Username</label>
+
               <input
-                type='password'
-                name="password"
-                placeholder="6+ characters"
-                className="textInput passwordInput"
+                type="text"
+                name="username"
+                placeholder="Username"
+                className="textInput"
                 required
-                ref={password}
+                ref={userName}
                 onClick={clearErrorNotification}
               />
             </div>
+
+            <div className="inputGroup">
+              <label className="inputLabel">Your email</label>
+
+              <input
+                type="email"
+                name="email"
+                placeholder="name@gmail.com"
+                className="textInput"
+                required
+                ref={email}
+                onClick={clearErrorNotification}
+              />
+            </div>
+
+            <div className="inputGroup">
+              <label className="inputLabel">Password</label>
+
+              <div className="passwordWrapper">
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="6+ characters"
+                  className="textInput passwordInput"
+                  required
+                  ref={password}
+                  onClick={clearErrorNotification}
+                />
+
+                <span className="passwordEye">◉</span>
+              </div>
+            </div>
+
+            <div className="termsText">
+              By signing up you agree to{" "}
+              <span className="termsLink">terms and conditions</span>
+            </div>
+
+            <button type="submit" className="submitBtn">
+              Get Started
+            </button>
+          </form>
+
+          <div className="authRedirect">
+            <p>
+              Already have an account?{" "}
+              <span
+                className="authLink"
+                onClick={() => {
+                  navigate("/Login");
+                }}
+              >
+                Login
+              </span>
+            </p>
           </div>
-
-          {/* ERROR NOTIFICATION COMING FROM FIREBASE */}
-
-
-          {/* Terms and Conditions */}
-          <div className="termsText">
-            By signing up you agree to <span className="termsLink">terms and conditions</span>
-          </div>
-
-          {/* Sign-Up Button */}
-          <button type="submit" className="submitBtn">
-            Signup
-          </button>
-        </form>
-
-        {/* Login Redirect Link */}
-        <div className="loginRedirectContainer">
-          <p>Already have an account? <span className="goToLogin" onClick={() => { navigate("/Login") }}>Login</span>
-          </p>
         </div>
       </div>
     </div>
-    </>
   );
 }
 
