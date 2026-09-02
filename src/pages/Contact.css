@@ -205,7 +205,7 @@
     line-height: 1.7;
 }
 
-.submitBtn {
+.submitBtnForm {
     grid-column: 1 / -1;
     display: inline-flex;
     align-items: center;
@@ -217,8 +217,8 @@
     margin-top: 5px;
     border: 1px solid #fff;
     border-radius: 0;
-    background: #fff;
-    color: #050505;
+    background: #24599c;
+    color: #fff;
     font-family: inherit;
     font-size: 0.68rem;
     font-weight: 600;
@@ -231,22 +231,22 @@
         transform 0.25s ease;
 }
 
-.submitBtn span {
+.submitBtnForm span {
     font-size: 1.15rem;
     transition: transform 0.25s ease;
 }
 
-.submitBtn:hover {
-    background: transparent;
-    color: #24599c;
+.submitBtnForm:hover {
+    background: #24599c;
+    color: #fff;
     transform: translateY(-2px);
 }
 
-.submitBtn:hover span {
+.submitBtnForm:hover span {
     transform: translateX(5px);
 }
 
-.submitBtn:active {
+.submitBtnForm:active {
     transform: translateY(0);
 }
 
@@ -269,7 +269,7 @@
 
 .ctaContent .sectionLabel {
     margin-bottom: 14px;
-    color: #ccc;
+    color: #000;
 }
 
 .ctaContent h2 {
