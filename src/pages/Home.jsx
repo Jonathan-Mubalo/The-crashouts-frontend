@@ -1,10 +1,11 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut, getAuth } from "firebase/auth";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./Home.css";
-import DriftWall from '../DesignBits/DriftWall';
+import DriftWall from "../DesignBits/DriftWall";
+import ScrollExpand from "../DesignBits/ScrollExpand";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -26,13 +27,48 @@ const Home = () => {
   };
 
   // For the animation
-  useEffect(() => { const revealElements = document.querySelectorAll(".reveal"); const observer = new IntersectionObserver( (entries) => { entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("active"); } }); }, { threshold: 0.15, } ); revealElements.forEach((element) => { observer.observe(element); }); return () => { revealElements.forEach((element) => { observer.unobserve(element); }); }; }, []);
+  useEffect(() => {
+    const revealElements = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          }
+        });
+      },
+      { threshold: 0.15 },
+    );
+    revealElements.forEach((element) => {
+      observer.observe(element);
+    });
+    return () => {
+      revealElements.forEach((element) => {
+        observer.unobserve(element);
+      });
+    };
+  }, []);
 
   const items = [
-  { image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZXZlbnR8ZW58MHx8MHx8fDA%3D', title: 'Peaks', href: 'https://example.com/one' },
-  { image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZXZlbnR8ZW58MHx8MHx8fDA%3D', title: 'Pup', href: 'https://example.com/two' },
-  { image: 'https://images.unsplash.com/photo-1560439514-4e9645039924?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGV2ZW50fGVufDB8fDB8fHww', title: 'Falls', href: 'https://example.com/three' },
-];
+    {
+      image:
+        "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZXZlbnR8ZW58MHx8MHx8fDA%3D",
+      title: "Peaks",
+      href: "https://example.com/one",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZXZlbnR8ZW58MHx8MHx8fDA%3D",
+      title: "Pup",
+      href: "https://example.com/two",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1560439514-4e9645039924?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGV2ZW50fGVufDB8fDB8fHww",
+      title: "Falls",
+      href: "https://example.com/three",
+    },
+  ];
 
   return (
     <>
@@ -157,7 +193,9 @@ const Home = () => {
               </p>
             </div>
 
-            <button className="Eventsbutton"><Link to="/Events">Explore Events</Link></button>
+            <button className="Eventsbutton">
+              <Link to="/Events">Explore Events</Link>
+            </button>
           </div>
         </section>
 
@@ -230,50 +268,62 @@ const Home = () => {
           </div>
         </section>
 
+        <ScrollExpand
+          src="https://img.partyslate.com/photos/2753880/photo-c619be1f-4c9a-4761-b905-b9458707cbd5.jpg?tr=w-1200,h-630,fo-fo-auto"
+          alt="Product hero"
+          title="See it Reserved!"
+          scrollHint="Scroll inside the frame"
+          useWindowScroll
+        >
+          <h2 style={{ color: "white", fontSize: "2.95rem"}}>Every pixel, everywhere</h2>
+          <p style={{ color: "white", fontSize: "1.95rem" }}>
+            X marks the spot!
+          </p>
+        </ScrollExpand>
+
         <section className="venuesSection">
-        <span className="sectionTag">For Your Convenience</span>
-        <h2>Venues</h2>
+          <span className="sectionTag">For Your Convenience</span>
+          <h2>Venues</h2>
 
-        <div className="venuesGrid">
-          <div className="venueBox reveal revealDelay1"></div>
-          <div className="venueBox reveal revealDelay2"></div>
-          <div className="venueBox reveal revealDelay3"></div>
-          <div className="venueBox reveal revealDelay1"></div>
-          <div className="venueBox reveal revealDelay2"></div>
-          <div className="venueBox reveal revealDelay3"></div>
-        </div>
+          <div className="venuesGrid">
+            <div className="venueBox reveal revealDelay1"></div>
+            <div className="venueBox reveal revealDelay2"></div>
+            <div className="venueBox reveal revealDelay3"></div>
+            <div className="venueBox reveal revealDelay1"></div>
+            <div className="venueBox reveal revealDelay2"></div>
+            <div className="venueBox reveal revealDelay3"></div>
+          </div>
 
-        <div className="venuesFooter reveal">
-          FOR VENUE MANAGERS <Link to='/Venues'>ADD YOUR VENUE NOW </Link>
-        </div>
-      </section>
+          <div className="venuesFooter reveal">
+            FOR VENUE MANAGERS <Link to="/Venues">ADD YOUR VENUE NOW </Link>
+          </div>
+        </section>
 
         <div style={{ height: 600 }}>
-  <DriftWall
-    items={items}
-    columns={7}
-    tileWidth={200}
-    tileHeight={132}
-    gap={18}
-    tilt={16}
-    turn={-14}
-    perspective={1200}
-    depth={120}
-    speed={42}
-    direction="up"
-    variance={0.45}
-    parallax={0.6}
-    lift={64}
-    fade={0.6}
-    dim={0.55}
-    overlayColor="#24599c"
-    radius={14}
-    roll={0}
-    pauseOnHover={false}
-    grayscale={false}
-/>
-</div>
-
+          <DriftWall
+            items={items}
+            columns={7}
+            tileWidth={200}
+            tileHeight={132}
+            gap={18}
+            tilt={16}
+            turn={-14}
+            perspective={1200}
+            depth={120}
+            speed={42}
+            direction="up"
+            variance={0.45}
+            parallax={0.6}
+            lift={64}
+            fade={0.6}
+            dim={0.55}
+            overlayColor="#24599c"
+            radius={14}
+            roll={0}
+            pauseOnHover={false}
+            grayscale={false}
+          />
+        </div>
       </div>
 
       <Footer />

@@ -1,214 +1,229 @@
-import React,{ useRef } from 'react';
-import Navbar from '../components/Navbar'
-import Footer from '../components/Footer'
-import './Contact.css'
-import { Link } from 'react-router-dom';
+import React, { useRef, useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import "./Contact.css";
+import { Link } from "react-router-dom";
 import emailjs from "@emailjs/browser";
 
 function Contact() {
+  const form = useRef();
+  const [visible, setVisible] = useState({});
 
-    // const fullName = useRef();
-    // const email = useRef();
-    // const message = useRef();
+  useEffect(() => {
+    const elements = document.querySelectorAll(".reveal");
 
-    const form = useRef()
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisible((prev) => ({
+              ...prev,
+              [entry.target.dataset.reveal]: true,
+            }));
 
-    const submitForm = async (e) =>{
-        e.preventDefault();
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+      },
+    );
 
-        // const response = await fetch('//localhost:3000/postForms',{
-        //     method:'POST',
-        //     headers:{'Content-Type': "application/json"},
-        //     body:JSON.stringify({
-        //         fullName: fullName.current.value,
-        //         email: email.current.value,
-        //        message: message.current.value
-        //     })
-        // })
+    elements.forEach((element, index) => {
+      element.dataset.reveal = index;
+      observer.observe(element);
+    });
 
-        // const data = await response.json();
+    return () => observer.disconnect();
+  }, []);
 
-        // return ( response.status === 200 ) ? alert(data.message): alert(data.message);
+  const submitForm = async (e) => {
+    e.preventDefault();
 
-        try {
-        // Email to you
-        await emailjs.sendForm(
-            "service_vi5kgcl",
-            "template_3lifeoo",
-            form.current,
-            {
-                publicKey: "tBEaJB7Fm24vpN3TS",
-            }
-        );
+    try {
+      // Email to you
+      await emailjs.sendForm(
+        "service_vi5kgcl",
+        "template_3lifeoo",
+        form.current,
+        {
+          publicKey: "tBEaJB7Fm24vpN3TS",
+        },
+      );
 
-        // Confirmation email to customer
-        await emailjs.sendForm(
-            "service_vi5kgcl",
-            "template_kewqhue",
-            form.current,
-            {
-                publicKey: "tBEaJB7Fm24vpN3TS",
-            }
-        );
+      // Confirmation email to customer
+      await emailjs.sendForm(
+        "service_vi5kgcl",
+        "template_kewqhue",
+        form.current,
+        {
+          publicKey: "tBEaJB7Fm24vpN3TS",
+        },
+      );
 
-        alert("Message sent successfully!");
-
-        form.current.reset();
-
+      alert("Message sent successfully!");
+      form.current.reset();
     } catch (error) {
-        console.error("EmailJS Error:", error);
-        alert("Something went wrong.");
+      console.error("EmailJS Error:", error);
+      alert("Something went wrong.");
     }
-};
+  };
 
-    return (
-        <>
-            <Navbar />
+  return (
+    <>
+      <main className="contactPage">
+         <Navbar />
+        <section className="contactHero">
+          <div className="heroOverlay"></div>
 
-            <main className="contactPage">
+          <div className="contactHeroContent">
+            <h1>Contact Us</h1>
 
-                <section className="contactHero">
-                    <div className="heroOverlay"></div>
+            <div className="breadcrumb">
+              <span>
+                <Link to="/Home">Home</Link>
+              </span>
 
-                    <div className="contactHeroContent">
-                        <h1>Contact Us</h1>
+              <span>/</span>
 
-                        <div className="breadcrumb">
-                            <span><Link to="/Home">Home</Link></span>
-                            <span>/</span>
-                            <span>Contact Us</span>
-                        </div>
-                    </div>
-                </section>
+              <span><Link to ="/About">About Us</Link></span>
+            </div>
+          </div>
+        </section>
 
-                <section className="contactContent">
+        <section className="contactContent">
+          <div className={`contactIntro reveal ${visible[0] ? "show" : ""}`}>
+            <span className="sectionLabel">Contact Us</span>
 
-                    <div className="contactIntro">
-                        <span className="sectionLabel">Contact Us</span>
+            <h2>
+              Let's Celebrate
+              <br />
+              Something Great
+            </h2>
 
-                        <h2>
-                            Let's Celebrate
-                            <br />
-                            Something Great
-                        </h2>
+            <p>
+              Have a event in mind or want to attend an event? We'd love to hear
+              from you. Send us a message and let's create something memorable!
+            </p>
 
-                        <p>
-                            Have a event in mind or want to attend an event?
-                            We'd love to hear from you. Send us a message and
-                            let's create something memorable!
-                        </p>
+            <div className="contactDetails">
+              <div
+                className={`contactDetail reveal ${visible[1] ? "show" : ""}`}
+              >
+                <span className="detailNumber">01</span>
 
-                        <div className="contactDetails">
+                <div>
+                  <h4>Our Location</h4>
+                  <p>72 Marlborough Road, Springfield</p>
+                </div>
+              </div>
 
-                            <div className="contactDetail">
-                                <span className="detailNumber">01</span>
-                                <div>
-                                    <h4>Our Location</h4>
-                                    <p>72 Marlborough Road, Springfield</p>
-                                </div>
-                            </div>
+              <div
+                className={`contactDetail reveal ${visible[2] ? "show" : ""}`}
+              >
+                <span className="detailNumber">02</span>
 
-                            <div className="contactDetail">
-                                <span className="detailNumber">02</span>
-                                <div>
-                                    <h4>Phone</h4>
-                                    <p>+27 61 908 1742</p>
-                                </div>
-                            </div>
+                <div>
+                  <h4>Phone</h4>
+                  <p>+27 61 908 1742</p>
+                </div>
+              </div>
 
-                            <div className="contactDetail">
-                                <span className="detailNumber">03</span>
-                                <div>
-                                    <h4>Email</h4>
-                                    <p>eugenieekazi@gmail.com</p>
-                                </div>
-                            </div>
+              <div
+                className={`contactDetail reveal ${visible[3] ? "show" : ""}`}
+              >
+                <span className="detailNumber">03</span>
 
-                        </div>
-                    </div>
+                <div>
+                  <h4>Email</h4>
+                  <p>eugenieekazi@gmail.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-                    <div className="contactForm">
+          <div className={`contactForm reveal ${visible[4] ? "show" : ""}`}>
+            <div className="formHeader">
+              <span className="sectionLabel">Get In Touch</span>
 
-                        <div className="formHeader">
-                            <span className="sectionLabel">Get In Touch</span>
-                            <h3>Send Us A Message</h3>
-                        </div>
+              <h3>Send Us A Message</h3>
+            </div>
 
-                        <form ref={form} className="formBoxTwo" onSubmit={submitForm}>
+            <form ref={form} className="formBoxTwo" onSubmit={submitForm}>
+              <div className="conDiv">
+                <label className="inputLabel" htmlFor="fullName">
+                  Full Name
+                </label>
 
-                            <div className="conDiv">
-                                <label className="inputLabel" htmlFor="fullName">
-                                    Full Name
-                                </label>
+                <input
+                  id="fullName"
+                  className="inputBox"
+                  type="text"
+                  placeholder="John Doe"
+                  name="from_name"
+                  required
+                />
+              </div>
 
-                                <input
-                                    id="fullName"
-                                    className="inputBox"
-                                    type="text"
-                                    placeholder="John Doe"
-                                    name="from_name"
-                                />
-                            </div>
+              <div className="conDiv">
+                <label className="inputLabel" htmlFor="email">
+                  Email Address
+                </label>
 
-                            <div className="conDiv">
-                                <label className="inputLabel" htmlFor="email">
-                                    Email Address
-                                </label>
+                <input
+                  id="email"
+                  className="inputBox"
+                  type="email"
+                  placeholder="johndoe@nomail.com"
+                  name="from_email"
+                  required
+                />
+              </div>
 
-                                <input
-                                    id="email"
-                                    className="inputBox"
-                                    type="email"
-                                    placeholder="johndoe@nomail.com"
-                                    name="from_email"
-                                />
-                            </div>
+              <div className="conDiv messageDiv">
+                <label className="inputLabel" htmlFor="message">
+                  Message
+                </label>
 
-                            <div className="conDiv messageDiv">
-                                <label className="inputLabel" htmlFor="message">
-                                    Message
-                                </label>
+                <textarea
+                  id="message"
+                  className="inputBox messageBox"
+                  placeholder="Write your message here..."
+                  rows="5"
+                  name="message"
+                  required
+                />
+              </div>
 
-                                <textarea
-                                    id="message"
-                                    className="inputBox messageBox"
-                                    placeholder="Write your message here..."
-                                    rows="5"
-                                    name="message"
-                                />
-                            </div>
+              <button type="submit" className="submitBtnForm">
+                Send Message
+                <span>&#x2192;</span>
+              </button>
+            </form>
+          </div>
+        </section>
 
-                            <button type="submit" className="submitBtnForm">
-                                Send Message
-                                <span>&#x2192;</span>
-                            </button>
+        <section className={`contactCta reveal ${visible[5] ? "show" : ""}`}>
+          <div className="ctaContent">
+            <span className="sectionLabel">Book Now</span>
 
-                        </form>
-                    </div>
+            <h2>
+              We Are Always Ready
+              <br />
+              To Celebrate Something Amazing
+            </h2>
 
-                </section>
+            <button className="ctaButton">
+              <Link to="/Events">Get Started</Link>
 
-                <section className="contactCta">
-                    <div className="ctaContent">
-                        <span className="sectionLabel">Book Now</span>
-
-                        <h2>
-                            We Are Always Ready
-                            <br />
-                            To Celebrate Something Amazing
-                        </h2>
-
-                        <button className="ctaButton">
-                            <Link to="/Events">Get Started</Link>
-                            <span>&#x2192;</span>
-                        </button>
-                    </div>
-                </section>
-
-            </main>
-            <Footer />
-        </>
-    )
+              <span>&#x2192;</span>
+            </button>
+          </div>
+        </section>
+      </main>
+    </>
+  );
 }
 
-export default Contact
+export default Contact;
