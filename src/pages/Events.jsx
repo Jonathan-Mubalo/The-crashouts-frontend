@@ -38,32 +38,32 @@ function Events() {
 
   // THE ENDPOINT FUNCTION THAT GETS ALL OF THE EVENTS
   useEffect(() => {
-    const getBookingHistory = async () => {
-      try {
-        const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
-        console.log(accessToken);
-        const response = await fetch(
-          `http://localhost:3000/seatPaymentsHistory/${accessToken}`,
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          },
-        );
+  const getBookingHistory = async () => {
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+      const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
+      console.log(accessToken);
+      const response = await fetch(
+        `${API_URL}/seatPaymentsHistory/${accessToken}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
 
-        const data = await response.json();
-        // console.log(data.message)
-        if (response.status === 200) {
-          setBookingHistoryData(data.seatHistory);
-        }
-      } catch (error) {
-        console.error(
-          "There was a problem trying to get the users bookingHistory info",
-          error,
-        );
+      const data = await response.json();
+      if (response.status === 200) {
+        setBookingHistoryData(data.seatHistory);
       }
-    };
-    getBookingHistory();
-  }, []);
+    } catch (error) {
+      console.error(
+        "There was a problem trying to get the users bookingHistory info",
+        error,
+      );
+    }
+  };
+  getBookingHistory();
+}, []);
 
   const displaySeatBooking = (event) => {
     console.log(event.target.id);

@@ -48,22 +48,21 @@ const Dashboard = () => {
     // USEEFFECT USED TO COLLECT AND STORE ALL OF THE USERS FROM THE DATABASE IN A STATE VARIABLE
 
     useEffect(() => {
-        const getAllUsers = async () => {
-            try {
+    const getAllUsers = async () => {
+        try {
+            const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+            const email = JSON.parse(sessionStorage.getItem("accessToken"));
 
-                const email = JSON.parse(sessionStorage.getItem("accessToken"));
+            const response = await fetch(`${API_URL}/getAllUsers/${email}`);
 
-                const response = await fetch(`//localhost:3000/getAllUsers/${email}`);
+            const data = await response.json();
 
-                const data = await response.json();
+            console.log("Number of users collected: ", data.message.length);
 
-                console.log("Number of users collected: ", data.message.length);
-
-                // USESTATE THAT WILL STORE ALL OF THE USERS THAT HAVE AN ACCOUNT ON OUT APPLICATION
-                setUsersList( ()=>{
-                    return data.message;
-                })
-
+            // USESTATE THAT WILL STORE ALL OF THE USERS THAT HAVE AN ACCOUNT ON OUT APPLICATION
+            setUsersList(() => {
+                return data.message;
+            });
                 // USESTATE THAT WILL STORE ALL OF THE USERS THAT YOU ARE SPECIFICALLY SEARCHING FOR
                    setFilteredUsers( ()=>{
                     return data.message;

@@ -171,22 +171,22 @@ const Venues = () => {
   // ENDPOINT USED TO BOOK A VENUE
 
   const bookVenue = async (event) => {
-    try {
-
-      event.preventDefault();
-      console.log("function is called")
-      const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
-      const response = await fetch(`//localhost:3000/bookVenue/${accessToken}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...bookedVenue,
-          eventName: eventName.current.value,
-          eventDescription: eventDescription.current.value,
-          eventSeatPrice: eventSeatPrice.current.value,
-          eventDate: eventDate.current.value
-        })
-      });
+  try {
+    event.preventDefault();
+    console.log("function is called");
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+    const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
+    const response = await fetch(`${API_URL}/bookVenue/${accessToken}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...bookedVenue,
+        eventName: eventName.current.value,
+        eventDescription: eventDescription.current.value,
+        eventSeatPrice: eventSeatPrice.current.value,
+        eventDate: eventDate.current.value
+      })
+    });
 
       const data = await response.json();
 
