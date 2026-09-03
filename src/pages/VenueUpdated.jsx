@@ -6,10 +6,6 @@ import Footer from "../components/Footer";
 
 const VenueUpdated = () => {
 
-    // =====================================
-    // VENUE INFORMATION
-    // =====================================
-
     const [VenueName, SetVenueName] = useState(
         "Grand Conference Hall"
     );
@@ -26,10 +22,6 @@ const VenueUpdated = () => {
         "123 Main Street, Johannesburg, Gauteng"
     );
 
-    // =====================================
-    // SEATING INFORMATION
-    // =====================================
-
     const [TotalSeats, SetTotalSeats] = useState("500");
 
     const [numberOfRows, setNumberOfRows] = useState("20");
@@ -37,11 +29,6 @@ const VenueUpdated = () => {
     const [seatsPerRow, setSeatsPerRow] = useState("25");
 
     const [bookingPrice, setBookingPrice] = useState("5000");
-
-
-    // =====================================
-    // VENUE IMAGES
-    // =====================================
 
     const [images, setImages] = useState([
         {
@@ -63,11 +50,6 @@ const VenueUpdated = () => {
         }
     ]);
 
-
-    // =====================================
-    // VENUE DOCUMENTS
-    // =====================================
-
     const [documents, setDocuments] = useState([
         {
             id: 1,
@@ -84,11 +66,6 @@ const VenueUpdated = () => {
             name: "Venue Certificate.pdf"
         }
     ]);
-
-
-    // =====================================
-    // UPLOAD IMAGES
-    // =====================================
 
     const handleImageUpload = (event) => {
 
@@ -107,11 +84,6 @@ const VenueUpdated = () => {
 
     };
 
-
-    // =====================================
-    // REMOVE IMAGE
-    // =====================================
-
     const removeImage = (id) => {
 
         setImages((previousImages) =>
@@ -122,10 +94,6 @@ const VenueUpdated = () => {
 
     };
 
-
-    // =====================================
-    // UPLOAD DOCUMENTS
-    // =====================================
 
     const handleDocumentUpload = (event) => {
 
@@ -144,10 +112,6 @@ const VenueUpdated = () => {
     };
 
 
-    // =====================================
-    // REMOVE DOCUMENT
-    // =====================================
-
     const removeDocument = (id) => {
 
         setDocuments((previousDocuments) =>
@@ -157,11 +121,6 @@ const VenueUpdated = () => {
         );
 
     };
-
-
-    // =====================================
-    // UPDATE VENUE
-    // =====================================
 
     const handleSubmit = (event) => {
 
@@ -199,9 +158,6 @@ const VenueUpdated = () => {
     };
 
 
-    // =====================================
-    // CANCEL
-    // =====================================
 
     const handleCancel = () => {
 
@@ -210,43 +166,36 @@ const VenueUpdated = () => {
     };
 
 
-    // =====================================
-    // RETURN
-    // =====================================
 
     return (
 
         <>
 
-            <Navbar />
+        <Navbar />
 
+    <div className="edit-venue-page">
+    <div className="edit-venue-container"></div>
 
-            <div className="edit-venue-page">
+    {}
 
-                {/* =====================================
-                    PAGE HEADER
-                ===================================== */}
+    <div className="edit-venue-header">
 
-                <div className="edit-venue-header">
+    <div>
 
-                    <div>
+     <h1>
+      Edit Venue
+    </h1>
 
-                        <h1>
-                            Edit Venue
-                        </h1>
-
-                        <p>
-                            Update your venue information
-                        </p>
+    <p>
+     Update your venue information
+    </p>
 
                     </div>
 
                 </div>
 
 
-                {/* =====================================
-                    FORM
-                ===================================== */}
+                {}
 
                 <form
                     className="edit-venue-form"
@@ -254,9 +203,7 @@ const VenueUpdated = () => {
                 >
 
 
-                    {/* =====================================
-                        VENUE INFORMATION
-                    ===================================== */}
+                    {}
 
                     <section className="edit-section">
 
@@ -276,7 +223,7 @@ const VenueUpdated = () => {
                         <div className="form-grid">
 
 
-                            {/* VENUE NAME */}
+                            {}
 
                             <div className="form-group">
 
@@ -297,7 +244,7 @@ const VenueUpdated = () => {
                             </div>
 
 
-                            {/* PHONE NUMBER */}
+                            {}
 
                             <div className="form-group">
 
@@ -318,7 +265,7 @@ const VenueUpdated = () => {
                             </div>
 
 
-                            {/* REGISTRATION NUMBER */}
+                            {}
 
                             <div className="form-group">
 
@@ -339,7 +286,7 @@ const VenueUpdated = () => {
                             </div>
 
 
-                            {/* FULL ADDRESS */}
+                            {}
 
                             <div className="form-group full">
 
@@ -364,9 +311,7 @@ const VenueUpdated = () => {
                     </section>
 
 
-                    {/* =====================================
-                        VENUE IMAGES
-                    ===================================== */}
+                    {}
 
                     <section className="edit-section">
 
@@ -392,8 +337,8 @@ const VenueUpdated = () => {
                             {images.map((image) => (
 
                                 <div
-                                    className="edit-image-card"
-                                    key={image.id}
+                                className="edit-image-card"
+                                key={image.id}
                                 >
 
                                     <img
@@ -427,7 +372,7 @@ const VenueUpdated = () => {
                             ))}
 
 
-                            {/* UPLOAD IMAGE */}
+                            {}
 
                             <label className="upload-image-card">
 
@@ -458,9 +403,7 @@ const VenueUpdated = () => {
                     </section>
 
 
-                    {/* =====================================
-                        VENUE DOCUMENTS
-                    ===================================== */}
+                    {}
 
                     <section className="edit-section">
 
@@ -480,7 +423,7 @@ const VenueUpdated = () => {
                         <div className="documents-list">
 
 
-                            {/* EXISTING DOCUMENTS */}
+                            {}
 
                             {documents.map((document) => (
 
@@ -527,7 +470,7 @@ const VenueUpdated = () => {
                             ))}
 
 
-                            {/* UPLOAD DOCUMENT */}
+                            {}
 
                             <label className="upload-document">
 
@@ -565,9 +508,7 @@ const VenueUpdated = () => {
                     </section>
 
 
-                    {/* =====================================
-                        SEATING INFORMATION
-                    ===================================== */}
+                    {}
 
                     <section className="edit-section">
 
@@ -588,7 +529,7 @@ const VenueUpdated = () => {
                         <div className="form-grid">
 
 
-                            {/* TOTAL SEATS */}
+                            {}
 
                             <div className="form-group">
 
@@ -609,7 +550,7 @@ const VenueUpdated = () => {
                             </div>
 
 
-                            {/* NUMBER OF ROWS */}
+                            {}
 
                             <div className="form-group">
 
@@ -630,7 +571,7 @@ const VenueUpdated = () => {
                             </div>
 
 
-                            {/* SEATS PER ROW */}
+                            {}
 
                             <div className="form-group">
 
@@ -651,7 +592,7 @@ const VenueUpdated = () => {
                             </div>
 
 
-                            {/* BOOKING PRICE */}
+                            {}
 
                             <div className="form-group">
 
@@ -685,9 +626,7 @@ const VenueUpdated = () => {
                     </section>
 
 
-                    {/* =====================================
-                        BUTTONS
-                    ===================================== */}
+                    {}
 
                     <div className="form-actions">
 
