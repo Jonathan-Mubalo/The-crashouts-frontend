@@ -5,6 +5,7 @@ import { EventContext } from "../context/SpecificEvent";
 import { useNavigate } from "react-router-dom";
 import PaystackPop from "@paystack/inline-js";
 import axios from "axios";
+import { jsPDF } from "jspdf";
 
 const publicKey = "pk_test_2c7fa0027b2eb549818e537b4750b0258a2d7bd3";
 
@@ -185,13 +186,13 @@ const handlePaystackPayment = () => {
           .then((response) => {
             if (response.data.status || response.data.data.status === "success") {
               bookSeats();
+              generatePDFTicket(transaction.reference); // <-- Trigger PDF generation
             }
           })
           .catch((error) => {
             console.error("Verification error:", error);
-            alert("Payment was successful, but verification failed.");
-            alert("You are using a demo version because the business is not registered on paystack; therefore payments will not really occur.");
-              bookSeats();
+            bookSeats();
+            generatePDFTicket(transaction.reference || "TEST-REF"); // <-- Trigger for test mode fallback
           });
       },
       onCancel: () => {
@@ -200,6 +201,63 @@ const handlePaystackPayment = () => {
     });
   };
 
+  // pdf ticket generator, work in progress
+
+  const generatePDFTicket = (transactionReference) => {
+  const doc = new jsPDF();
+  const eventTitle = currentFilteredEvent[0]?.venueName || currentFilteredEvent[0]?.title || "Event Ticket";
+  const eventDate = currentFilteredEvent[0]?.eventDate || "TBD";
+  const eventAddress = currentFilteredEvent[0]?.address || "TBD";
+  const userEmail = JSON.parse(sessionStorage.getItem("accessToken")) || "Attendee";
+
+  // Ticket Header Box
+  doc.setFillColor(37, 99, 235); // Blue background
+  doc.rect(15, 15, 180, 25, "F");
+  
+  doc.setTextColor(255, 255, 255);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(16);
+  doc.text("OFFICIAL EVENT TICKET", 20, 31);
+
+  // Event Details
+  doc.setTextColor(15, 23, 42);
+  doc.setFontSize(14);
+  doc.text(eventTitle, 20, 55);
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+  doc.text(`Date: ${eventDate}`, 20, 65);
+  doc.text(`Venue Address: ${eventAddress}`, 20, 72);
+
+  // Divider Line
+  doc.setDrawColor(226, 232, 240);
+  doc.line(20, 80, 190, 80);
+
+  // Booking & Attendee Info
+  doc.setFont("helvetica", "bold");
+  doc.text("Attendee Information:", 20, 92);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Email: ${userEmail}`, 20, 100);
+
+  doc.setFont("helvetica", "bold");
+  doc.text("Seat Details:", 20, 112);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Selected Seats: ${bookedSeats.join(", ")}`, 20, 120);
+  doc.text(`Total Seats: ${numberOfBookedSeats}`, 20, 127);
+  doc.text(`Total Paid: R${numberOfBookedSeats * seatPrice}`, 20, 134);
+
+  // Footer / Reference
+  doc.setDrawColor(226, 232, 240);
+  doc.line(20, 145, 190, 145);
+  
+  doc.setFontSize(8);
+  doc.setTextColor(100, 116, 139);
+  doc.text(`Reference ID: ${transactionReference}`, 20, 155);
+  doc.text("Thank you for your booking!", 20, 162);
+
+  // Save the PDF
+  doc.save(`Ticket-${bookedSeats.join("-")}.pdf`);
+};
 
   return (
     <>
