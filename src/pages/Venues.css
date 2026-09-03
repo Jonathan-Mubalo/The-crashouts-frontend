@@ -146,91 +146,233 @@
 
 /* STYLING FOR THE EVENTS BOOKING DIALOG */
 
-.eventBooking_dialog{
-width: auto;
-/* height: 100dvh; */
-position: fixed;
-z-index: 2;
-top: 5%;
-left: 10%;
-right: 10%;
-bottom: 5%;
-border: 0px solid yellow;
-border-radius: 10px;
+.eventBooking_dialog {
+  width: 90%;
+  max-width: 850px;
+  max-height: 90dvh;
+  position: fixed;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  padding: 0;
+  border: none;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.eventBooking_dialog::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(5px);
 }
 
 .eventBooking_dialog::-webkit-scrollbar {
-    display: none;
+  width: 6px;
 }
 
-.venue_eventBookingForm{
+.eventBooking_dialog::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.eventBooking_dialog::-webkit-scrollbar-thumb {
+  background: #b8c6cc;
+  border-radius: 10px;
+}
+
+.venue_eventBookingForm {
   display: flex;
   flex-flow: column nowrap;
-  /* border: 2px solid rgb(153, 189, 25); */
-  width: 60%;
-  margin: auto;
+  width: 100%;
   min-width: 300px;
-  align-items: center;
+  box-sizing: border-box;
+  padding: 35px 45px 40px;
+  align-items: stretch;
 }
 
-.venue_eventBookingForm h1, .venue_eventBookingForm h3{
-  /* border: 1px solid black; */
-  /* background-color: var(--backgroundBlue); */
+.venue_eventBookingForm h1 {
+  width: 100%;
+  margin: 0;
   color: var(--backgroundBlue);
-  border-radius: 5px;
-  width:100%;
-  margin: auto;
-  margin-top: 5px;
+  font-size: 28px;
+  font-weight: 700;
   text-align: center;
-
-} 
-
-.venue_eventBookingForm p{
-  margin-top: 8px;
+  line-height: 1.2;
 }
 
-.venue_eventBookingForm h1, .venue_eventBookingForm h3{
-  margin-top: 10px;
+.venue_eventBookingForm h3 {
+  width: 100%;
+  margin: 8px 0 20px;
+  color: #687780;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.venue_eventBookingForm label {
+  margin-top: 15px;
+  margin-bottom: 7px;
+  color: #1b303a;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.venue_eventBookingForm input,
+.venue_eventBookingForm textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 15px;
+  border: 1px solid #d3dfe4;
+  border-radius: 9px;
+  outline: none;
+  background-color: #f7fafb;
+  color: #17252c;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.venue_eventBookingForm input {
+  min-height: 46px;
+}
+
+.venue_eventBookingForm textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.venue_eventBookingForm input::placeholder,
+.venue_eventBookingForm textarea::placeholder {
+  color: #9aa8ae;
 }
 
 
-/* STYLING FOR THE EVENT BOOKING LABELS */
-
-.venue_eventBookingForm label{
-margin-top: 10px;
-margin-bottom: 5px;
-text-decoration: underline;
-font-weight:bold;
-color: rgb(6, 6, 100);
+.venue_eventBookingForm input:focus,
+.venue_eventBookingForm textarea:focus {
+  border-color: var(--buttonBlue);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 100, 180, 0.1);
 }
 
-/* STYLING FOR THE EVENT BOOKING INPUTS */
-.venue_eventBookingForm input, .venue_eventBookingForm textarea{
-  padding: 10px 0px 10px 10px;
-  border-radius: 5px;
-  width: 90%;
-  margin: auto;
-  border: 1px solid var(--buttonBlue);
-  background-color: rgb(202, 223, 231);
-
+.venue_eventBookingForm h3:nth-of-type(2) {
+  margin-top: 30px;
+  margin-bottom: 8px;
+  padding-top: 25px;
+  border-top: 1px solid #e1e8eb;
+  color: var(--backgroundBlue);
+  font-size: 19px;
+  font-weight: 700;
+  text-align: left;
 }
 
-.venue_eventbookingPriceDisplay{
-font-family: italics;  
-color: var(--buttonBlue);
-font-weight: 600;
+.venue_eventBookingForm p {
+  margin: 5px 0 10px;
+  padding: 14px 16px;
+  border-radius: 9px;
+  background-color: #f0f6f8;
+  color: #53646c;
+  font-size: 14px;
+}
+
+.venue_eventbookingPriceDisplay {
+  color: var(--buttonBlue);
+  font-size: 18px;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+.venue_eventBookingForm section {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid #e1e8eb;
+}
+
+.event_venueBookingBtn {
+  min-width: 130px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
 
-/* VENUE BOOKING BTN */
+/* BOOK EVENT */
 
-.event_venueBookingBtn{
-padding: 10px 10px;
-color: white;
-background-color: var(--buttonBlue);
-margin: 10px 10px 7px;
-border-radius: 10px;
-width: 150px;
+.event_venueBookingBtn:first-child {
+  background-color: var(--buttonBlue);
+  color: #ffffff;
+  box-shadow: 0 5px 15px rgba(0, 100, 180, 0.2);
+}
+
+.event_venueBookingBtn:first-child:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 100, 180, 0.3);
+}
+
+
+/* CANCEL */
+
+.event_venueBookingBtn:last-child {
+  background-color: #edf1f3;
+  color: #42535b;
+}
+
+.event_venueBookingBtn:last-child:hover {
+  background-color: #dfe6e9;
+  transform: translateY(-2px);
+}
+
+
+@media (max-width: 650px) {
+
+  .eventBooking_dialog {
+    width: 94%;
+    max-height: 94dvh;
+    border-radius: 14px;
+  }
+
+  .venue_eventBookingForm {
+    min-width: 0;
+    padding: 25px 20px 30px;
+  }
+
+  .venue_eventBookingForm h1 {
+    font-size: 23px;
+  }
+
+  .venue_eventBookingForm h3 {
+    font-size: 13px;
+  }
+
+  .venue_eventBookingForm label {
+    font-size: 13px;
+  }
+
+  .venue_eventBookingForm input,
+  .venue_eventBookingForm textarea {
+    font-size: 14px;
+  }
+
+  .venue_eventBookingForm section {
+    flex-direction: column;
+  }
+
+  .event_venueBookingBtn {
+    width: 100%;
+  }
 }
 
 

@@ -34,7 +34,7 @@
   border-radius: 10px;
 }
 
-.nav_btn {
+.lookup_btn {
   background: transparent;
   border: none;
   padding: 8px 18px;
@@ -46,7 +46,7 @@
   transition: all 0.2s ease;
 }
 
-.nav_btn.active {
+.lookup_btn .active {
   background: #ffffff;
   color: #2563eb;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);

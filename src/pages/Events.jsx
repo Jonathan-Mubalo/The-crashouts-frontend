@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { EventContext } from "../context/SpecificEvent";
 import "./Events.css";
 import { useNavigate } from "react-router-dom";
+import ScrollExpand from "../DesignBits/ScrollExpand";
 
 function Events() {
   // THIS NAVIGATION ELEMENT IS USED TO NAVIGATE TO THE NEXT PAGE WHENEVER SOMEONE WANTS TO BOOK A SEAT
@@ -101,6 +102,7 @@ function Events() {
       <Navbar />
 
       <header className="eventsHeader">
+
         <div className="container headerSection">
           <div>
             <h1>Events</h1>
@@ -113,14 +115,14 @@ function Events() {
           {/* Works with the filter code to pull and bring up events as well as the user's booking history :) I'm so smart!! */}
           <nav>
             <button
-              className={`nav_btn ${currentTab === "search" ? "active" : ""}`}
+              className={`lookup_btn ${currentTab === "search" ? "active" : ""}`}
               onClick={() => setCurrentTab("search")}
             >
               Browse Events
             </button>
 
             <button
-              className={`nav_btn ${currentTab === "history" ? "active" : ""}`}
+              className={`lookup_btn ${currentTab === "history" ? "active" : ""}`}
               onClick={() => setCurrentTab("history")}
             >
               Booking History
