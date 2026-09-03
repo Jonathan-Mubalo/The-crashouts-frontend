@@ -12,25 +12,26 @@ function SignIn() {
   const errorMessages = useRef();
   const loginSuccess = useRef();
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
+ const handleSignUp = async (e) => {
+  e.preventDefault();
 
-    try {
-      const response = await fetch("http://localhost:3000/signup", {
-        method: "POST",
+  try {
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+    const response = await fetch(`${API_URL}/signup`, {
+      method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
-        },
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-        body: JSON.stringify({
-          userName: userName.current.value,
+      body: JSON.stringify({
+        userName: userName.current.value,
 
-          email: email.current.value,
+        email: email.current.value,
 
-          password: password.current.value,
-        }),
-      });
+        password: password.current.value,
+      }),
+    });
 
       const data = await response.json();
 

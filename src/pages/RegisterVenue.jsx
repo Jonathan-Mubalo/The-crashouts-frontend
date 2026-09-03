@@ -80,10 +80,11 @@ function RegisterVenue() {
 
     const accessTokenEmail = JSON.parse(sessionStorage.getItem("accessToken"));
 
-    const response = await fetch(`http://localhost:3000/newVenue/${accessTokenEmail}`, {
-      method: "POST",
-      body: submissionData,
-    });
+   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
+  method: "POST",
+  body: submissionData,
+});
 
     const data = await response.json();
 

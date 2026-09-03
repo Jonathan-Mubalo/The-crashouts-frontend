@@ -104,23 +104,24 @@ try{
 
   console.log("bookSeats function has started");
 
-    const email = JSON.parse(sessionStorage.getItem("accessToken"));
-console.log("email: ",email)
-    const response = await fetch(`//localhost:3000/bookingSeat`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        bookingPrice: seatPrice,
-        eventDate: currentFilteredEvent[0].eventDate,
-        bookedBy: email,
-        numberOfSeats: bookedSeats.length,
-        seatNumber: bookedSeats,
-        venueName: currentFilteredEvent[0].venueName,
-        address: currentFilteredEvent[0].address,
-        eventName: currentFilteredEvent[0].eventName
-      })
-    });
+   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const email = JSON.parse(sessionStorage.getItem("accessToken"));
+console.log("email: ", email);
+const response = await fetch(`${API_URL}/bookingSeat`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    email,
+    bookingPrice: seatPrice,
+    eventDate: currentFilteredEvent[0].eventDate,
+    bookedBy: email,
+    numberOfSeats: bookedSeats.length,
+    seatNumber: bookedSeats,
+    venueName: currentFilteredEvent[0].venueName,
+    address: currentFilteredEvent[0].address,
+    eventName: currentFilteredEvent[0].eventName
+  })
+});
 
     const data = await response.json();
 

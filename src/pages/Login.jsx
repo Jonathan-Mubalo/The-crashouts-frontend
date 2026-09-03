@@ -15,19 +15,17 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/login", {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-          email: email.current.value,
-
-          password: password.current.value,
-        }),
-      });
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  const response = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email.current.value,
+      password: password.current.value,
+    }),
+  });
 
       const data = await response.json();
 
