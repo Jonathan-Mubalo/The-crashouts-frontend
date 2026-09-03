@@ -9,12 +9,13 @@ useEffect(()=>{
         try {
             console.log("Is it working")
             console.log("Getting the email: ", auth.currentUser.email)
-            const user = await fetch(`http://localhost:3000/isAuthorised/${auth.currentUser.email}`,
-                {
-                    method: 'GET',
-                    headers: { "Content-Type": "application/json" }
-                }
-            );
+            const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:3000")
+const user = await fetch(`${API_URL}/isAuthorised/${auth.currentUser.email}`,
+    {
+        method: 'GET',
+        headers: { "Content-Type": "application/json" }
+    }
+);
 
             const data = await json(user);
             if (data.role == "manager" || data.role == "admin") {
