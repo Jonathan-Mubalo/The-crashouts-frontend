@@ -35,13 +35,13 @@ function RegisterVenue() {
     setFormData((prev) => ({ ...prev, [id]: files }));
   };
 
-   const handlePlaceSelect = (place) => {
-    if (place && place.formatted_address) {
-      setFormData((prev) => ({
-        ...prev,
-        address: place.formatted_address,
-      }));
-    }
+  const handlePlaceSelect = (place) => { 
+    console.log("FULL GEOAPIFY PLACE:", place); 
+    console.log("GEOAPIFY PROPERTIES:", place?.properties); 
+    console.log("FORMATTED ADDRESS:", place?.properties?.formatted); 
+    if (place?.properties?.formatted) { setFormData((prev) => 
+      ({ ...prev, address: place.properties.formatted, })); 
+    } 
   };
 
   const nextStep = (e) => {
@@ -114,8 +114,6 @@ function RegisterVenue() {
     });
 
   };
-
-
 
   return (
     <>

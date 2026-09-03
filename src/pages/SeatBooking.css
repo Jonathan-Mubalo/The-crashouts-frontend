@@ -69,26 +69,30 @@
   padding: 30px 20px;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; 
   margin-bottom: 20px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .seatsGrid {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: max-content;
 }
 
 .seatRow {
   display: flex;
   gap: 8px;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .seat {
   width: 48px;
   height: 48px;
+  flex-shrink: 0;
   border-radius: 8px;
   font-size: 0.75rem;
   display: flex;
@@ -227,4 +231,37 @@
 
 .dialogBtn:hover {
   background-color: #1d4ed8;
+}
+
+/* Price summary styling */
+
+.bookingSummary {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.bookingSummary p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.bookingSummary p:last-child {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #0f172a;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 10px;
 }
