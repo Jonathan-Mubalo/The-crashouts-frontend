@@ -228,10 +228,11 @@ const Venues = () => {
       console.log("selectedVenueName after the slicing effect: ", venueName)
 
 
-      const response = await fetch(`//localhost:3000/removeMyVenue/${venueName}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "appliction/json" },
-      });
+     const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:3000")
+const response = await fetch(`${API_URL}/removeMyVenue/${venueName}`, {
+  method: "DELETE",
+  headers: { "Content-Type": "application/json" },
+});
 
       const data = await response.json();
       if (response.status !== 200) {
