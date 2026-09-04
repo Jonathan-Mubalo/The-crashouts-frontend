@@ -34,7 +34,6 @@ const UserProfile = () => {
   return (
     <>
       <Navbar />
-
       <main className="userProfile">
         <section className="profileHero">
           <div className="profileHeroGlow"></div>
