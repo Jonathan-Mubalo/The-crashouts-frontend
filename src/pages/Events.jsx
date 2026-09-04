@@ -99,43 +99,46 @@ function Events() {
 
   return (
     <div className="eventPage">
-      <Navbar />
+      
 
       <header className="eventsHeader">
+  <Navbar />
 
-        <div className="container headerSection">
-          <div>
-            <h1>Events</h1>
-            <p>
-              Browse available events, choose your seat count, and explore
-              venues.
-            </p>
-          </div>
+  <div className="eventContainer headerSection">
+    <div className="heroContent">
+      <span className="heroEyebrow">DISCOVER • BOOK • EXPERIENCE</span>
 
-          {/* Works with the filter code to pull and bring up events as well as the user's booking history :) I'm so smart!! */}
-          <nav>
-            <button
-              className={`lookup_btn ${currentTab === "search" ? "active" : ""}`}
-              onClick={() => setCurrentTab("search")}
-            >
-              Browse Events
-            </button>
+      <h1>Find Your Next Event</h1>
 
-            <button
-              className={`lookup_btn ${currentTab === "history" ? "active" : ""}`}
-              onClick={() => setCurrentTab("history")}
-            >
-              Booking History
-            </button>
-          </nav>
-        </div>
-      </header>
+      <p>
+        Browse available events, choose your seats, and experience
+        unforgettable moments at amazing venues.
+      </p>
+    </div>
+
+    <div className="eventsTabs">
+      <button
+        className={`eventTab ${currentTab === "search" ? "active" : ""}`}
+        onClick={() => setCurrentTab("search")}
+      >
+        Browse Events
+      </button>
+
+      <button
+        className={`eventTab ${currentTab === "history" ? "active" : ""}`}
+        onClick={() => setCurrentTab("history")}
+      >
+        Booking History
+      </button>
+    </div>
+  </div>
+</header>
 
       {/* used ternary to make sures when pressing the browser it displays only the browser content and used the state "currentTab"*/}
-      <main className="container mainContent">
+      <main className="eventContainer mainContent">
         {currentTab === "search" ? (
           <>
-            <section className="filterBar">
+            {/* <section className="filterBar">
               <div className="filterItem">
                 <span className="filterIcon">Status</span>
                 <div className="filterWrapper">
@@ -161,7 +164,7 @@ function Events() {
                     value={choosenSeat}
                     onChange={(e) => setChoosenSeat(e.target.value)}
                   >
-                    {/*      {[...Array(10)].map((_, i) => (<option key={i + 1} value={i + 1}> {i + 1} {i === 0 ? 'Seat' : 'Seats'} </option>))}  */}
+                    {/*      {[...Array(10)].map((_, i) => (<option key={i + 1} value={i + 1}> {i + 1} {i === 0 ? 'Seat' : 'Seats'} </option>))}  
                   </select>
                 </div>
               </div>
@@ -175,7 +178,7 @@ function Events() {
                     value={choosenLocation}
                     onChange={(e) => setChoosenLocation(e.target.value)}
                   >
-                    {/*     <option value="all">All Locations</option>{dropLocation.map((locate, index) => (<option key={index} value={locate}>{locate}</option>))} */}
+                         <option value="all">All Locations</option>{dropLocation.map((locate, index) => (<option key={index} value={locate}>{locate}</option>))} 
                   </select>
                 </div>
               </div>
@@ -183,7 +186,7 @@ function Events() {
               <button className="mainBtn searchBtn">
                 Search ({choosenSeat} Seats)
               </button>
-            </section>
+            </section> */}
 
             {/* The grid in which the events will take placed in dynamically... I think, Jonathan and Laura please confirm ;) */}
 

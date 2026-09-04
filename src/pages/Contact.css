@@ -26,7 +26,8 @@
 .heroOverlay {
     position: absolute;
     inset: 0;
-    background: #24599c;
+     background:
+    linear-gradient(135deg, #0f172a 0%, #172554 48%, #1d4ed8 100%);
 }
 
 .contactHeroContent {
@@ -266,7 +267,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: #24599c;
+     background:
+    linear-gradient(135deg, #0f172a 0%, #172554 48%, #1d4ed8 100%);
     color: #fff;
 }
 

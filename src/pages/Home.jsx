@@ -1,34 +1,19 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { signOut, getAuth } from "firebase/auth";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "./Home.css";
+
 import DriftWall from "../DesignBits/DriftWall";
 import ScrollExpand from "../DesignBits/ScrollExpand";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const auth = getAuth();
+  const [events, setEvents] = useState([]);
+  const [eventsLoading, setEventsLoading] = useState(true);
 
-  const handleLogout = async () => {
-    try {
-      const credentials = signOut(auth);
-      sessionStorage.setItem("ReserveX", JSON.stringify(false));
-
-      console.log(
-        "sessionStorage logout: ",
-        JSON.parse(sessionStorage.getItem("ReserveX")),
-      );
-      navigate("/Login");
-    } catch (error) {
-      return alert("Unable to currently logout");
-    }
-  };
-
-  // For the animation
   useEffect(() => {
     const revealElements = document.querySelectorAll(".reveal");
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -39,267 +24,437 @@ const Home = () => {
       },
       { threshold: 0.15 },
     );
-    revealElements.forEach((element) => {
-      observer.observe(element);
-    });
+
+    revealElements.forEach((element) => observer.observe(element));
+
     return () => {
-      revealElements.forEach((element) => {
-        observer.unobserve(element);
-      });
+      revealElements.forEach((element) => observer.unobserve(element));
     };
   }, []);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch events");
+        }
+
+        const data = await response.json();
+
+        // Only show venues that actually have an event
+        const upcomingEvents = data
+          .filter((event) => event.eventName && event.eventDate)
+          .filter((event) => new Date(event.eventDate) >= new Date())
+          .sort((a, b) => new Date(a.eventDate) - new Date(b.eventDate));
+
+        setEvents(upcomingEvents);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setEventsLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  const categories = [
+    {
+      icon: "♫",
+      title: "Music",
+      text: "Concerts & live performances",
+    },
+    {
+      icon: "⚽",
+      title: "Sports",
+      text: "Games & sporting events",
+    },
+    {
+      icon: "◉",
+      title: "Comedy",
+      text: "Laugh-out-loud experiences",
+    },
+    {
+      icon: "✦",
+      title: "Festivals",
+      text: "Unforgettable celebrations",
+    },
+  ];
 
   const items = [
     {
       image:
-        "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZXZlbnR8ZW58MHx8MHx8fDA%3D",
-      title: "Peaks",
-      href: "https://example.com/one",
+        "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500&auto=format&fit=crop&q=80",
+      title: "Live Events",
+      href: "/Events",
     },
     {
       image:
-        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZXZlbnR8ZW58MHx8MHx8fDA%3D",
-      title: "Pup",
-      href: "https://example.com/two",
+        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&auto=format&fit=crop&q=80",
+      title: "Festivals",
+      href: "/Events",
     },
     {
       image:
-        "https://images.unsplash.com/photo-1560439514-4e9645039924?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGV2ZW50fGVufDB8fDB8fHww",
-      title: "Falls",
-      href: "https://example.com/three",
+        "https://images.unsplash.com/photo-1560439514-4e9645039924?w=500&auto=format&fit=crop&q=80",
+      title: "Experiences",
+      href: "/Events",
     },
   ];
 
   return (
     <>
-      {/* <h1>This is the home page</h1>
-            <button className="logOutBtn" onClick={handleLogout}>Log out</button> */}
-
       <div className="homeContainer">
-        <Navbar />
+        <section className="homePage">
+          <div className="homeNav">
+            <Navbar />
+          </div>
 
-        <div className="homePage">
           <div className="bannerOverlay"></div>
 
           <div className="bannerContent">
-            <p>YOUR PERFECT EVENT STARTS HERE</p>
+            <span className="heroLabel">DISCOVER • BOOK • EXPERIENCE</span>
 
             <h1>
-              Embark On Your Journey To Secure <br /> The Ideal Getaway.
+              Your Next
+              <br />
+              Unforgettable Event.
             </h1>
 
             <p className="bannerDescription">
-              Discover exceptional venues and create memorable experiences.{" "}
-              <br /> Find the perfect destination for your next event.{" "}
+              Discover amazing events, secure your tickets and create memories
+              that last forever.
             </p>
-          </div>
-        </div>
 
-        <section className="statSection">
+            <div className="heroSearch">
+              <div className="searchField">
+                <span>⌕</span>
+                <div>
+                  <small>WHAT ARE YOU LOOKING FOR?</small>
+                  <strong>Search events</strong>
+                </div>
+              </div>
+
+              <div className="searchField">
+                <span>⌖</span>
+                <div>
+                  <small>LOCATION</small>
+                  <strong>Gauteng</strong>
+                </div>
+              </div>
+
+              <div className="searchField">
+                <span>◷</span>
+                <div>
+                  <small>DATE</small>
+                  <strong>Any date</strong>
+                </div>
+              </div>
+
+              <Link to="/Events" className="heroSearchButton">
+                Find Events
+              </Link>
+            </div>
+          </div>
+
+          <div className="heroBottom">
+            <span>SCROLL TO DISCOVER</span>
+            <span className="heroLine"></span>
+          </div>
+        </section>
+
+        <section className="stats">
           <div className="stat reveal">
             <strong>160+</strong>
-            <span>Available Venues</span>
+            <span>Events & Venues</span>
           </div>
 
           <div className="stat reveal revealDelay1">
-            <strong>56+</strong>
-            <span>Events</span>
+            <strong>5K+</strong>
+            <span>Tickets Sold</span>
           </div>
 
           <div className="stat reveal revealDelay2">
-            <strong>3rd</strong>
-            <span>Yearly Experience</span>
+            <strong>50+</strong>
+            <span>Live Events</span>
+          </div>
+
+          <div className="stat reveal revealDelay3">
+            <strong>4.9/5</strong>
+            <span>Customer Rating</span>
           </div>
         </section>
 
-        <section>
-          <div className="booking reveal">
-            <h2>Book A Seat</h2>
-            <a href="/Venues">VIEW AVAILABLE VENUES</a>
+        <section className="categoriesSection">
+          <div className="sectionHeading reveal">
+            <div>
+              <span className="sectionTag">EXPLORE EVENTS</span>
+              <h2>
+                Find Something
+                <br />
+                You Love.
+              </h2>
+            </div>
+
+            <Link to="/Events" className="viewAll">
+              View all events →
+            </Link>
           </div>
 
-          <div className="bookingSection reveal">
-            <div className="bookingSectionTwo">
-              <span className="fieldIcon">&#9728;</span>
-              <div>
-                <small>Location</small>
-                <strong>Gauteng</strong>
-              </div>
-            </div>
+          <div className="categoryGrid">
+            {categories.map((category, index) => (
+              <Link
+                to="/Events"
+                className={`categoryCard reveal revealDelay${index + 1}`}
+                key={category.title}
+              >
+                <span className="categoryIcon">{category.icon}</span>
 
-            <div className="bookingSectionTwo">
-              <span className="fieldIcon">&#9728;</span>
-              <div>
-                <small>Guest</small>
-                <strong>1 Person</strong>
-              </div>
-            </div>
+                <div>
+                  <h3>{category.title}</h3>
+                  <p>{category.text}</p>
+                </div>
 
-            <div className="bookingSectionTwo">
-              <span className="fieldIcon">&#9728;</span>
-              <div>
-                <small>Date</small>
-                <strong>Select Date</strong>
-              </div>
-            </div>
-
-            <button className="searchButton" Link to="/">
-              Search
-            </button>
+                <span className="categoryArrow">↗</span>
+              </Link>
+            ))}
           </div>
         </section>
 
-        <section className="event-section">
-          <div className="eventImages reveal revealLeft">
-            <div className="eventImageMain">
-              <img
-                src="https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=800&q=85"
-                alt="Event"
-              />
+        <section className="eventsSection">
+          <div className="sectionHeading reveal">
+            <div>
+              <span className="sectionTag">DON'T MISS OUT</span>
+              <h2>Trending Events</h2>
             </div>
 
-            <div className="priceBadge">
-              <strong>R1500, Starting Price</strong>
-              <span>Event Registration</span>
-            </div>
+            <Link to="/Events" className="viewAll">
+              Explore all →
+            </Link>
           </div>
 
-          <div className="eventCopy reveal revealRight">
-            <p className="sectionLabel">FOR OUR CUSTOMERS</p>
-            <h2>Event Hosting Made Easy</h2>
+          {eventsLoading ? (
+            <div className="eventsLoading">
+              <span>Loading events...</span>
+            </div>
+          ) : events.length === 0 ? (
+            <div className="eventsEmpty">
+              <h3>No upcoming events</h3>
+              <p>Check back soon for new events.</p>
+
+              <Link to="/Events" className="ticketButton">
+                Browse Events
+              </Link>
+            </div>
+          ) : (
+            <div className="eventsGrid">
+              {events.slice(0, 3).map((event, index) => {
+                const date = new Date(event.eventDate);
+
+                return (
+                  <article
+                    className={`ticketCard reveal revealDelay${index + 1}`}
+                    key={event._id}
+                  >
+                    <div className="ticketImage">
+                      <img src={event.images?.[0]} alt={event.eventName} />
+
+                      <span className="eventCategory">EVENT</span>
+
+                      <div className="eventDate">
+                        <strong>{date.getDate()}</strong>
+
+                        <span>
+                          {date
+                            .toLocaleString("en-US", {
+                              month: "short",
+                            })
+                            .toUpperCase()}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="ticketInfo">
+                      <h3>{event.eventName}</h3>
+
+                      <p className="eventLocation">⌖ {event.venueName}</p>
+
+                      <p className="eventLocation">{event.address}</p>
+
+                      <div className="ticketBottom">
+                        <div>
+                          <small>FROM</small>
+
+                          <strong>
+                            R{Number(event.eventSeatPrice).toLocaleString()}
+                          </strong>
+                        </div>
+
+                        <Link
+                          to={`/Events/${event._id}`}
+                          className="ticketButton"
+                        >
+                          Get Tickets
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
+        </section>
+
+        <section className="featuredEvent reveal">
+          <div className="featuredImage">
+            <img
+              src="./public/assets/WhatsApp Image 2026-07-27 at 19.49.19.jpeg"
+              alt="Featured event"
+            />
+          </div>
+
+          <div className="featuredContent">
+            <span className="sectionTag">FEATURED EXPERIENCE</span>
+
+            <h2>
+              Make Tonight
+              <br />
+              <span>Unforgettable.</span>
+            </h2>
+
             <p>
-              Host unforgettable experiences with venues designed around your
-              needs. From intimate gatherings to large celebrations, we've got
-              the perfect space for you.
+              From sold-out concerts to intimate experiences, Reserve puts the
+              best events right at your fingertips.
             </p>
 
-            <div className="benefit">
-              <span>&#9729;</span>
+            <div className="featuredDetails">
+              <div>
+                <small>DATE</small>
+                <strong>29 September 2026</strong>
+              </div>
 
+              <div>
+                <small>LOCATION</small>
+                <strong>Johannesburg</strong>
+              </div>
+
+              <div>
+                <small>TICKETS FROM</small>
+                <strong>R100</strong>
+              </div>
+            </div>
+
+            <Link to="/Events" className="featuredButton">
+              Book Your Ticket
+            </Link>
+          </div>
+        </section>
+
+        <section className="howSection">
+          <div className="sectionHeading centered reveal">
+            <span className="sectionTag">SIMPLE & FAST</span>
+            <h2>
+              Book Your Ticket
+              <br />
+              In Three Steps.
+            </h2>
+          </div>
+
+          <div className="steps">
+            <div className="step reveal revealDelay1">
+              <span className="stepNumber">01</span>
+              <div className="stepIcon">⌕</div>
+              <h3>Discover</h3>
               <p>
-                <strong>Working Quality</strong>
-                <br />
-                Reliable spaces, designed for every occasion.
+                Browse through exciting events and find something that matches
+                your vibe.
               </p>
             </div>
 
-            <div className="benefit">
-              <span>&#9729;</span>
+            <div className="step reveal revealDelay2">
+              <span className="stepNumber">02</span>
+              <div className="stepIcon">▣</div>
+              <h3>Choose Your Ticket</h3>
+              <p>Select your preferred ticket type, quantity and event date.</p>
+            </div>
 
+            <div className="step reveal revealDelay3">
+              <span className="stepNumber">03</span>
+              <div className="stepIcon">✓</div>
+              <h3>Enjoy The Event</h3>
               <p>
-                <strong>Wide Event Environment</strong>
-                <br />
-                Choose from hundreds of unique locations.
+                Complete your booking and get ready for an unforgettable
+                experience.
               </p>
             </div>
-
-            <button className="Eventsbutton">
-              <Link to="/Events">Explore Events</Link>
-            </button>
           </div>
         </section>
 
-        <section className="managers">
-          <div className="managerContent reveal revealLeft">
-            <p>FOR VENUE MANAGERS</p>
-            <h2>Live Venues</h2>
-
-            <div className="managerCards">
-              <div className="managerImage">
-                <img
-                  src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=700&q=85"
-                  alt="Venue"
-                />
-
-                <button>&#9654;</button>
-              </div>
-
-              <div className="managerFeatures">
-                <div>
-                  <span>&#8472;</span>
-
-                  <p>
-                    <strong>Unique Facilities</strong>
-                    <br />
-                    Explore beautiful event spaces.
-                  </p>
-                </div>
-
-                <div>
-                  <span>&#8472;</span>
-
-                  <p>
-                    <strong>Easy Booking</strong>
-                    <br />
-                    Reserve your venue in minutes.
-                  </p>
-                </div>
-
-                <div>
-                  <span>&#8472;</span>
-
-                  <p>
-                    <strong>Great Locations</strong>
-                    <br />
-                    Venues in conveniet locations.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="testimonial reveal revealRight">
-            <div className="quote">“</div>
-
-            <p>
-              "Reserve makes finding the right venue incredibly simple. The
-              booking process was seamless and the venue exceeded our
-              expectations."
-            </p>
-
-            <div className="testimonialPerson">
-              <div className="avatar">J.D</div>
-
-              <div>
-                <strong>John Doe</strong>
-                <span>Event Organizer</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <ScrollExpand
+        {/* <ScrollExpand
           src="https://img.partyslate.com/photos/2753880/photo-c619be1f-4c9a-4761-b905-b9458707cbd5.jpg?tr=w-1200,h-630,fo-fo-auto"
-          alt="Product hero"
-          title="See it Reserved!"
+          alt="Live event"
+          title="Your Experience Starts Here"
           scrollHint="Scroll inside the frame"
           useWindowScroll
         >
-          <h2 style={{ color: "white", fontSize: "2.95rem"}}>Every pixel, everywhere</h2>
-          <p style={{ color: "white", fontSize: "1.95rem" }}>
-            X marks the spot!
+          <h2 style={{ color: "white", fontSize: "2.95rem" }}>
+            See You There.
+          </h2>
+
+          <p style={{ color: "white", fontSize: "1.2rem" }}>
+            Find it. Book it. Experience it.
           </p>
-        </ScrollExpand>
+        </ScrollExpand> */}
 
         <section className="venuesSection">
-          <span className="sectionTag">For Your Convenience</span>
-          <h2>Venues</h2>
-
-          <div className="venuesGrid">
-            <div className="venueBox reveal revealDelay1"></div>
-            <div className="venueBox reveal revealDelay2"></div>
-            <div className="venueBox reveal revealDelay3"></div>
-            <div className="venueBox reveal revealDelay1"></div>
-            <div className="venueBox reveal revealDelay2"></div>
-            <div className="venueBox reveal revealDelay3"></div>
+          <div className="sectionHeading centered reveal">
+            <span className="sectionTag">DISCOVER MORE</span>
+            <h2>
+              Every Event.
+              <br />
+              One Place.
+            </h2>
           </div>
 
-          <div className="venuesFooter reveal">
-            FOR VENUE MANAGERS <Link to="/Venues">ADD YOUR VENUE NOW </Link>
+          <div className="venueGrid">
+            <Link to="/Events" className="venueBox reveal revealDelay1">
+              <img
+                src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=700&q=80"
+                alt="Music event"
+              />
+              <div>
+                <span>LIVE MUSIC</span>
+                <strong>Feel The Music</strong>
+              </div>
+            </Link>
+
+            <Link to="/Events" className="venueBox reveal revealDelay2">
+              <img
+                src="https://images.unsplash.com/photo-1468359601543-843bfaef291a?auto=format&fit=crop&w=700&q=80"
+                alt="Sports event"
+              />
+              <div>
+                <span>SPORTS</span>
+                <strong>Feel The Energy</strong>
+              </div>
+            </Link>
+
+            <Link to="/Events" className="venueBox reveal revealDelay3">
+              <img
+                src="https://images.unsplash.com/photo-1505236858219-8359eb29e329?auto=format&fit=crop&w=700&q=80"
+                alt="Festival"
+              />
+              <div>
+                <span>FESTIVALS</span>
+                <strong>Create Memories</strong>
+              </div>
+            </Link>
           </div>
         </section>
 
-        <div style={{ height: 600 }}>
+        <div className="driftSection">
           <DriftWall
             items={items}
             columns={7}
@@ -317,7 +472,7 @@ const Home = () => {
             lift={64}
             fade={0.6}
             dim={0.55}
-            overlayColor="#24599c"
+            // overlayColor="#172554"
             radius={14}
             roll={0}
             pauseOnHover={false}

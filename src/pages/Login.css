@@ -38,32 +38,7 @@
     flex-direction: column;
     justify-content: space-between;
     color: white;
-    background:
-        radial-gradient(
-            circle at 15% 10%,
-            rgba(96, 217, 255, 0.95),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 65% 20%,
-            rgba(170, 80, 255, 0.90),
-            transparent 35%
-        ),
-
-        radial-gradient(
-            circle at 35% 65%,
-            rgba(35, 25, 200, 0.95),
-            transparent 55%
-        ),
-
-        linear-gradient(
-            135deg,
-            #60d9ff,
-            #4c35ff 45%,
-            #d7c8ff
-        );
-
+    background: linear-gradient(135deg, #0f172a 0%, #172554 48%, #1d4ed8 100%)
 }
 
 .authVisual::before {
