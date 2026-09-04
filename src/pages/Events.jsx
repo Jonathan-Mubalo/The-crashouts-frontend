@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { EventContext } from "../context/SpecificEvent";
 import "./Events.css";
 import { useNavigate } from "react-router-dom";
+import ScrollExpand from "../DesignBits/ScrollExpand";
 
 function Events() {
   // THIS NAVIGATION ELEMENT IS USED TO NAVIGATE TO THE NEXT PAGE WHENEVER SOMEONE WANTS TO BOOK A SEAT
@@ -37,32 +38,32 @@ function Events() {
 
   // THE ENDPOINT FUNCTION THAT GETS ALL OF THE EVENTS
   useEffect(() => {
-    const getBookingHistory = async () => {
-      try {
-        const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
-        console.log(accessToken);
-        const response = await fetch(
-          `http://localhost:3000/seatPaymentsHistory/${accessToken}`,
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          },
-        );
+  const getBookingHistory = async () => {
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+      const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
+      console.log(accessToken);
+      const response = await fetch(
+        `${API_URL}/seatPaymentsHistory/${accessToken}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
 
-        const data = await response.json();
-        // console.log(data.message)
-        if (response.status === 200) {
-          setBookingHistoryData(data.seatHistory);
-        }
-      } catch (error) {
-        console.error(
-          "There was a problem trying to get the users bookingHistory info",
-          error,
-        );
+      const data = await response.json();
+      if (response.status === 200) {
+        setBookingHistoryData(data.seatHistory);
       }
-    };
-    getBookingHistory();
-  }, []);
+    } catch (error) {
+      console.error(
+        "There was a problem trying to get the users bookingHistory info",
+        error,
+      );
+    }
+  };
+  getBookingHistory();
+}, []);
 
   const displaySeatBooking = (event) => {
     console.log(event.target.id);
@@ -101,6 +102,7 @@ function Events() {
       <Navbar />
 
       <header className="eventsHeader">
+
         <div className="container headerSection">
           <div>
             <h1>Events</h1>
@@ -113,14 +115,14 @@ function Events() {
           {/* Works with the filter code to pull and bring up events as well as the user's booking history :) I'm so smart!! */}
           <nav>
             <button
-              className={`nav_btn ${currentTab === "search" ? "active" : ""}`}
+              className={`lookup_btn ${currentTab === "search" ? "active" : ""}`}
               onClick={() => setCurrentTab("search")}
             >
               Browse Events
             </button>
 
             <button
-              className={`nav_btn ${currentTab === "history" ? "active" : ""}`}
+              className={`lookup_btn ${currentTab === "history" ? "active" : ""}`}
               onClick={() => setCurrentTab("history")}
             >
               Booking History

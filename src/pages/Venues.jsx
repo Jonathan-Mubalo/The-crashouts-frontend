@@ -171,22 +171,22 @@ const Venues = () => {
   // ENDPOINT USED TO BOOK A VENUE
 
   const bookVenue = async (event) => {
-    try {
-
-      event.preventDefault();
-      console.log("function is called")
-      const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
-      const response = await fetch(`//localhost:3000/bookVenue/${accessToken}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...bookedVenue,
-          eventName: eventName.current.value,
-          eventDescription: eventDescription.current.value,
-          eventSeatPrice: eventSeatPrice.current.value,
-          eventDate: eventDate.current.value
-        })
-      });
+  try {
+    event.preventDefault();
+    console.log("function is called");
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+    const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
+    const response = await fetch(`${API_URL}/bookVenue/${accessToken}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...bookedVenue,
+        eventName: eventName.current.value,
+        eventDescription: eventDescription.current.value,
+        eventSeatPrice: eventSeatPrice.current.value,
+        eventDate: eventDate.current.value
+      })
+    });
 
       const data = await response.json();
 
@@ -228,10 +228,11 @@ const Venues = () => {
       console.log("selectedVenueName after the slicing effect: ", venueName)
 
 
-      const response = await fetch(`//localhost:3000/removeMyVenue/${venueName}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "appliction/json" },
-      });
+     const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:3000")
+const response = await fetch(`${API_URL}/removeMyVenue/${venueName}`, {
+  method: "DELETE",
+  headers: { "Content-Type": "application/json" },
+});
 
       const data = await response.json();
       if (response.status !== 200) {
@@ -279,8 +280,8 @@ const Venues = () => {
           </div>
           {/* Used to conditionally render the display of venues based on what you select */}
           <nav>
-            <button className={`nav_btn ${currentTab === 'search' ? 'active' : ''}`} onClick={() => setCurrentTab('search')} > Browse Venues </button>
-            <button className={`nav_btn ${currentTab === 'history' ? 'active' : ''}`} onClick={() => setCurrentTab('history')} > Personal Venues </button>
+            <button className={`lookup_btn ${currentTab === 'search' ? 'active' : ''}`} onClick={() => setCurrentTab('search')} > Browse Venues </button>
+            <button className={`lookup_btn ${currentTab === 'history' ? 'active' : ''}`} onClick={() => setCurrentTab('history')} > Personal Venues </button>
           </nav>
 
         </div>
@@ -297,9 +298,9 @@ const Venues = () => {
                   <h1>{bookedVenue && bookedVenue.venueName}</h1>
                   <h3>{bookedVenue && bookedVenue.address}</h3>
                   <label htmlFor="venue_EventName">Event Name</label>
-                  <input id="venue_EventName" type="text" placeholder="Spiderman No way home" ref={eventName} required />
+                  <input id="venue_EventName" type="text" placeholder="Enter Event name" ref={eventName} required />
                   <label htmlFor="venue_EventDescription" >Provide a short description of the event taking place</label>
-                  <textarea id="venue_EventDescription" rows="5" cols="50" minLength="30" placeholder="Come and watch the premiere of spiderman brand new day; where he tries..." ref={eventDescription} required ></textarea>
+                  <textarea id="venue_EventDescription" rows="5" cols="50" minLength="30" placeholder="e.g a detailed description" ref={eventDescription} required ></textarea>
                   <label htmlFor="seatPrice">Price per seat</label>
                   <input id="venue_EventPrice" type="number" placeholder="100" ref={eventSeatPrice} />
                   <label htmlFor="venue_eventDate">Select your event date</label>

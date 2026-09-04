@@ -18,15 +18,14 @@ function Navbar() {
     const accessTokenEmail = JSON.parse(sessionStorage.getItem("accessToken"));
 
     const handleNavbarDisplay = async () => {
+  try {
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+    const response = await fetch(`${API_URL}/isAuthorised/${accessTokenEmail}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
 
-      try {
-        const response = await fetch(`http://localhost:3000/isAuthorised/${accessTokenEmail}`,
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          });
-
-        const data = await response.json();
+    const data = await response.json();
   
 
         if (data.role === "admin") {
