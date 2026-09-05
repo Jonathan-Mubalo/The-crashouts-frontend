@@ -18,6 +18,7 @@ import PageNotFound from './pages/PageNotFound'
 import Dashboard from './pages/Dashboard'
 import DisplayVenue from './components/DisplayVenue'
 import VenueUpdated from './pages/VenueUpdated'
+import SpecificVenueContext from './context/SpecificVenueContext'
 
 function App() {
   return (
@@ -59,7 +60,10 @@ function App() {
           </ProtectedRoute>} />
 
           <Route path="/Venues" element={<ProtectedRoute>
-            <Venues />
+            <SpecificVenueContext>
+              <Venues />
+            </SpecificVenueContext>
+            
           </ProtectedRoute>} />
 
           

@@ -1,10 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 import "./Venues.css";
 // import './DisplayVenue.css';
 
 const Venues = () => {
+
+  // THE NAVIGATE THAT WILL HELP US TO NAVIGATE TO THE NEXT VENUEUPDATED CONTEXT WHEN WE WANT TO UPDATE A VENUES DETAILS
+const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState("search");
 
   // STATE VARIABLE THAT IS USED TO STORE ALL OF THE VENUES THAT ARE AVAILABLE
@@ -913,13 +917,13 @@ const Venues = () => {
                                   className="personalVenueDetailsBtn"
                                   onClick={displayVenueDetailsDialog}
                                 >
-                                  
-                                  Venue details
+                                   Venue details
                                 </button>
                                 <section className="personalVenuesEditsBtnsContainer">
                                   <button
                                     className="updateVenueBtn"
                                     id={venue["_id"]}
+                                    onClick={()=>{ return navigate("/VenueUpdated")}}
                                   >
                                      Update venue
                                   </button>
