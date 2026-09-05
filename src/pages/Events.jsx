@@ -130,6 +130,12 @@ function Events() {
       >
         Booking History
       </button>
+
+      <button
+        className={'eventTab'}
+      >
+        My Events
+      </button>
     </div>
   </div>
 </header>
