@@ -17,8 +17,8 @@ function Events() {
   const [choosenLocation, setChoosenLocation] = useState("all");
 
   // CONTEXT FILE STATE VARIABLES
-  const { setStoredEvent, allEventsData, setAllEventsData } =
-    useContext(EventContext);
+  const { setStoredEvent, allEventsData, setAllEventsData } = useContext(EventContext);
+  
 console.log("Array of objects of all of the events: ",allEventsData)
   const [bookingHistoryData, setBookingHistoryData] = useState([
     {

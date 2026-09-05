@@ -913,24 +913,22 @@ const Venues = () => {
                                   className="personalVenueDetailsBtn"
                                   onClick={displayVenueDetailsDialog}
                                 >
-                                  {" "}
-                                  Venue details{" "}
+                                  
+                                  Venue details
                                 </button>
                                 <section className="personalVenuesEditsBtnsContainer">
                                   <button
                                     className="updateVenueBtn"
                                     id={venue["_id"]}
                                   >
-                                    {" "}
-                                    Update venue{" "}
+                                     Update venue
                                   </button>
                                   <button
                                     className="deleteVenueBtn"
                                     id={`${venue.venueName}${index}`}
                                     onClick={deletePersonalVenue}
                                   >
-                                    {" "}
-                                    Delete venue{" "}
+                                     Delete venue
                                   </button>
                                 </section>
                               </div>
