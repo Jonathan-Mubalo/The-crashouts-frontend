@@ -19,7 +19,7 @@ function Events() {
   // CONTEXT FILE STATE VARIABLES
   const { setStoredEvent, allEventsData, setAllEventsData } =
     useContext(EventContext);
-
+console.log("Array of objects of all of the events: ",allEventsData)
   const [bookingHistoryData, setBookingHistoryData] = useState([
     {
       _id: "qwerty78",
@@ -71,31 +71,6 @@ function Events() {
     navigate("/SeatBooking");
   };
 
-  // const everyting = () => {
-  //   console.log("currentFilteredEvent:", currentFilteredEvent);
-  //   console.log("seatArrangement:", currentFilteredEvent?.seatArrangement);
-  // }
-
-  // hardcoded locations and events
-
-  // const availableEvents = [
-
-  // ]
-
-  // this makes the filter part with create unique locations for the select dropdown
-  // uses array destructing to store the state of each event
-
-  // const allEvents = [...availableEvents, ...comingSoonEvents];
-
-  // const dropLocation = Array.from(new Set(allEvents.map((e) => e.location)));
-
-  // const filteredLocation = allEvents.filter((event) => {
-  //   const matchChoice = choosenStatus === 'all' || event.status === choosenStatus;
-  //   const matchLocations = choosenLocation === 'all' || event.location === choosenLocation;
-  //   return matchChoice && matchLocations;
-  // })
-
-  // this makes the filter part with create unique locations for the select dropdown
 
   return (
     <div className="eventPage">
@@ -219,7 +194,8 @@ function Events() {
                         )}
                       </div>
                       <div className="eventDetails">
-                        <h3 className="eventCardTitle">{event.venueName}</h3>
+                        <h3 className="eventCardTitle">{event.eventName}</h3>
+                        <h4 className="eventVenueName">{event.venueName}</h4>
                         <p className="eventCardLoaction">{event.address}</p>
                         <div>
                           <span className="eventDate">{event.eventDate}</span>
