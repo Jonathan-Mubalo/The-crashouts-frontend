@@ -105,6 +105,12 @@ console.log("Array of objects of all of the events: ",allEventsData)
       >
         Booking History
       </button>
+
+      <button
+        className={'eventTab'}
+      >
+        My Events
+      </button>
     </div>
   </div>
 </header>
