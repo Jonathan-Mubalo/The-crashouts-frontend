@@ -151,6 +151,17 @@
   margin-bottom: 20px;
 }
 
+.singleEventMainInfo {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;flex-flow: column wrap;
+  align-items: left;
+  gap: 20px;
+  border: 1px solid #e2e8f0;
+  text-align: left;
+}
+
 .singleEventCard {
   background: #f8fafc;
   border-radius: 12px;

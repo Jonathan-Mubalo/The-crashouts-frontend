@@ -206,7 +206,8 @@ const Venues = () => {
         cardNumber.current.value = "";
         cardExpireryDate.current.value = "";
         cardCVV.current.value = "";
-        return alert(data.message);
+        alert(data.message);
+        return eventDialog.current.close();
       }
     } catch (error) {
       console.error("Error occured while trying to book a venue: ", error);
@@ -290,18 +291,16 @@ const Venues = () => {
 
             <div className="venueNav">
               <button
-                className={`venueTab ${
-                  currentTab === "search" ? "active" : ""
-                }`}
+                className={`venueTab ${currentTab === "search" ? "active" : ""
+                  }`}
                 onClick={() => setCurrentTab("search")}
               >
                 Browse Venues
               </button>
 
               <button
-                className={`venueTab ${
-                  currentTab === "history" ? "active" : ""
-                }`}
+                className={`venueTab ${currentTab === "history" ? "active" : ""
+                  }`}
                 onClick={() => setCurrentTab("history")}
               >
                 Personal Venues
@@ -474,7 +473,7 @@ const Venues = () => {
                           <div className="venue-details-content">
                             <div className="details-section">
                               <h3>Venue Information</h3>
-                              {}{" "}
+                              { }{" "}
                               <div className="details-grid">
                                 <div className="detail-item">
                                   <span>Venue Name</span>

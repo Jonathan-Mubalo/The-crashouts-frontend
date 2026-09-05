@@ -100,63 +100,63 @@ const SeatBooking = () => {
 
   const bookSeats = async () => {
 
-try{
+    try {
 
-  console.log("bookSeats function has started");
+      console.log("bookSeats function has started");
 
-   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
-const email = JSON.parse(sessionStorage.getItem("accessToken"));
-console.log("email: ", email);
-const response = await fetch(`${API_URL}/bookingSeat`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    email,
-    bookingPrice: seatPrice,
-    eventDate: currentFilteredEvent[0].eventDate,
-    bookedBy: email,
-    numberOfSeats: bookedSeats.length,
-    seatNumber: bookedSeats,
-    venueName: currentFilteredEvent[0].venueName,
-    address: currentFilteredEvent[0].address,
-    eventName: currentFilteredEvent[0].eventName
-  })
-});
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+      const email = JSON.parse(sessionStorage.getItem("accessToken"));
+      console.log("email: ", email);
+      const response = await fetch(`${API_URL}/bookingSeat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          bookingPrice: seatPrice,
+          eventDate: currentFilteredEvent[0].eventDate,
+          bookedBy: email,
+          numberOfSeats: bookedSeats.length,
+          seatNumber: bookedSeats,
+          venueName: currentFilteredEvent[0].venueName,
+          address: currentFilteredEvent[0].address,
+          eventName: currentFilteredEvent[0].eventName
+        })
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.status !== 200) {
-      alert(data.message);
-    }
-    else {
+      if (response.status !== 200) {
+        alert(data.message);
+      }
+      else {
 
-      alert(data.message);
+        alert(data.message);
 
-      // CURRENT FILTERED EVENT IS AN ARRAY WITH ONE OBJECT CONTAINING
-      //  LITERALLY ALL OF THE INFORMATION THAT IS BEING DISPLAYED ON THE SCREEN 
-      // BY USING THE MAPPING EFFECT
+        // CURRENT FILTERED EVENT IS AN ARRAY WITH ONE OBJECT CONTAINING
+        //  LITERALLY ALL OF THE INFORMATION THAT IS BEING DISPLAYED ON THE SCREEN 
+        // BY USING THE MAPPING EFFECT
 
-        setBookedSeats( ()=>{ return [...[]] });
-        setNumberOfBookedSeats( ()=>{ return 0 });
+        setBookedSeats(() => { return [...[]] });
+        setNumberOfBookedSeats(() => { return 0 });
         const newCurrentFilteredEvent = currentFilteredEvent;
         newCurrentFilteredEvent[0].seatArrangement = data.seatArrangement;
-        setCurrentFilteredEvent( ()=>{ return newCurrentFilteredEvent })
+        setCurrentFilteredEvent(() => { return newCurrentFilteredEvent })
 
 
-      // THIS IS WHAT CAUSES THE SUBMISSION TO GO BACK TO THE EVENTS PAGE
-      // It needs to go back to the events page or the user will not be able to see that their chair was booked because it will not automatically render the component
-      // navigate(-1);
+        // THIS IS WHAT CAUSES THE SUBMISSION TO GO BACK TO THE EVENTS PAGE
+        // It needs to go back to the events page or the user will not be able to see that their chair was booked because it will not automatically render the component
+        // navigate(-1);
 
+      }
+    }
+    catch (error) {
+      console.error("There was an error while trying to book a seat: ", error)
     }
   }
-  catch (error){
-    console.error("There was an error while trying to book a seat: ", error)
-  }
-}
 
-// Pay Stack
+  // Pay Stack
 
-const handlePaystackPayment = () => {
+  const handlePaystackPayment = () => {
     if (bookedSeats.length === 0) {
       alert("Please select at least one seat!");
       return;
@@ -205,60 +205,60 @@ const handlePaystackPayment = () => {
   // pdf ticket generator, work in progress
 
   const generatePDFTicket = (transactionReference) => {
-  const doc = new jsPDF();
-  const eventTitle = currentFilteredEvent[0]?.venueName || currentFilteredEvent[0]?.title || "Event Ticket";
-  const eventDate = currentFilteredEvent[0]?.eventDate || "TBD";
-  const eventAddress = currentFilteredEvent[0]?.address || "TBD";
-  const userEmail = JSON.parse(sessionStorage.getItem("accessToken")) || "Attendee";
+    const doc = new jsPDF();
+    const eventTitle = currentFilteredEvent[0]?.venueName || currentFilteredEvent[0]?.title || "Event Ticket";
+    const eventDate = currentFilteredEvent[0]?.eventDate || "TBD";
+    const eventAddress = currentFilteredEvent[0]?.address || "TBD";
+    const userEmail = JSON.parse(sessionStorage.getItem("accessToken")) || "Attendee";
 
-  // Ticket Header Box
-  doc.setFillColor(37, 99, 235); // Blue background
-  doc.rect(15, 15, 180, 25, "F");
-  
-  doc.setTextColor(255, 255, 255);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(16);
-  doc.text("OFFICIAL EVENT TICKET", 20, 31);
+    // Ticket Header Box
+    doc.setFillColor(37, 99, 235); // Blue background
+    doc.rect(15, 15, 180, 25, "F");
 
-  // Event Details
-  doc.setTextColor(15, 23, 42);
-  doc.setFontSize(14);
-  doc.text(eventTitle, 20, 55);
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(16);
+    doc.text("OFFICIAL EVENT TICKET", 20, 31);
 
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(10);
-  doc.text(`Date: ${eventDate}`, 20, 65);
-  doc.text(`Venue Address: ${eventAddress}`, 20, 72);
+    // Event Details
+    doc.setTextColor(15, 23, 42);
+    doc.setFontSize(14);
+    doc.text(eventTitle, 20, 55);
 
-  // Divider Line
-  doc.setDrawColor(226, 232, 240);
-  doc.line(20, 80, 190, 80);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.text(`Date: ${eventDate}`, 20, 65);
+    doc.text(`Venue Address: ${eventAddress}`, 20, 72);
 
-  // Booking & Attendee Info
-  doc.setFont("helvetica", "bold");
-  doc.text("Attendee Information:", 20, 92);
-  doc.setFont("helvetica", "normal");
-  doc.text(`Email: ${userEmail}`, 20, 100);
+    // Divider Line
+    doc.setDrawColor(226, 232, 240);
+    doc.line(20, 80, 190, 80);
 
-  doc.setFont("helvetica", "bold");
-  doc.text("Seat Details:", 20, 112);
-  doc.setFont("helvetica", "normal");
-  doc.text(`Selected Seats: ${bookedSeats.join(", ")}`, 20, 120);
-  doc.text(`Total Seats: ${numberOfBookedSeats}`, 20, 127);
-  doc.text(`Total Paid: R${numberOfBookedSeats * seatPrice}`, 20, 134);
+    // Booking & Attendee Info
+    doc.setFont("helvetica", "bold");
+    doc.text("Attendee Information:", 20, 92);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Email: ${userEmail}`, 20, 100);
 
-  // Footer / Reference
-  doc.setDrawColor(226, 232, 240);
-  doc.line(20, 145, 190, 145);
-  
-  doc.setFontSize(8);
-  doc.setTextColor(100, 116, 139);
-  doc.text(`Reference ID: ${transactionReference}`, 20, 155);
-  doc.text("Thank you for your booking!", 20, 162);
+    doc.setFont("helvetica", "bold");
+    doc.text("Seat Details:", 20, 112);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Selected Seats: ${bookedSeats.join(", ")}`, 20, 120);
+    doc.text(`Total Seats: ${numberOfBookedSeats}`, 20, 127);
+    doc.text(`Total Paid: R${numberOfBookedSeats * seatPrice}`, 20, 134);
 
-  // Save the PDF
-  doc.save(`Ticket-${bookedSeats.join("-")}.pdf`);
-};
+    // Footer / Reference
+    doc.setDrawColor(226, 232, 240);
+    doc.line(20, 145, 190, 145);
+
+    doc.setFontSize(8);
+    doc.setTextColor(100, 116, 139);
+    doc.text(`Reference ID: ${transactionReference}`, 20, 155);
+    doc.text("Thank you for your booking!", 20, 162);
+
+    // Save the PDF
+    doc.save(`Ticket-${bookedSeats.join("-")}.pdf`);
+  };
 
   return (
     <>
@@ -312,6 +312,28 @@ const handlePaystackPayment = () => {
                 </section>
 
                 <section className="singleEventDetailsWrapper">
+
+                  <div className="singleEventDetailContent">
+                    {currentFilteredEvent && currentFilteredEvent.map((event) => {
+                      return (
+
+
+                                             <div className="singleEventMainInfo" key={event._id}>
+
+                          <h3 className="singleEventCardTitle">{event.eventName || event.title}</h3>
+                          <div className="singleEventMeta">
+                            <p>{event.eventDescription}</p>
+                          </div>
+
+
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                </section>
+
+                <section className="singleEventDetailsWrapper">
                   {currentFilteredEvent && currentFilteredEvent.map((event) => {
                     return (
                       <div className="singleEventCard" key={event._id}>
@@ -321,6 +343,7 @@ const handlePaystackPayment = () => {
                             {event.tag && <span className="singleEventBadge">{event.tag}</span>}
                           </div>
                         )}
+
                         <div className="singleEventDetailContent">
                           <h3 className="singleEventCardTitle">{event.venueName || event.title}</h3>
                           <p className="singleEventCardLocation">{event.address}</p>
