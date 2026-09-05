@@ -310,7 +310,7 @@ const Home = () => {
         <section className="featuredEvent reveal">
           <div className="featuredImage">
             <img
-              src="./public/assets/WhatsApp Image 2026-07-27 at 19.49.19.jpeg"
+              src="/assets/WhatsApp Image 2026-07-27 at 19.49.19.jpeg"
               alt="Featured event"
             />
           </div>
