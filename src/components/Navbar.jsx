@@ -4,30 +4,16 @@ import "./Navbar.css";
 import Logo from "../assets/Logo.png";
 
 function Navbar() {
-  const [navDisplay, setNavDisplay] = useState(
-    <div className="nav">
-      <Link to="/">
-        <img src={Logo} alt="Logo" className="navLogo" />
-      </Link>
-
-      <div className="navLinks">
-        <Link className="navLink" to="/">Home</Link>
-        <Link className="navLink" to="/Events">Events</Link>
-        <Link className="navLink" to="/UserProfile">Profile</Link>
-        <Link className="navLink" to="/Contact">Contact</Link>
-      </div>
-    </div>
-  );
-
   const [menuOpen, setMenuOpen] = useState(false);
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
-    const accessTokenEmail = JSON.parse(
-      sessionStorage.getItem("accessToken")
-    );
-
-    const handleNavbarDisplay = async () => {
+    const getRole = async () => {
       try {
+        const accessTokenEmail = JSON.parse(
+          sessionStorage.getItem("accessToken")
+        );
+
         const API_URL =
           import.meta.env.VITE_API_URL || "http://localhost:3000";
 
@@ -36,117 +22,85 @@ function Navbar() {
           {
             method: "GET",
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           }
         );
 
         const data = await response.json();
 
-        if (data.role === "admin") {
-          setNavDisplay(
-            <div className="nav">
-              <Link to="/">
-                <img src={Logo} alt="Logo" className="navLogo" />
-              </Link>
-
-              <button
-                className="menuBtn"
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Toggle navigation"
-              >
-                <span></span>
-                <span></span>
-                <span></span>
-              </button>
-
-              <div className={`navLinks ${menuOpen ? "open" : ""}`}>
-                <Link className="navLink" to="/" onClick={() => setMenuOpen(false)}>
-                  Home
-                </Link>
-
-                <Link className="navLink" to="/Events" onClick={() => setMenuOpen(false)}>
-                  Events
-                </Link>
-
-                <Link className="navLink" to="/Venues" onClick={() => setMenuOpen(false)}>
-                  Venues
-                </Link>
-
-                <Link className="navLink" to="/RegisterVenue" onClick={() => setMenuOpen(false)}>
-                  Create venue
-                </Link>
-
-                <Link className="navLink" to="/UserProfile" onClick={() => setMenuOpen(false)}>
-                  Profile
-                </Link>
-
-                <Link className="navLink" to="/Contact" onClick={() => setMenuOpen(false)}>
-                  Contact
-                </Link>
-
-                <Link className="navLink" to="/Dashboard" onClick={() => setMenuOpen(false)}>
-                  Dashboard
-                </Link>
-
-                {/* <Link className="navLink" to="/VenueUpdated" onClick={() => setMenuOpen(false)}>
-                  VenueUpdated
-                </Link> */}
-              </div>
-            </div>
-          );
-        }
-
-        if (data.role === "manager") {
-          setNavDisplay(
-            <div className="nav">
-              <Link to="/">
-                <img src={Logo} alt="Logo" className="navLogo" />
-              </Link>
-
-              <button
-                className="menuBtn"
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label="Toggle navigation"
-              >
-                <span></span>
-                <span></span>
-                <span></span>
-              </button>
-
-              <div className={`navLinks ${menuOpen ? "open" : ""}`}>
-                <Link className="navLink" to="/" onClick={() => setMenuOpen(false)}>
-                  Home
-                </Link>
-
-                <Link className="navLink" to="/Events" onClick={() => setMenuOpen(false)}>
-                  Events
-                </Link>
-
-                <Link className="navLink" to="/Venues" onClick={() => setMenuOpen(false)}>
-                  Venues
-                </Link>
-
-                <Link className="navLink" to="/RegisterVenue" onClick={() => setMenuOpen(false)}>
-                  Create venue
-                </Link>
-
-                <Link className="navLink" to="/UserProfile" onClick={() => setMenuOpen(false)}>
-                  Profile
-                </Link>
-              </div>
-            </div>
-          );
-        }
+        setRole(data.role);
       } catch (error) {
-        console.error("Error displaying the navbar: ", error);
+        console.error("Error displaying navbar:", error);
       }
     };
 
-    handleNavbarDisplay();
+    getRole();
   }, []);
 
-  return navDisplay;
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  return (
+    <div className="nav">
+
+      <Link to="/" onClick={closeMenu}>
+        <img src={Logo} alt="Logo" className="navLogo" />
+      </Link>
+
+      <button
+        className="menuBtn"
+        onClick={() => setMenuOpen((prev) => !prev)}
+        aria-label="Toggle navigation"
+        aria-expanded={menuOpen}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div className={`navLinks ${menuOpen ? "open" : ""}`}>
+
+        <Link className="navLink" to="/" onClick={closeMenu}>
+          Home
+        </Link>
+
+        <Link className="navLink" to="/Events" onClick={closeMenu}>
+          Events
+        </Link>
+
+        {(role === "admin" || role === "manager") && (
+          <Link className="navLink" to="/Venues" onClick={closeMenu}>
+            Venues
+          </Link>
+        )}
+
+        {(role === "admin" || role === "manager") && (
+          <Link className="navLink" to="/RegisterVenue" onClick={closeMenu}>
+            Create venue
+          </Link>
+        )}
+
+        <Link className="navLink" to="/UserProfile" onClick={closeMenu}>
+          Profile
+        </Link>
+
+        {(role === "admin") && (
+          <Link className="navLink" to="/Contact" onClick={closeMenu}>
+            Contact
+          </Link>
+        )}
+
+        {(role === "admin") && (
+          <Link className="navLink" to="/Dashboard" onClick={closeMenu}>
+            Dashboard
+          </Link>
+        )}
+
+      </div>
+    </div>
+  );
 }
 
 export default Navbar;
