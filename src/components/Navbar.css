@@ -83,35 +83,23 @@
 
 .menuBtn {
   display: none;
-  width: 44px;
-  height: 44px;
-  padding: 9px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 11px;
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
+  border: none;
   cursor: pointer;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  transition:
-    background 0.25s ease,
-    transform 0.25s ease;
+}
+
+.menuBtn span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px 0;
+  background: white;
+  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
 .menuBtn:hover {
   background: rgba(255, 255, 255, 0.18);
   transform: scale(1.03);
-}
-
-.menuBtn span {
-  width: 21px;
-  height: 2px;
-  border-radius: 999px;
-  background: #ffffff;
-  transition:
-    transform 0.25s ease,
-    opacity 0.25s ease;
 }
 
 @media (max-width: 1050px) {
@@ -193,6 +181,24 @@
 
   .navLink:hover {
     transform: translateX(4px);
+  }
+}
+
+@media (max-width: 768px) {
+
+  .menuBtn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .navLinks {
+    display: none;
+  }
+
+  .navLinks.open {
+    display: flex;
+    flex-direction: column;
   }
 }
 
