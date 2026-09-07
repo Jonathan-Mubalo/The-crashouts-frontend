@@ -51,17 +51,20 @@ const Venues = () => {
     const getAllVenues = async () => {
       try {
         const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
-        const response = await fetch(
-          `${API_URL}/allVenues/${accessTokenEmail}`,
-        );
+
+        const response = await fetch(`${API_URL}/allVenues`);
+
+        const data = await response.json();
+
         if (response.status === 200) {
           return setAllVenues(() => {
             return data.message;
           });
         } else {
           alert(
-            "Unable to collect all of the available prperties, please try again later.",
+            "Unable to collect all of the available properties, please try again later.",
           );
+
           return setAllVenues(() => {
             return [
               {
@@ -71,7 +74,7 @@ const Venues = () => {
                 registrationNo: "N/A",
                 address: "N/A",
                 facilities: "N/A",
-                numberOfSeats: N / A,
+                numberOfSeats: "N/A",
                 seatRows: 0,
                 seatColumns: 0,
                 seatArrangement: [
@@ -113,6 +116,9 @@ const Venues = () => {
         const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
         const response = await fetch(`${API_URL}/myVenues/${accessTokenEmail}`);
+
+        const data = await response.json();
+
         if (response.status === 200) {
           return setMyVenues(() => {
             return data.message;
@@ -121,6 +127,7 @@ const Venues = () => {
           alert(
             "Unable to collect all of the available properties, please try again later.",
           );
+
           return setMyVenues(() => {
             return [
               {
@@ -130,7 +137,7 @@ const Venues = () => {
                 registrationNo: "N/A",
                 address: "N/A",
                 facilities: "N/A",
-                numberOfSeats: N / A,
+                numberOfSeats: "N/A",
                 seatRows: 0,
                 seatColumns: 0,
                 seatArrangement: [
@@ -164,6 +171,7 @@ const Venues = () => {
 
   const displayDialog = (event) => {
     let selectedId = event.target.parentElement.id;
+
     console.log("Selected property's id: ", selectedId);
 
     const selectedVenue = allVenues.filter((item) => {
@@ -173,6 +181,7 @@ const Venues = () => {
     setBookedVenue(() => {
       return selectedVenue[0];
     });
+
     eventDialog.current.showModal();
   };
 
@@ -181,12 +190,18 @@ const Venues = () => {
   const bookVenue = async (event) => {
     try {
       event.preventDefault();
+
       console.log("function is called");
+
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
       const accessToken = JSON.parse(sessionStorage.getItem("accessToken"));
+
       const response = await fetch(`${API_URL}/bookVenue/${accessToken}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           ...bookedVenue,
           eventName: eventName.current.value,
@@ -208,46 +223,62 @@ const Venues = () => {
         cardNumber.current.value = "";
         cardExpireryDate.current.value = "";
         cardCVV.current.value = "";
+
         alert(data.message);
+
         return eventDialog.current.close();
       }
     } catch (error) {
       console.error("Error occured while trying to book a venue: ", error);
     }
   };
+
   // FUNCTION USED TO DELETE A PERSONAL VENUE
 
   const deletePersonalVenue = async (event) => {
     try {
-      // THE VENUE ID REPRESENTS THE VENUE NAME AND THE INDEX OF THE WHOLE VENUE IN THE ARRAY AS THE LAST CHARACTER OF THE ID
+      // THE VENUE ID REPRESENTS THE VENUE NAME AND THE INDEX
+      // OF THE WHOLE VENUE IN THE ARRAY AS THE LAST CHARACTER OF THE ID
+
       const selectedVenueName = event.target.id;
+
       console.log(
         "selectedVenueName before the slicing effect: ",
         selectedVenueName,
       );
 
-      // SPECIFICALLY GETTING THE VENUE INDEX FROM THE ID WITH THE VENUE NAME AND INDEX
+      // SPECIFICALLY GETTING THE VENUE INDEX
+
       const venueIndex = selectedVenueName.split("").slice(-1).join("");
+
       console.log("Sliced index value: ", venueIndex);
 
-      // SPECIFICALLY GETTING THE VENUE NAME FROM THE ID WITH THE VENUE NAME AND INDEX
+      // SPECIFICALLY GETTING THE VENUE NAME
+
       const venueName = selectedVenueName.split("").slice(0, -1).join("");
+
       console.log("selectedVenueName after the slicing effect: ", venueName);
 
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
       const response = await fetch(`${API_URL}/removeMyVenue/${venueName}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
 
       const data = await response.json();
+
       if (response.status !== 200) {
         return alert(data.message);
       } else {
         let venuesUpdate = myVenues.splice(venueIndex, 1);
+
         setMyVenues(() => {
           return [...myVenues];
         });
+
         console.log(data.message);
       }
     } catch (error) {
@@ -264,10 +295,13 @@ const Venues = () => {
     const filteredVenue = allVenues.filter((venue) => {
       return venue["_id"] === event.target.parentElement.id;
     });
+
     console.log("filtered venue to display in the dialog: ", filteredVenue);
+
     setVenueDetails(() => {
       return filteredVenue;
     });
+
     venueDetailsDialog.current.showModal();
   };
 
