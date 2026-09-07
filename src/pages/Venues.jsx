@@ -6,9 +6,8 @@ import "./Venues.css";
 // import './DisplayVenue.css';
 
 const Venues = () => {
-
   // THE NAVIGATE THAT WILL HELP US TO NAVIGATE TO THE NEXT VENUEUPDATED CONTEXT WHEN WE WANT TO UPDATE A VENUES DETAILS
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState("search");
 
   // STATE VARIABLE THAT IS USED TO STORE ALL OF THE VENUES THAT ARE AVAILABLE
@@ -51,10 +50,10 @@ const navigate = useNavigate();
   useEffect(() => {
     const getAllVenues = async () => {
       try {
-        const response = await fetch("//localhost:3000/allVenues");
-        const data = await response.json();
-
-        // MAKES SURE THAT THE PROPERTIES ARE ACTUALLY COLLECTED AND NO NULL VELUE IS RETURNED
+        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+        const response = await fetch(
+          `${API_URL}/allVenues/${accessTokenEmail}`,
+        );
         if (response.status === 200) {
           return setAllVenues(() => {
             return data.message;
@@ -111,10 +110,9 @@ const navigate = useNavigate();
           sessionStorage.getItem("accessToken"),
         );
 
-        const response = await fetch(
-          `//localhost:3000/myVenues/${accessTokenEmail}`,
-        );
-        const data = await response.json();
+        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
+        const response = await fetch(`${API_URL}/myVenues/${accessTokenEmail}`);
         if (response.status === 200) {
           return setMyVenues(() => {
             return data.message;
@@ -295,16 +293,18 @@ const navigate = useNavigate();
 
             <div className="venueNav">
               <button
-                className={`venueTab ${currentTab === "search" ? "active" : ""
-                  }`}
+                className={`venueTab ${
+                  currentTab === "search" ? "active" : ""
+                }`}
                 onClick={() => setCurrentTab("search")}
               >
                 Browse Venues
               </button>
 
               <button
-                className={`venueTab ${currentTab === "history" ? "active" : ""
-                  }`}
+                className={`venueTab ${
+                  currentTab === "history" ? "active" : ""
+                }`}
                 onClick={() => setCurrentTab("history")}
               >
                 Personal Venues
@@ -477,7 +477,7 @@ const navigate = useNavigate();
                           <div className="venue-details-content">
                             <div className="details-section">
                               <h3>Venue Information</h3>
-                              { }{" "}
+                              {}{" "}
                               <div className="details-grid">
                                 <div className="detail-item">
                                   <span>Venue Name</span>
@@ -917,22 +917,24 @@ const navigate = useNavigate();
                                   className="personalVenueDetailsBtn"
                                   onClick={displayVenueDetailsDialog}
                                 >
-                                   Venue details
+                                  Venue details
                                 </button>
                                 <section className="personalVenuesEditsBtnsContainer">
                                   <button
                                     className="updateVenueBtn"
                                     id={venue["_id"]}
-                                    onClick={()=>{ return navigate("/VenueUpdated")}}
+                                    onClick={() => {
+                                      return navigate("/VenueUpdated");
+                                    }}
                                   >
-                                     Update venue
+                                    Update venue
                                   </button>
                                   <button
                                     className="deleteVenueBtn"
                                     id={`${venue.venueName}${index}`}
                                     onClick={deletePersonalVenue}
                                   >
-                                     Delete venue
+                                    Delete venue
                                   </button>
                                 </section>
                               </div>
