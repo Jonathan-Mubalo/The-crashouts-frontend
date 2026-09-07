@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./RegisterVenue.css";
 import Navbar from "../components/Navbar";
-import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete';
-import '@geoapify/geocoder-autocomplete/styles/minimal.css';
+import {
+  GeoapifyGeocoderAutocomplete,
+  GeoapifyContext,
+} from "@geoapify/react-geocoder-autocomplete";
+import "@geoapify/geocoder-autocomplete/styles/minimal.css";
 const GEOAPIFY_API_KEY = import.meta.env.VITE_GEOAPIFY_API_KEY;
 
 function RegisterVenue() {
-
   // Needed to change the useState name from "formDate" to "formData" because the forms are using "formData" but the useState created was named "formDate"
   const [formData, setFormData] = useState({
     venueName: "",
@@ -19,7 +21,7 @@ function RegisterVenue() {
     noOfSeats: "",
     noOfRows: "",
     noOfColumns: "",
-    venueBookingPrice: ""
+    venueBookingPrice: "",
   });
 
   // Added the useState after reviewing the merged code and the pull request and realising that setState was not present at all.
@@ -35,13 +37,13 @@ function RegisterVenue() {
     setFormData((prev) => ({ ...prev, [id]: files }));
   };
 
-  const handlePlaceSelect = (place) => { 
-    console.log("FULL GEOAPIFY PLACE:", place); 
-    console.log("GEOAPIFY PROPERTIES:", place?.properties); 
-    console.log("FORMATTED ADDRESS:", place?.properties?.formatted); 
-    if (place?.properties?.formatted) { setFormData((prev) => 
-      ({ ...prev, address: place.properties.formatted, })); 
-    } 
+  const handlePlaceSelect = (place) => {
+    console.log("FULL GEOAPIFY PLACE:", place);
+    console.log("GEOAPIFY PROPERTIES:", place?.properties);
+    console.log("FORMATTED ADDRESS:", place?.properties?.formatted);
+    if (place?.properties?.formatted) {
+      setFormData((prev) => ({ ...prev, address: place.properties.formatted }));
+    }
   };
 
   const nextStep = (e) => {
@@ -58,15 +60,18 @@ function RegisterVenue() {
     e.preventDefault();
 
     const submissionData = new FormData();
-    submissionData.append("venueName", formData.venueName)
-    submissionData.append("phoneNumber", formData.number)
-    submissionData.append("registrationNo", formData.registrationNo)
-    submissionData.append("address", formData.address)
-    submissionData.append("facilities", formData.facilities)
-    submissionData.append("numberOfSeats", parseInt(formData.noOfSeats))
-    submissionData.append("seatRows", parseInt(formData.noOfRows))
-    submissionData.append("seatColumns", parseInt(formData.noOfColumns))
-    submissionData.append("venueBookingPrice", parseInt(formData.venueBookingPrice))
+    submissionData.append("venueName", formData.venueName);
+    submissionData.append("phoneNumber", formData.number);
+    submissionData.append("registrationNo", formData.registrationNo);
+    submissionData.append("address", formData.address);
+    submissionData.append("facilities", formData.facilities);
+    submissionData.append("numberOfSeats", parseInt(formData.noOfSeats));
+    submissionData.append("seatRows", parseInt(formData.noOfRows));
+    submissionData.append("seatColumns", parseInt(formData.noOfColumns));
+    submissionData.append(
+      "venueBookingPrice",
+      parseInt(formData.venueBookingPrice),
+    );
     for (let image of formData.images) {
       submissionData.append("images", image);
     }
@@ -80,11 +85,11 @@ function RegisterVenue() {
 
     const accessTokenEmail = JSON.parse(sessionStorage.getItem("accessToken"));
 
-   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
-const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
-  method: "POST",
-  body: submissionData,
-});
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+    const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
+      method: "POST",
+      body: submissionData,
+    });
 
     const data = await response.json();
 
@@ -93,12 +98,17 @@ const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
       console.log(key, value);
     }
     console.log("Final Registration Data submitted:", formData);
-    console.log("Object sent to the backend: ", submissionData.entries(([key, value]) => { return console.log(key, value) }))
+    console.log(
+      "Object sent to the backend: ",
+      submissionData.entries(([key, value]) => {
+        return console.log(key, value);
+      }),
+    );
     alert("Form Submitted successfully!");
 
     // CLEARING THE FORM ONCE A PROPERTY HAS BEEN CREATED
     setFormData(() => {
-      return ({
+      return {
         venueName: "",
         registrationNo: "",
         number: "",
@@ -109,11 +119,9 @@ const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
         noOfSeats: "",
         noOfRows: "",
         noOfColumns: "",
-        venueBookingPrice: ""
-      }
-      )
+        venueBookingPrice: "",
+      };
     });
-
   };
 
   return (
@@ -122,7 +130,10 @@ const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
       <div className="register-page">
         <h1>Register Your Venue</h1>
         <div className="registerVenueDiv">
-          <form className="venue_form" onSubmit={step === 2 ? handleSubmit : nextStep}>
+          <form
+            className="venue_form"
+            onSubmit={step === 2 ? handleSubmit : nextStep}
+          >
             {step === 1 && (
               <>
                 <div className="form-group">
@@ -166,7 +177,7 @@ const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
 
                 <div className="form-group">
                   <label htmlFor="address">Full Address</label>
-                  
+
                   {/* Geoapify Autocomplete integration wrapping context */}
                   <GeoapifyContext apiKey={GEOAPIFY_API_KEY}>
                     <GeoapifyGeocoderAutocomplete
@@ -175,7 +186,10 @@ const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
                       placeSelect={handlePlaceSelect}
                       onUserInput={(userInput) => {
                         // Allow typing fallback to state if user clears or types custom text
-                        setFormData((prev) => ({ ...prev, address: userInput }));
+                        setFormData((prev) => ({
+                          ...prev,
+                          address: userInput,
+                        }));
                       }}
                     />
                   </GeoapifyContext>
@@ -183,7 +197,8 @@ const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
 
                 <div className="form-group">
                   <label htmlFor="images">Upload Images</label>
-                  <input className="RegisterFile"
+                  <input
+                    className="RegisterFile"
                     type="file"
                     id="images"
                     accept="image/*"
@@ -195,7 +210,8 @@ const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
 
                 <div className="form-group">
                   <label htmlFor="documents">Upload Documents</label>
-                  <input className="RegisterFile"
+                  <input
+                    className="RegisterFile"
                     type="file"
                     id="documents"
                     multiple
@@ -274,11 +290,14 @@ const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
                   />
                 </div>
 
-                <div className="form-navigation" style={{ display: "flex", gap: "15px", marginTop: "20px" }}>
-                  <button type="button" onClick={prevStep} className="back-btn" >
+                <div
+                  className="form-navigation"
+                  style={{ display: "flex", gap: "15px", marginTop: "20px" }}
+                >
+                  <button type="button" onClick={prevStep} className="back-btn">
                     Previous
                   </button>
-                  <button type="submit" className="register-btn" >
+                  <button type="submit" className="register-btn">
                     Register
                   </button>
                 </div>
@@ -286,12 +305,10 @@ const response = await fetch(`${API_URL}/newVenue/${accessTokenEmail}`, {
             )}
           </form>
         </div>
-        <main>
-
-        </main>
+        <main></main>
       </div>
     </>
   );
 }
 
-export default RegisterVenue
+export default RegisterVenue;
